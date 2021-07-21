@@ -41,3 +41,57 @@ how_drive_works_2:
           It works in the backend by leveraging web sockets, which make all pages load
           faster.
       correct: b
+
+how_drive_works_3:
+  question: |
+    When Turbo Drive loads a new page, what exactly happens behind the scenes?
+  explanation: |
+    Turbo will merge the tags present in the `head` tag in a smart way.
+    
+    It will remove anything in `head` other than JavaScripts and Css tags. It will then inject
+    any new such elements, such as the `title` element and meta data elements. Lastly, it will
+    add those `script` and `css` tags that aren't present in the current page.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Turbo just replaces the old page with the new page loaded through
+          Ajax and executes all scripts again.
+        b: |
+          Turbo merges all scripts, meta-data and even title element present in
+          the `head` tag, then replaces the `body` with new content.
+        c: |
+          Turbo replaces the `body` with the new content but leaves the `head` tag intact.
+        d: |
+          Turbo will merge the new `head` tag with the old one in a smart way, only adding
+          new entries and scripts to it. It then replaces the `body`
+      correct: d
+      
+javascript:
+  question: |
+    What is the big difference for JavaScript on Turbo enable Websites?
+  explanation: |
+    As turbo only loads JavaScript files once (and executes them once) per "session", you
+    need to make sure any initialization code that needs to run once the DOM loads, is executed
+    properly! New scripts that are *added* to the `head`, however, do get parsed!
+    
+    > If you put JavaScript into the `body` of a page, it will execute normally on every
+    > page load!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          There are no differences between a normal Website and a Turbo Drive powererd
+          Website. JavaScript always behave the same way in a Browser.
+        b: |
+          The difference is that, as Turbo Drive loads a new page, every JavaScript script
+          is parsed and executed again to ensure that a page has its initialization done
+          properly. This includes old scripts that don't get removed!
+        c: |
+          The difference is that, as Turbo Drive loads a new page, script tags that were
+          present in the previous page, don't get parsed and executed again, as you might
+          expect with a normal page load.
+        d: |
+          The difference is that, as Turbo Drive loads a new page, new script tags are
+          parsed but not executed. You need to execute them from Turbo.
+      correct: c
