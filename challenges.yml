@@ -1,0 +1,43 @@
+how_drive_works:
+  question: |
+    How does Turbo work inside a Symfony-ux project?
+  explanation: |
+    Symfony adds a dummy stimulus controller to its controller list. All this controller
+    does, is import the Turbo functionality into its JavaScript and expose the Turbo
+    variable in `window`!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          When you install `symfony/ux-turbo`, it adds a dummy stimulus controller to
+          `controllers.json`, it takes care of adding Turbo functionality into your site.
+        b: |
+          Turbo is automatically added to your codebase when you use webpack encore
+          on a symfony-ux project.
+        c: |
+          It doesn't work out of the box. You need to import Turbo on all of your files. This
+          way, you can selectively choose which parts of your website use Turbo and which don't.
+      correct: a
+
+how_drive_works_2:
+  question: |
+    Once you install `symfony/ux-turbo`, it automatically starts working throughout your
+    website. But, how exactly does it work and what does it do?
+  explanation: |
+    Turbo will intercept actions like clicks and form submits and load them with an Ajax call.
+    It will then save snapshots of these pages so that when you click the back or forward buttons
+    in your browser, the pages will load instantly. If a page takes a long time to load, it will
+    even show a progress bar on top of the page that you can customize!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          It downloads and install a browser extension that processes all request in the
+          background before clearing the page.
+        b: |
+          It loads JavaScript that intercepts events like clicks and form submits and
+          makes an Ajax request to load them in the background.
+        c: |
+          It works in the backend by leveraging web sockets, which make all pages load
+          faster.
+      correct: b
