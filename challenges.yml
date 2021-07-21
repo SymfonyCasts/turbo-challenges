@@ -124,4 +124,97 @@ javascript_2:
           Because the JavaScript included in a `body` tag will *not* be executed by Turbo Drive
           when the page loads!
       correct: b
-        
+
+disabling:
+  question: |
+    Given this very basic template (please ignore the missing tags and attributes :p ):
+    
+    ```twig
+    <html>
+        <head>
+            <title>My Template</title>
+            {% block javascripts %}{% endblock %}
+            {% block styles %}{% endblock %}
+        </head>
+        <body>
+            {% block body %}{% endblock %}
+        </body>
+    </html>
+    ```
+    
+    How can we disable turbo on this page?
+  explanation: |
+    If you set the property `data-turbo="false"` in a `body` tag, it will effectively disable
+    Turbo for that entire page!
+    
+    > You can also disable or enable (with `data-turbo="true") specific links within a page
+    > or entire page sections!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <html data-turbo="false">
+              <head>
+                  <title>My Template</title>
+                  {% block javascripts %}{% endblock %}
+                  {% block styles %}{% endblock %}
+              </head>
+              <body>
+                  {% block body %}{% endblock %}
+              </body>
+          </html>
+          ```
+        b: |
+          ```twig
+          <html>
+              <head>
+                  <title>My Template</title>
+                  <meta data-turbo="false">
+                  {% block javascripts %}{% endblock %}
+                  {% block styles %}{% endblock %}
+              </head>
+              <body>
+                  {% block body %}{% endblock %}
+              </body>
+          </html>
+          ```
+        c: |
+          ```twig
+          <html>
+              <head>
+                  <title>My Template</title>
+                  {% block javascripts %}{% endblock %}
+                  {% block styles %}{% endblock %}
+              </head>
+              <body data-turbo="false">
+                  {% block body %}{% endblock %}
+              </body>
+          </html>
+          ```
+        d: |
+          Once you install and set up turbo (i.e. include Turbo in your main
+          JavaScript entry, you cannot disable it.
+      correct: c
+      
+forms:
+  question: |
+    In this video, we fixed our forms by making them respond with a 422 status code
+    when they fail. Why did we do this?
+  explanation: |
+    A 422 status when a form has errors is a better way of handling a form failure. It
+    also tells Turbo that there has been an error and needs to re-render the page.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          We do this to avoid an error by Turbo where it says that "form submits should
+          redirect to another location". By sending a different status other than 200,
+          we are basically telling Turbo to reload that template.
+        b: |
+          We do this to better conform to HTTP standards, since our code was incomplete
+          in this regard
+        c: |
+          We do this to show a nice new feature of synfomy regarding forms, where it can
+          handle different status codes on different situations.
+      correct: a
