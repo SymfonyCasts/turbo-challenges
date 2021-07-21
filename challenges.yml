@@ -95,3 +95,33 @@ javascript:
           The difference is that, as Turbo Drive loads a new page, new script tags are
           parsed but not executed. You need to execute them from Turbo.
       correct: c
+
+javascript_2:
+  question: |
+    Why is it not recommended to have JavaScript inside the `body` tag on a Turbo Drive
+    powered Website?
+  explanation: |
+    When Turbo Drive switches to a page that was previously visited, its cache feature,
+    which makes the page appear instantly, will cause any JavaScript in the `body` to be
+    executed. When the actual page finishes loading, turbo will replace the cached page
+    with the new one, causing another execution of its JavaScript, thus potentially causing
+    issues.
+    
+    The best way to use JavaScript in a Turbo Drive powered Website is Stimulus!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Having JavaScript in the `body` tag is not a recommended practice and thus,
+          should be avoided.
+        b: |
+          Because the Turbo cache can cause this JavaScript to be executed twice on a page
+          load, leading to potential issues.
+        c: |
+          There are no problems with having JavaScript in your `body` tag, although it is
+          not a recommended practice!
+        d: |
+          Because the JavaScript included in a `body` tag will *not* be executed by Turbo Drive
+          when the page loads!
+      correct: b
+        
