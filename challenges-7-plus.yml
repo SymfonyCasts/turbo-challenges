@@ -1,0 +1,54 @@
+preview:
+  question: |
+    Hey! I've prepared this template that needs NO preview from Turbo when it loads:
+    
+    ```twig
+    {% extends 'base.html.twig' %}
+    
+    {% block title%}Play Pong in the Browser for Free!{% endblock %}
+    
+    {% block metas %}
+    
+    {% endblock %}
+    
+    {% block body %}
+    <div id="pong_game_app"></div>
+    {% endblock %}
+    ```
+    
+    I even added a `block metas` so that I can add the proper `head` tag to avoid this... but,
+    I can't seem to remember exactly how this is!
+    
+    What is the actual `meta` tag that we need to add to stop turbo previews?
+  explanation: |
+    You can also set this meta to contain the value `no-cache` which means that it won't generate
+    any previews at all (not even for the back button!)
+
+    Other metas that we can leverage with turbo are:
+    
+    ```twig
+    <meta name="turbo-visit-control" content="reload">
+    ```
+    
+    To enforce a complete reload every time turbo visits this page. Check the Turbo Drive reference
+    for more information on these!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <meta name="turbo-cache" content="no-preview">
+          ```
+        b: |
+          ```twig
+          <meta name="cache-control" content="no-preview">
+          ```
+        c: |
+          ```twig
+          <meta name="turbo-cache-control" content="no-preview">
+          ```
+        d: |
+          ```twig
+          <meta name="cache" content="no-preview">
+          ```
+      correct: c
