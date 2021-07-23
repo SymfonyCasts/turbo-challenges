@@ -52,3 +52,97 @@ preview:
           <meta name="cache" content="no-preview">
           ```
       correct: c
+
+modal_preview:
+  question: |
+    What happens when Turbo creates a preview of a page?
+  explanation: |
+    This is important because you need to make sure your page functionality is preserve
+    between page views.
+    
+    In general, the best way to add JavaScript functionality with Turbo Drive is its best
+    friend: Stimulus! But there *are* workarounds we can do to keep our existing JavaScript
+    working.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          At the moment right before leaving the page, Turbo clones the DOM using `cloneNode`,
+          which does *not* include event listeners added from JavaScript.
+        b: |
+          At page load, Turbo clones the DOM using a "deep clone" algorithm, but
+          since JavaScring hasn't executed yet, we don't get any listeners adde dy it.
+        c: |
+          At the moment right before leaving the page, Turbo clones the DOm using a "deep
+          clone" algorithm, but removes any event listeners added by JavaScript because
+          it relies on Stimulus to add them back.
+        d: |
+          At page load, and after all JavaScript has been parsed and executed, Turbo clones
+          the DOM using a "deep clone" algorithm, but it removes any event listeners added by
+          JavaScript because ir relies on Stimulus to add them back.
+      correct: a
+  
+modal_preview_2:
+  question: |
+    In my web page, I decided to create my own modal. It's just a `div` element
+    that I set to `display: block` whenever I want to show it. Not a big deal!
+    
+    ```twig
+    <div id="my_great_modal" style="display: none">
+        <h1>Welcome our Pizza Section!</h1>
+    
+        <p>You need to be a pizza lover before you proceed!</p>
+    
+        <button
+            class="btn btn-primary"
+            onclick="javascript:document.getElementById('my_great_modal').style.display='none';"
+        >
+            Proceed
+        </button>
+    </div>
+    ```
+    
+    I then use JavaScript to discretely show this popup under certain circumstances (i.e. when
+    I detect that a customer might not love pizza!).
+    
+    But, when the user leaves the page and then goes back, Turbo is showing this modal
+    *even* when the user might have proven otherwise that he is indeed a Pizzal lover!
+    I don't want that!
+    
+    How can I hide this modal every time Turbo shows my page preview?
+  explanation: |
+    Leveraging the turbo event `turbo:before-cache` is the best solution for things like
+    these, because you can clean up and prepare your snapshow before turbo takes it so that
+    you ensure that you will always see the right state!
+    
+    Other seemingly useful events, like `turbo:load` might look useful, but they will
+    only fire after the page has finished loading, which means that the preview event
+    already took place!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```javascript
+          document.addEventListener('turbo:before-visit', (event) => {
+              document.getElementById('my_great_modal').display = 'none';
+          });
+          ```
+        b: |
+          ```javascript
+          document.addEventListener('turbo:before-cache', (event) => {
+              document.getElementById('my_great_modal').display = 'none';
+          });
+          ```
+        c: |
+          ```javascript
+          document.addEventListener('turbo:before-fetch-request', (event) => {
+              document.getElementById('my_great_modal').display = 'none';
+          });
+          ```
+        d: |
+          ```javascript
+          document.addEventListener('turbo:load', (event) => {
+              document.getElementById('my_great_modal').display = 'none';
+          });
+          ```
+      correct: b
