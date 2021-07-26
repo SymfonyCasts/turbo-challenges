@@ -146,3 +146,42 @@ modal_preview_2:
           });
           ```
       correct: b
+
+cleaned_pewview:
+  question: |
+    In our video, we show how closing a bootstrap dialog before exiting a page,
+    so that we can have a cleaned preview, doesn't quite work. When we came
+    back to the page, we saw a greyed invalidation div covering it!
+    
+    Fixing this required some more hacking on our part in order to have it working
+    properly.
+    
+    Why did we get this weird behavior?
+  explanation: |
+    The `turbo:before-cache` event is synchronous, which means that what you do in that
+    event handler will happen instantly. If in that event you call some animation
+    (like the bootstrap `close` function), then the animation won't finish executing,
+    preventing any callbacks after the animation from cleaning up the page.
+    
+    It's important to know this for any third party code that we use, so that when
+    preparing a snapshop on the `before-cache` event goes smoothly!
+    
+    > Alternatively, you can disable cache on certain pages if the clean up
+    > process seems too complicated
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          This happened because bootstrap has a bug where some times calling `close`
+          on a modal doesn't close it properly.
+        b: |
+          This happened because Turbo has a bug where some times our code inside a
+          `turbo:before-cache` event doesn't execute properly.
+        c: |
+          This happenbed because we called `close` on our dialog and forgot to make the
+          `turbo:before-cache` callback asynchronous.
+        d: |
+          This happened because we called `close` on our dialog right inside
+          `turbo:before-cache` and the closing animation didn't have time to
+          finish before the cache was saved.
+      correct: d
