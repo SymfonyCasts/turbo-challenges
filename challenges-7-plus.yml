@@ -247,3 +247,31 @@ analytics:
           It fires every time that turbo has received a new page via Ajax, after it
           replaces the `body` element but *before* executing any JavaScript in it
       correct: c
+
+analytics_2:
+  question: |
+    At the end of our video, we talk about analytics and show an example of how you can
+    execute code *once* (and only once) on every page load (including the first page load!)
+    
+    What is this event and why others don't work?
+  explanation: |
+    `turbo:laod` is very usefull if we need to execute some code on a "per view" basis. It will
+    execute on every page view and will *not* repeat itself if a page has a preview. *Just* what
+    we need to get our analytics code working!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          The event to use is `turbo:load`. `turbo:before-render` and `turbo:render` do NOT execute
+          on the first load. The *also* execute twice if page has a preview to show first!
+        b: |
+          The event to use is `turbo:load`. `turbo:before-render` could also work, but it does not
+          execute on the first page load.
+        c: |
+          The event to use is `turbo:render`. `turbo:load` only executes on the first page load but
+          doesn't execute later. `turbo:before-render` can execute twice if a page has a preview.
+        d: |
+          The event to use is `turbo:before-render`. `turbo:render` can execute twice if a page
+          has a preview, but *not* `turbo:before-render`. `turbo:load` only executes on the first
+          page load but doesn't execute later.
+      correct: a
