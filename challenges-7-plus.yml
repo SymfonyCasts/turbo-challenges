@@ -219,3 +219,31 @@ js_widget:
           The widget snipped worked as expected. It did not stop working after subsecuent
           page views.
       correct: a
+
+analytics:
+  question: |
+    When does the event `turbo:before-render` fire?
+  explanation: |
+    This is very usefull because you can access the contents of the new `body` element
+    that is about to replace the old one, so that you can tweak it and modify it
+    before any JavaScript is executed!
+    
+    > You can access the "about to be added" `body` elements with `event.detail.newBody`!
+    
+    > Related is the `turbo:render` event, which fires *after* the entire rendering operation
+    > has completed.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          It fires every time turbo has to render a page, but before its new contents have
+          arrived via Ajax.
+        b: |
+          It fires once per session, before Turbo initializes its JavaScript engine.
+        c: |
+          It fires every time that turbo has received a new page via Ajax and before it
+          replaces the `body` element with the new `body` contents.
+        d: |
+          It fires every time that turbo has received a new page via Ajax, after it
+          replaces the `body` element but *before* executing any JavaScript in it
+      correct: c
