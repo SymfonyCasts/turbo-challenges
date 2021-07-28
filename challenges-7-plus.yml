@@ -147,7 +147,7 @@ modal_preview_2:
           ```
       correct: b
 
-cleaned_pewview:
+cleaned_preview:
   question: |
     In our video, we show how closing a bootstrap dialog before exiting a page,
     so that we can have a cleaned preview, doesn't quite work. When we came
@@ -185,3 +185,37 @@ cleaned_pewview:
           `turbo:before-cache` and the closing animation didn't have time to
           finish before the cache was saved.
       correct: d
+
+js_widget:
+  question: |
+    In this video, we've added a Weather Widget sanippet into our page and saw how it
+    only work the first time our page loaded. When we clicked on subsecuent pages, it
+    stopped working!
+    
+    Why is this so?
+  explanation: |
+    In our video, the snipped of code is executed every time we load a page because it's
+    in our `body` element! But in it there's a check before adding the `script` to our
+    `head`. This `script` is only added if it's not already present. This is why the
+    `script` tag was only added once, and therefore, only executed once between our page
+    views!
+    
+    > When we forced our snippet to add the `script` tag without any check, it effectively
+    > added a new copy of itself into our `head` *every* single time we change the page.
+    > This worked, but now we have a new problem: Our `head` is growing forever!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because the `script` tag added by our snippet of code is only added once, hence
+          it only executes once.
+        b: |
+          Because the snippet of code added by us is only executed once, hence it only
+          adds the `script` tag once
+        c: |
+          Because Turbo recognizes similar scripts between page views and avoids re-executing
+          them.
+        d: |
+          The widget snipped worked as expected. It did not stop working after subsecuent
+          page views.
+      correct: a
