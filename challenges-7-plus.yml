@@ -154,7 +154,7 @@ cleaned_preview:
   question: |
     In our video, we show how closing a bootstrap dialog before exiting a page,
     (so that we can have a cleaned preview) doesn't quite work. When we came
-    back to the page, we saw a greyed invalidation div covering it!
+    back to the page, we saw a greyed overlay div covering it!
     
     Fixing this required some more hacking on our part in order to have it working
     properly.
