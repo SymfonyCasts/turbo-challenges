@@ -73,7 +73,7 @@ javascript:
     What is the biggest way in which JavaScript works differently on Turbo-enabled websites?
   explanation: |
     As Turbo only loads JavaScript files once (and executes them once) per "session" (i.e. full page refresh), you
-    need to make sure any initialization code that needs to run once the DOM loads, is executed
+    need to make sure any initialization code that needs to run on every "page load" is executed
     properly! New scripts that are *added* to the `head`, however, do get parsed!
     
     > If you put JavaScript into the `body` of a page, it will execute normally on every
