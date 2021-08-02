@@ -219,5 +219,5 @@ forms:
         c: |
           We do this to hint to Turbo that the form submit was *not* successful (since a 200
           status code looks like it *was* successful).
-          handle different status codes on different situations.
+          handle different status codes in different situations.
       correct: a
