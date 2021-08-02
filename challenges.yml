@@ -55,7 +55,7 @@ how_drive_works_3:
     multiple_choice:
       choices:
         a: |
-          Turbo just replaces the old page with the new page loaded through
+          Turbo replaces the old page with the new page loaded through
           Ajax and executes all scripts again.
         b: |
           Turbo merges all scripts, meta-data and even title element present in
