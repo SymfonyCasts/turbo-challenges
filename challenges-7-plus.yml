@@ -1,6 +1,6 @@
 preview:
   question: |
-    Hey! I've prepared this template that needs NO preview from Turbo when it loads:
+    Hey! I've prepared this template for a shiny new Pong page!
     
     ```twig
     {% extends 'base.html.twig' %}
