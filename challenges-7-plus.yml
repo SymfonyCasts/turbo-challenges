@@ -262,7 +262,7 @@ analytics_2:
       choices:
         a: |
           The event to use is `turbo:load`. `turbo:before-render` and `turbo:render` do NOT execute
-          on the first load. The *also* execute twice if page has a preview to show first!
+          on the first load. They *also* execute twice if a page has a preview to show first!
         b: |
           The event to use is `turbo:load`. `turbo:before-render` could also work, but it does not
           execute on the first page load.
