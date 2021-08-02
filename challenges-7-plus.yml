@@ -21,7 +21,7 @@ preview:
     What is the actual `meta` tag that we need to add to stop turbo previews?
   explanation: |
     You can also set this meta to contain the value `no-cache` which means that it won't generate
-    any previews at all (not even for the back button!)
+    any snapshot cache at all (not even for the back button!)
 
     Other metas that we can leverage with turbo are:
     
