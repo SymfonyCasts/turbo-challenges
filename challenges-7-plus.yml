@@ -29,7 +29,7 @@ preview:
     <meta name="turbo-visit-control" content="reload">
     ```
     
-    To enforce a complete reload every time turbo visits this page. Check the Turbo Drive reference
+    This enforces a full page reload every time turbo visits this page. Check the Turbo Drive reference
     for more information on these!
   features:
     multiple_choice:
