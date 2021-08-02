@@ -70,7 +70,7 @@ how_drive_works_3:
       
 javascript:
   question: |
-    What is the big difference for JavaScript on Turbo enable Websites?
+    What is the biggest way in which JavaScript works differently on Turbo-enabled websites?
   explanation: |
     As turbo only loads JavaScript files once (and executes them once) per "session", you
     need to make sure any initialization code that needs to run once the DOM loads, is executed
