@@ -179,7 +179,7 @@ cleaned_preview:
           on a modal sometimes doesn't close it properly.
         b: |
           This happened because Turbo has a bug where sometimes our code inside a
-          `turbo:before-cache` event doesn't execute properly.
+          `turbo:before-cache` event doesn't execute quickly enough.
         c: |
           This happenbed because we called `close` on our dialog and forgot to make the
           `turbo:before-cache` callback asynchronous.
