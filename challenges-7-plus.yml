@@ -192,7 +192,7 @@ cleaned_preview:
 js_widget:
   question: |
     In this video, we've added a weather widget snippet to our page and saw how it
-    only work the first time our page loaded. When we clicked on subsecuent pages, it
+    only works the first time our page loaded. When we clicked on subsequent pages, it
     stopped working!
     
     Why is this so?
