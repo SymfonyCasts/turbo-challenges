@@ -35,7 +35,7 @@ how_drive_works_2:
     multiple_choice:
       choices:
         a: |
-          It downloads and install a browser extension that processes all requests in the
+          It downloads and installs a browser extension that processes all requests in the
           background before clearing the page.
         b: |
           It loads JavaScript that intercepts events like clicks and form submits and
