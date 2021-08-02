@@ -44,3 +44,170 @@ how_drive_works_2:
           It works in the backend by leveraging web sockets, which make all pages load
           faster.
       correct: b
+
+how_drive_works_3:
+  question: |
+    When Turbo Drive loads a new page, what exactly happens behind the scenes?
+  explanation: |
+    Turbo will merge the tags present in the `<head>` tag in a smart way.
+    
+    It will remove anything in `<head>` other than JavaScripts and CSS tags. After removing
+    all non-JS and non-CSS tags from the old page, it will then inject anything that is left,
+    such as the `title` element and meta data elements from the old page to the new.
+    Lastly, it will add those `<script>` and `<css>` tags that aren't present in the current page.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Turbo replaces the old page with the new page loaded through
+          Ajax and executes all `<script>` tags again.
+        b: |
+          Turbo merges all scripts, meta-data and even the `<title>` element present in
+          the `<head>` tag, then replaces the `<body>` with new content.
+        c: |
+          Turbo replaces the `<body>` with the new content but leaves the `<head>` tag intact,
+          except for the `<title>` element, which is replaced with the new title.
+        d: |
+          Turbo merges the new `<head>` tag by adding new `<script>` and `<link>` tags but replacing any
+          other tags with those from the new page. It then replaces the `<body>`.
+      correct: d
+      
+javascript:
+  question: |
+    What is the biggest way in which JavaScript works differently on Turbo-enabled websites?
+  explanation: |
+    As Turbo only loads JavaScript files once (and executes them once) per "session" (i.e. full page refresh), you
+    need to make sure any initialization code that needs to run on every "page load" is executed
+    properly! New scripts that are *added* to the `head`, however, do get parsed!
+    
+    > If you put JavaScript into the `body` of a page, it will execute normally on every
+    > page load!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          There are no significant differences between a normal website and a Turbo Drive powered
+          site. That's what makes Turbo so great: you can use it on any site without major changes.
+        b: |
+          The difference is that, when Turbo Drive loads a new page, every JavaScript script
+          is parsed and executed again to ensure that the new page has been reinitialized
+          properly. This includes old scripts that don't get removed!
+        c: |
+          The difference is that, when Turbo Drive loads a new page, `<script>` tags that were
+          present in the previous page, don't get parsed and executed again, as you might
+          expect with a normal page load.
+        d: |
+          The difference is that, when Turbo Drive loads a new page, new script tags found in the `<body>` tag are
+          parsed but not executed. You need to move these to the `<head>` tag for them to be parsed.
+      correct: c
+
+javascript_2:
+  question: |
+    What is one reason why it is not recommended to have JavaScript inside the `body` tag on a Turbo Drive
+    powered website?
+  explanation: |
+    When Turbo Drive switches to a page that was previously visited, its cache feature,
+    which makes the page appear instantly, will cause any JavaScript in the `<body>` to be
+    executed. When the actual page finishes loading, turbo will replace the cached page
+    with the new one, causing another execution of its JavaScript, thus potentially causing
+    issues.
+  
+    Also, executing the same JavaScript code on every page is wasteful! When you put JavaScript
+    in the `<head>` tag, it's only parsed and executed *one* time, which means there is less
+    work to do each time Turbo Drive navigates to a new page.
+    
+    The best way to use JavaScript in a Turbo Drive powered website is Stimulus!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Having JavaScript in the `body` tag is not a recommended practice and thus,
+          should be avoided.
+        b: |
+          Because the Turbo cache can cause this JavaScript to be executed twice on a page
+          load, leading to potential issues.
+        c: |
+          There are no problems with having JavaScript in your `body` tag, although it is
+          not a recommended practice!
+        d: |
+          Because the JavaScript included in a `body` tag will *not* be executed by Turbo Drive
+          when the page loads!
+      correct: b
+
+disabling:
+  question: |
+    Given this very basic template:
+    
+    ```twig
+    <html>
+        <head>
+            <title>My Template</title>
+            {% block javascripts %}{% endblock %}
+            {% block stylesheets %}{% endblock %}
+        </head>
+        <body>
+            {% block body %}{% endblock %}
+        </body>
+    </html>
+    ```
+    
+    How can we disable turbo on this page?
+  explanation: |
+    If you set the property `data-turbo="false"` in a `<body>` tag, it will effectively disable
+    Turbo for that entire page!
+    
+    > You can also disable or enable (with `data-turbo="true") specific links within a page
+    > or entire page sections!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```diff
+          -<html>
+          +<html data-turbo="false">
+          ```
+        b: |
+          ```diff
+          <html>
+              <head>
+                  <title>My Template</title>
+          +       <meta data-turbo="false">
+              </head>
+          ```
+        c: |
+          ```diff
+          -   <body>
+          +   <body data-turbo="false">
+          ```
+        d: |
+          Once you install and set up turbo (i.e. include Turbo in your main
+          JavaScript entry), you cannot disable it, except on a link-by-link basis.
+      correct: c
+      
+forms:
+  question: |
+    In this video, we fixed our forms by making them respond with a 422 status code
+    when they fail. Which of the following explains why we do this?
+  explanation: |
+    A 422 status when a form has errors is a better way of handling a form failure. It
+    also tells Turbo that there has been an error and needs to re-render the page.
+  
+    Previously, when we returned a 200 status code, it made Turbo think that our form
+    did submit successfully. But, when a form submits successfully, we should redirect.
+    This... confused Turbo, which thought that our form did submit successfully...
+    but then we did not redirect.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          We do this to avoid an error by Turbo where it says that "form submits should
+          redirect to another location".
+        b: |
+          We do this to better conform to HTTP standards, since our code was incomplete
+          in this regard.
+        c: |
+          We do this to show a nice new feature of synfomy regarding forms, where it can
+          handle different status codes on different situations.
+        d: |
+          All of the above.
+      correct: d
