@@ -156,7 +156,7 @@ cleaned_preview:
     (so that we can have a cleaned preview) doesn't quite work. When we came
     back to the page, we saw a greyed overlay div covering it!
     
-    Fixing this required some more hacking on our part in order to have it working
+    Fixing this required some more hacking to get it working
     properly.
     
     Why did we get this weird behavior?
