@@ -196,7 +196,7 @@ disabling:
           ```
         d: |
           Once you install and set up turbo (i.e. include Turbo in your main
-          JavaScript entry, you cannot disable it.
+          JavaScript entry), you cannot disable it, except on a link-by-link basis.
       correct: c
       
 forms:
