@@ -101,7 +101,7 @@ javascript:
 javascript_2:
   question: |
     Why is it not recommended to have JavaScript inside the `body` tag on a Turbo Drive
-    powered Website?
+    powered website?
   explanation: |
     When Turbo Drive switches to a page that was previously visited, its cache feature,
     which makes the page appear instantly, will cause any JavaScript in the `body` to be
