@@ -129,7 +129,7 @@ javascript_2:
 
 disabling:
   question: |
-    Given this very basic template (please ignore the missing tags and attributes :p ):
+    Given this very basic template:
     
     ```twig
     <html>
