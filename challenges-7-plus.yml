@@ -115,7 +115,7 @@ modal_preview_2:
     How can I hide this modal every time Turbo shows my page preview?
   explanation: |
     Leveraging the turbo event `turbo:before-cache` is the best solution for things like
-    these, because you can clean up and prepare your snapshow before turbo takes it so that
+    these, because you can clean up and prepare your snapshot before turbo takes it so that
     you ensure that you will always see the right state!
     
     Other seemingly useful events, like `turbo:load` might look useful, but they will
