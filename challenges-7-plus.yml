@@ -219,7 +219,7 @@ js_widget:
           Because Turbo recognizes similar scripts between page views and avoids re-executing
           them.
         d: |
-          The widget snipped worked as expected. It did not stop working after subsecuent
+          The widget snipped worked as expected. It did not stop working after subsequent
           page views.
       correct: a
 
