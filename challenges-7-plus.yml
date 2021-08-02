@@ -7,12 +7,10 @@ preview:
     
     {% block title%}Play Pong in the Browser for Free!{% endblock %}
     
-    {% block metas %}
-    
-    {% endblock %}
+    {% block metas %}{% endblock %}
     
     {% block body %}
-    <div id="pong_game_app"></div>
+        <div id="pong_game_app"></div>
     {% endblock %}
     ```
     
