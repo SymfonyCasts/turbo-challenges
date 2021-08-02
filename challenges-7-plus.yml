@@ -92,7 +92,7 @@ modal_preview_2:
     
     ```twig
     <div id="my_great_modal" style="display: none">
-        <h1>Welcome our Pizza Section!</h1>
+        <h1>Welcome to our Pizza Section!</h1>
     
         <p>You need to be a pizza lover before you proceed!</p>
     
