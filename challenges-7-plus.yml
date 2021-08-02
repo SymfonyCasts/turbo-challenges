@@ -195,7 +195,7 @@ js_widget:
     only works the first time our page loaded. When we clicked on subsequent pages, it
     stopped working!
     
-    Why is this so?
+    Why?
   explanation: |
     In our video, the snipped of code is executed every time we load a page because it's
     in our `body` element! But in it there's a check before adding the `script` to our
