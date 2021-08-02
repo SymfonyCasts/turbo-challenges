@@ -82,7 +82,8 @@ javascript:
     multiple_choice:
       choices:
         a: |
-          There are no differences between a normal Website and a Turbo Drive powererd
+          There are no significant differences between a normal website and a Turbo Drive powered
+          site. That's what makes Turbo so great: you can use it on any site without major changes.
           Website. JavaScript always behave the same way in a Browser.
         b: |
           The difference is that, as Turbo Drive loads a new page, every JavaScript script
