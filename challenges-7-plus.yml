@@ -15,7 +15,7 @@ preview:
     ```
     
     I even added a `block metas` so that I can add the proper `head` tag to avoid this... but,
-    I can't seem to remember exactly how this is!
+    I can't seem to remember exactly what that tag should look like!
     
     What is the actual `meta` tag that we need to add to stop turbo previews?
   explanation: |
