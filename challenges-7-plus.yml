@@ -227,7 +227,7 @@ analytics:
     that is about to replace the old one, so that you can tweak it and modify it
     before any JavaScript is executed!
     
-    > You can access the "about to be added" `body` elements with `event.detail.newBody`!
+    > You can access the "about to be added" `body` element with `event.detail.newBody`!
     
     > Related is the `turbo:render` event, which fires *after* the entire rendering operation
     > has completed.
