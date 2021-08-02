@@ -223,7 +223,7 @@ analytics:
   question: |
     When does the event `turbo:before-render` fire?
   explanation: |
-    This is very usefull because you can access the contents of the new `body` element
+    This is useful because you can access the contents of the new `body` element
     that is about to replace the old one, so that you can tweak it and modify it
     before any JavaScript is executed!
     
