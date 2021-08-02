@@ -162,7 +162,7 @@ cleaned_preview:
     Why did we get this weird behavior?
   explanation: |
     The `turbo:before-cache` event is synchronous, which means that what you do in that
-    event handler will happen instantly. If in that event you call some animation
+    event handler will happen instantly. If, in that event, you call some animation
     (like the bootstrap `close` function), then the animation won't finish executing,
     preventing any callbacks after the animation from cleaning up the page.
     
