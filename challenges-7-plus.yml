@@ -178,7 +178,7 @@ cleaned_preview:
           This happened because bootstrap has a bug where calling `close`
           on a modal sometimes doesn't close it properly.
         b: |
-          This happened because Turbo has a bug where some times our code inside a
+          This happened because Turbo has a bug where sometimes our code inside a
           `turbo:before-cache` event doesn't execute properly.
         c: |
           This happenbed because we called `close` on our dialog and forgot to make the
