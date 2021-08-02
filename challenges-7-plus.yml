@@ -252,7 +252,7 @@ analytics_2:
     At the end of our video, we talk about analytics and show an example of how you can
     execute code *once* (and only once) on every page load (including the first page load!)
     
-    What is this event and why others don't work?
+    What is this event? And what is the *best* explanation for why other events won't work?
   explanation: |
     `turbo:laod` is very usefull if we need to execute some code on a "per view" basis. It will
     execute on every page view and will *not* repeat itself if a page has a preview. *Just* what
