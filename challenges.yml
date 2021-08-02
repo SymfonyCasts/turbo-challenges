@@ -86,7 +86,7 @@ javascript:
           site. That's what makes Turbo so great: you can use it on any site without major changes.
           Website. JavaScript always behave the same way in a Browser.
         b: |
-          The difference is that, as Turbo Drive loads a new page, every JavaScript script
+          The difference is that, when Turbo Drive loads a new page, every JavaScript script
           is parsed and executed again to ensure that a page has its initialization done
           properly. This includes old scripts that don't get removed!
         c: |
