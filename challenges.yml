@@ -1,22 +1,25 @@
 how_drive_works:
   question: |
-    How does Turbo work inside a Symfony-ux project?
+    How is Turbo activated when using the `symfony/ux-turbo` package?
   explanation: |
-    Symfony adds a dummy stimulus controller to its controller list. All this controller
-    does, is import the Turbo functionality into its JavaScript and expose the Turbo
-    variable in `window`!
+    Symfony adds a dummy stimulus controller to its controller list. This controller simply
+    imports `@hotwired/turbo` (which activates Turbo Drive!) and exposes `Turbo` as a global
+    variable. Fun fact: since beta 6, when you import `@hotwired/turbo`, that automatically
+    exposes `Turbo` as a global variable (so, the dummy controller doesn't really need to do
+    it anymore).
   features:
     multiple_choice:
       choices:
         a: |
           When you install `symfony/ux-turbo`, it adds a dummy stimulus controller to
-          `controllers.json`, it takes care of adding Turbo functionality into your site.
+          `controllers.json` file that imports `@hotwired/turbo`.
         b: |
           Turbo is automatically added to your codebase when you use webpack encore
-          on a symfony-ux project.
+          and have `@hotwired/turbo` installed via `packacke.json`.
         c: |
-          It doesn't work out of the box. You need to import Turbo on all of your files. This
-          way, you can selectively choose which parts of your website use Turbo and which don't.
+          It doesn't work out of the box. You need to import Turbo on all of your files or in
+          `assets/bootstrap.js`. This way, you can selectively choose which parts of your website
+          use Turbo and which don't.
       correct: a
 
 how_drive_works_2:
@@ -24,7 +27,7 @@ how_drive_works_2:
     Once you install `symfony/ux-turbo`, it automatically starts working throughout your
     website. But, how exactly does it work and what does it do?
   explanation: |
-    Turbo will intercept actions like clicks and form submits and load them with an Ajax call.
+    Turbo Drive intercepts actions like clicks and form submits and loads them with an Ajax call.
     It will then save snapshots of these pages so that when you click the back or forward buttons
     in your browser, the pages will load instantly. If a page takes a long time to load, it will
     even show a progress bar on top of the page that you can customize!
@@ -32,7 +35,7 @@ how_drive_works_2:
     multiple_choice:
       choices:
         a: |
-          It downloads and install a browser extension that processes all request in the
+          It downloads and install a browser extension that processes all requests in the
           background before clearing the page.
         b: |
           It loads JavaScript that intercepts events like clicks and form submits and
