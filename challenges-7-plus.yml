@@ -220,7 +220,7 @@ js_widget:
           them.
         d: |
           The widget snipped worked as expected. It did not stop working after subsequent
-          page views.
+          page views: we even verified that the `a` tag was present!
       correct: a
 
 analytics:
