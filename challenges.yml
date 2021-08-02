@@ -215,7 +215,7 @@ forms:
           we are basically telling Turbo to reload that template.
         b: |
           We do this to better conform to HTTP standards, since our code was incomplete
-          in this regard
+          in this regard.
         c: |
           We do this to hint to Turbo that the form submit was *not* successful (since a 200
           status code looks like it *was* successful).
