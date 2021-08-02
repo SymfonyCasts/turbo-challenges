@@ -211,7 +211,7 @@ js_widget:
       choices:
         a: |
           Because the `script` tag added by our snippet of code is only added once, hence
-          it only executes once.
+          it only executes once and never re-initializes the widget on subsequent pages.
         b: |
           Because the snippet of code added by us is only executed once, hence it only
           adds the `script` tag once
