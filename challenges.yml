@@ -217,6 +217,7 @@ forms:
           We do this to better conform to HTTP standards, since our code was incomplete
           in this regard
         c: |
-          We do this to show a nice new feature of synfomy regarding forms, where it can
+          We do this to hint to Turbo that the form submit was *not* successful (since a 200
+          status code looks like it *was* successful).
           handle different status codes on different situations.
       correct: a
