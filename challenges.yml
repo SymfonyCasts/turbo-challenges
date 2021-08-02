@@ -65,7 +65,7 @@ how_drive_works_3:
           except for the `<title>` element, which is replaced with the new title.
         d: |
           Turbo will merge the new `head` tag with the old one in a smart way, only adding
-          new entries and scripts to it. It then replaces the `body`
+          new entries and scripts to it. It then replaces the `body`.
       correct: d
       
 javascript:
