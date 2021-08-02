@@ -56,7 +56,11 @@ modal_preview:
   question: |
     What happens when Turbo creates a preview of a page?
   explanation: |
-    This is important because you need to make sure your page functionality is preserve
+    This is important because you need to make sure your JavaScript continues to work when
+    a snapshot is restored (especially when hitting the back and forward buttons). Because `cloneNode()`
+    is used, any event listeners (like a click listener) on the original page will *not* be included on
+    the "restored" page. This means your JavaScript needs to be smart enough to continue working
+    even in this situation. 
     between page views.
     
     In general, the best way to add JavaScript functionality with Turbo Drive is its best
