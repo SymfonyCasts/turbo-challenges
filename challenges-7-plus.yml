@@ -70,7 +70,7 @@ modal_preview:
           which does *not* include event listeners added from JavaScript.
         b: |
           At page load, Turbo clones the DOM using a "deep clone" algorithm, but
-          since JavaScring hasn't executed yet, we don't get any listeners adde dy it.
+          since JavaScript hasn't executed yet, no listeners are included in the preview.
         c: |
           At the moment right before leaving the page, Turbo clones the DOm using a "deep
           clone" algorithm, but removes any event listeners added by JavaScript because
