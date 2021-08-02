@@ -48,7 +48,7 @@ how_drive_works_3:
   explanation: |
     Turbo will merge the tags present in the `head` tag in a smart way.
     
-    It will remove anything in `head` other than JavaScripts and Css tags. It will then inject
+    It will remove anything in `head` other than JavaScripts and CSS tags. It will then inject
     any new such elements, such as the `title` element and meta data elements. Lastly, it will
     add those `script` and `css` tags that aren't present in the current page.
   features:
