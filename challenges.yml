@@ -56,7 +56,7 @@ how_drive_works_3:
       choices:
         a: |
           Turbo replaces the old page with the new page loaded through
-          Ajax and executes all scripts again.
+          Ajax and executes all `<script>` tags again.
         b: |
           Turbo merges all scripts, meta-data and even title element present in
           the `head` tag, then replaces the `body` with new content.
