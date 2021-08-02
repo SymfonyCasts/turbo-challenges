@@ -94,7 +94,7 @@ javascript:
           present in the previous page, don't get parsed and executed again, as you might
           expect with a normal page load.
         d: |
-          The difference is that, as Turbo Drive loads a new page, new script tags are
+          The difference is that, when Turbo Drive loads a new page, new script tags found in the `<body>` tag are
           parsed but not executed. You need to execute them from Turbo.
       correct: c
 
