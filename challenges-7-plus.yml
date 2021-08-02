@@ -78,7 +78,7 @@ modal_preview:
         d: |
           At page load, and after all JavaScript has been parsed and executed, Turbo clones
           the DOM using a "deep clone" algorithm. It then removes any event listeners added by
-          JavaScript because ir relies on Stimulus to add them back.
+          JavaScript because it relies on Stimulus to add them back.
       correct: a
   
 modal_preview_2:
