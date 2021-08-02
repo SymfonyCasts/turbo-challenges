@@ -51,9 +51,10 @@ how_drive_works_3:
   explanation: |
     Turbo will merge the tags present in the `head` tag in a smart way.
     
-    It will remove anything in `head` other than JavaScripts and CSS tags. It will then inject
-    any new such elements, such as the `title` element and meta data elements. Lastly, it will
-    add those `script` and `css` tags that aren't present in the current page.
+    It will remove anything in `<head>` other than JavaScripts and CSS tags. After removing
+    all non-JS and non-CSS tags from the old page, it will then inject anything that is left,
+    such as the `title` element and meta data elements from the old page to the new.
+    Lastly, it will add those `<script>` and `<css>` tags that aren't present in the current page.
   features:
     multiple_choice:
       choices:
@@ -61,14 +62,14 @@ how_drive_works_3:
           Turbo replaces the old page with the new page loaded through
           Ajax and executes all `<script>` tags again.
         b: |
-          Turbo merges all scripts, meta-data and even title element present in
-          the `head` tag, then replaces the `body` with new content.
+          Turbo merges all scripts, meta-data and even the `<title>` element present in
+          the `<head>` tag, then replaces the `<body>` with new content.
         c: |
-          Turbo replaces the `body` with the new content but leaves the `head` tag intact,
+          Turbo replaces the `<body>` with the new content but leaves the `<head>` tag intact,
           except for the `<title>` element, which is replaced with the new title.
         d: |
-          Turbo will merge the new `head` tag with the old one in a smart way, only adding
-          new entries and scripts to it. It then replaces the `body`.
+          Turbo merges the new head tag by adding new `<script>` and `<link>` tags but replacing any
+          other tags with those from the new page. It then replaces the `<body>`.
       correct: d
       
 javascript:
@@ -111,6 +112,10 @@ javascript_2:
     executed. When the actual page finishes loading, turbo will replace the cached page
     with the new one, causing another execution of its JavaScript, thus potentially causing
     issues.
+  
+    Also, executing the same JavaScript code on every page is wasteful! When you put JavaScript
+    in the `<head>` tag, it's only parsed and executed *one* time, which means there is less
+    work to do each time Turbo Drive navigates to a new page.
     
     The best way to use JavaScript in a Turbo Drive powered website is Stimulus!
   features:
@@ -158,44 +163,22 @@ disabling:
     multiple_choice:
       choices:
         a: |
-          ```twig
-          <html data-turbo="false">
-              <head>
-                  <title>My Template</title>
-                  {% block javascripts %}{% endblock %}
-                  {% block styles %}{% endblock %}
-              </head>
-              <body>
-                  {% block body %}{% endblock %}
-              </body>
-          </html>
+          ```diff
+          -<html>
+          +<html data-turbo="false">
           ```
         b: |
-          ```twig
+          ```diff
           <html>
               <head>
                   <title>My Template</title>
-                  <meta data-turbo="false">
-                  {% block javascripts %}{% endblock %}
-                  {% block styles %}{% endblock %}
+          +       <meta data-turbo="false">
               </head>
-              <body>
-                  {% block body %}{% endblock %}
-              </body>
-          </html>
           ```
         c: |
-          ```twig
-          <html>
-              <head>
-                  <title>My Template</title>
-                  {% block javascripts %}{% endblock %}
-                  {% block styles %}{% endblock %}
-              </head>
-              <body data-turbo="false">
-                  {% block body %}{% endblock %}
-              </body>
-          </html>
+          ```diff
+          -   <body>
+          +   <body data-turbo="false">
           ```
         d: |
           Once you install and set up turbo (i.e. include Turbo in your main
@@ -205,22 +188,27 @@ disabling:
 forms:
   question: |
     In this video, we fixed our forms by making them respond with a 422 status code
-    when they fail. Why did we do this?
+    when they fail. Which of the following explains why we do this?
   explanation: |
     A 422 status when a form has errors is a better way of handling a form failure. It
     also tells Turbo that there has been an error and needs to re-render the page.
+  
+    Previously, when we returned a 200 status code, it made Turbo think that our form
+    did submit successfully. But, when a form submits successfully, we should redirect.
+    This... confused Turbo, which thought that our form did submit successfully...
+    but then we did not redirect.
   features:
     multiple_choice:
       choices:
         a: |
           We do this to avoid an error by Turbo where it says that "form submits should
-          redirect to another location". By sending a different status other than 200,
-          we are basically telling Turbo to reload that template.
+          redirect to another location".
         b: |
           We do this to better conform to HTTP standards, since our code was incomplete
           in this regard.
         c: |
-          We do this to hint to Turbo that the form submit was *not* successful (since a 200
-          status code looks like it *was* successful).
-          handle different status codes in different situations.
-      correct: a
+          We do this to show a nice new feature of synfomy regarding forms, where it can
+          handle different status codes on different situations.
+        d: |
+          All of the above.
+      correct: d
