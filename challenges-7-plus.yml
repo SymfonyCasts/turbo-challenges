@@ -72,7 +72,7 @@ modal_preview:
           At page load, Turbo clones the DOM using a "deep clone" algorithm, but
           since JavaScript hasn't executed yet, no listeners are included in the preview.
         c: |
-          At the moment right before leaving the page, Turbo clones the DOm using a "deep
+          At the moment right before leaving the page, Turbo clones the DOM using a "deep
           clone" algorithm, but removes any event listeners added by JavaScript because
           it relies on Stimulus to add them back.
         d: |
