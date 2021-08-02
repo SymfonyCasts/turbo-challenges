@@ -162,22 +162,45 @@ disabling:
     multiple_choice:
       choices:
         a: |
-          ```diff
-          -<html>
-          +<html data-turbo="false">
+          ```html
+          <html data-turbo="false">
+              <head>
+                  <title>My Template</title>
+                  {% block javascripts %}{% endblock %}
+                  {% block stylesheets %}{% endblock %}
+              </head>
+              <body>
+                  {% block body %}{% endblock %}
+              </body>
+          </html>
           ```
         b: |
           ```diff
           <html>
               <head>
                   <title>My Template</title>
-          +       <meta data-turbo="false">
+                  <meta data-turbo="false">
+                  {% block javascripts %}{% endblock %}
+                  {% block stylesheets %}{% endblock %}
               </head>
+              <body>
+                  {% block body %}{% endblock %}
+              </body>
+          </html>
           ```
         c: |
           ```diff
-          -   <body>
-          +   <body data-turbo="false">
+          <html>
+              <head>
+                  <title>My Template</title>
+                  <meta data-turbo="false">
+                  {% block javascripts %}{% endblock %}
+                  {% block stylesheets %}{% endblock %}
+              </head>
+              <body data-turbo="false">
+                  {% block body %}{% endblock %}
+              </body>
+          </html>
           ```
         d: |
           Once you install and set up turbo (i.e. include Turbo in your main
