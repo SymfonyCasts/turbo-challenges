@@ -109,7 +109,7 @@ javascript_2:
     with the new one, causing another execution of its JavaScript, thus potentially causing
     issues.
     
-    The best way to use JavaScript in a Turbo Drive powered Website is Stimulus!
+    The best way to use JavaScript in a Turbo Drive powered website is Stimulus!
   features:
     multiple_choice:
       choices:
