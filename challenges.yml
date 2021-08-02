@@ -136,7 +136,7 @@ disabling:
         <head>
             <title>My Template</title>
             {% block javascripts %}{% endblock %}
-            {% block styles %}{% endblock %}
+            {% block stylesheets %}{% endblock %}
         </head>
         <body>
             {% block body %}{% endblock %}
