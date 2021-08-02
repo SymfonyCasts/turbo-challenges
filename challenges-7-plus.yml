@@ -181,7 +181,7 @@ cleaned_preview:
           This happened because Turbo has a bug where sometimes our code inside a
           `turbo:before-cache` event doesn't execute quickly enough.
         c: |
-          This happenbed because we called `close` on our dialog and forgot to make the
+          This happened because we called `close` on our dialog and forgot to make the
           `turbo:before-cache` callback asynchronous.
         d: |
           This happened because we called `close` on our dialog right inside
