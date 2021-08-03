@@ -212,14 +212,15 @@ js_widget:
     multiple_choice:
       choices:
         a: |
-          Because the `<script>` tag added by our snippet of code is only added once, hence
-          it only executes once.
+          Because the `<script>` tag that our snippet of code adds to `<head>` is only added once,
+          because of a check made by the code itself, and only executes once.
         b: |
-          Because the snippet of code added by us to the `<bode>` element is only executed once,
-          hence it only adds the `<script>` tag to our `<head>` once.
+          Because the `<script>` tag added by our snippet of code to `<head>` is added multiple
+          times but only executed once since there is no full page load when we are navigating
+          using Turbo Drive.
         c: |
           Because Turbo recognizes similar scripts between page views and avoids re-executing
-          them.
+          them between page views.
         d: |
           The widget snippet worked as expected. It did not stop working after subsequent
           page views: we even verified that the `a` tag was present!
@@ -231,7 +232,9 @@ analytics:
   explanation: |
     This is useful because you can access the contents of the new `<body>` element
     that is about to replace the old one, so that you can tweak it and modify it
-    before any JavaScript is executed!
+    before any JavaScript is executed! Notice that when a page has a preview of it,
+    this event will fire twice! Once on the preview, and once when the full page load
+    has finished after the Ajax request!
     
     > You can access the "about to be added" `<body>` element with `event.detail.newBody`!
     
@@ -246,8 +249,9 @@ analytics:
         b: |
           It fires once per session, before Turbo initializes its JavaScript engine.
         c: |
-          It fires every time that turbo has received a new page via Ajax and before it
-          replaces the `<body>` element with the new `<body>` contents.
+          It fires every time that turbo has to render a page, including new Ajax requests
+          and previews, and before it replaces the `<body>` element with the new `<body>`
+          contents.
         d: |
           It fires every time that turbo has received a new page via Ajax, after it
           replaces the `<body>` element but *before* executing any JavaScript in it.
