@@ -199,7 +199,7 @@ js_widget:
   explanation: |
     In our video, the snippet of code is executed every time we load a page because it's
     in our `body` element! But in it there's a check before adding the `script` to our
-    `head`. This `script` is only added if it's not already present. This is why the
+    `head`: the `script` is only added if it's not already present. This is why the
     `script` tag was only added once, and therefore, only executed once between our page
     views!
     
