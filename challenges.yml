@@ -450,7 +450,7 @@ js_widget:
       choices:
         a: |
           Because the `<script>` tag that our snippet of code adds to `<head>` is only added once,
-          because of a check made by the code itself, and only executes once.
+          due to a check made by the code itself, and only executes once.
         b: |
           Because the `<script>` tag added by our snippet of code to `<head>` is added multiple
           times but only executed once since there is no full page load when we are navigating
