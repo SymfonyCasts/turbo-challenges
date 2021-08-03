@@ -15,7 +15,7 @@ preview:
     ```
   
     But now... I want to avoid showing a "preview" if the user navigates back to this page.
-    I've added a `block metas` so that I an add the proper tag to the head element to avoid
+    I've added a `block metas` so that I an add the proper tag to the `<head>` element to avoid
     the preview... but I can't seem to remember exactly how this is!
     
     What is the actual `meta` tag that we need to add to stop turbo previews?
@@ -25,7 +25,7 @@ preview:
 
     Other metas that we can leverage with turbo are:
     
-    ```twig
+    ```html
     <meta name="turbo-visit-control" content="reload">
     ```
     
@@ -35,19 +35,19 @@ preview:
     multiple_choice:
       choices:
         a: |
-          ```twig
+          ```html
           <meta name="turbo-cache" content="no-preview">
           ```
         b: |
-          ```twig
+          ```html
           <meta name="cache-control" content="no-preview">
           ```
         c: |
-          ```twig
+          ```html
           <meta name="turbo-cache-control" content="no-preview">
           ```
         d: |
-          ```twig
+          ```html
           <meta name="cache" content="no-preview">
           ```
       correct: c
@@ -56,11 +56,7 @@ modal_preview:
   question: |
     What happens when Turbo creates a preview of a page?
   explanation: |
-    This is important because you need to make sure your JavaScript continues to work when
-    a snapshot is restored (especially when hitting the back and forward buttons). Because `cloneNode()`
-    is used, any event listeners (like a click listener) on the original page will *not* be included on
-    the "restored" page. This means your JavaScript needs to be smart enough to continue working
-    even in this situation. 
+    This is important because you need to make sure your page functionality is preserved
     between page views.
     
     In general, the best way to add JavaScript functionality with Turbo Drive is its best
@@ -87,10 +83,10 @@ modal_preview:
   
 modal_preview_2:
   question: |
-    In my web page, I decided to create my own modal. It's just a `div` element
+    In my web page, I decided to create my own modal. It's just a `<div>` element
     that I set to `display: block` whenever I want to show it. Not a big deal!
     
-    ```twig
+    ```html
     <div id="my_great_modal" style="display: none">
         <h1>Welcome to our Pizza Section!</h1>
     
@@ -107,10 +103,10 @@ modal_preview_2:
     
     I then use JavaScript to discretely show this popup under certain circumstances (i.e. when
     I detect that a customer might not love pizza!).
-    
-    But, when the user leaves the page and then goes back, Turbo is showing this modal
-    *even* when the user might have proven otherwise that he is indeed a Pizzal lover!
-    I don't want that!
+  
+    But, when the user leaves the page when the modal is opened and then hits the browser's
+    back button, Turbo is showing this modal for a brief period of time while the preview is
+    showing. I don't want that!
     
     How can I hide this modal every time Turbo shows my page preview?
   explanation: |
@@ -118,7 +114,7 @@ modal_preview_2:
     these, because you can clean up and prepare your snapshot before turbo takes it so that
     you ensure that you will always see the right state!
     
-    Other seemingly useful events, like `turbo:load` might look useful, but they will
+    Other events, like `turbo:load` might look useful, but they will
     only fire after the page has finished loading, which means that the preview event
     already took place!
   features:
@@ -152,25 +148,31 @@ modal_preview_2:
 
 cleaned_preview:
   question: |
+  
     In our video, we show how closing a bootstrap dialog before exiting a page,
-    (so that we can have a cleaned preview) doesn't quite work. When we came
-    back to the page, we saw a greyed overlay div covering it!
-    
-    Fixing this required some more hacking to get it working
-    properly.
+    so that we can have a cleaned preview, doesn't quite work. When we came
+    back to the page, we saw a greyed invalidation div covering it!
+  
+    Fixing this required some more hacking to get it working properly.
     
     Why did we get this weird behavior?
   explanation: |
     The `turbo:before-cache` event is synchronous, which means that what you do in that
     event handler will happen instantly. If, in that event, you call some animation
-    (like the bootstrap `close` function), then the animation won't finish executing,
-    preventing any callbacks after the animation from cleaning up the page.
-    
-    It's important to know this for any third party code that we use, so that when
-    preparing a snapshop on the `before-cache` event goes smoothly!
+    (like the bootstrap `close` function), then the animation won't finish executing.
+  
+    This can cause two potential problems. First, the snapshot will be taken before the element
+    that is animating (e.g. the modal closing) is finished animating. And second, as in this case,
+    Bootstrap is "listening" for the animation to finish so that it can do other clean up, like
+    removing the overlay. But because the element was removed from the page, the animation never
+    "finishes" and the cleanup never happens. Weird, eh?
     
     > Alternatively, you can disable cache on certain pages if the clean up
     > process seems too complicated
+    
+    > Also, starting on Turbo Drive v7.0.0-beta.8, you can add `data-turbo-cache="false"` to
+    > *any* DOM element individually so that they get removed before the page gets cached
+    > without you doing anything else!
   features:
     multiple_choice:
       choices:
@@ -198,29 +200,28 @@ js_widget:
     Why?
   explanation: |
     In our video, the snippet of code is executed every time we load a page because it's
-    in our `body` element! But in it there's a check before adding the `script` to our
-    `head`: the `script` is only added if it's not already present. This is why the
-    `script` tag was only added once, and therefore, only executed one time no matter
-    how many pages we visit with Turbo.
-    views!
+    in our `<body>` element! But inside the snippet itself, there's a check before adding
+    the `<script>` to our `<head>`: the `<script>` is only added if it's not already present.
+    This is why the `<script>` tag was only added once, and therefore, only executed one
+    time no matter how many pages we visit with Turbo.
     
-    > When we forced our snippet to add the `script` tag without any check, it effectively
-    > added a new copy of itself into our `head` *every* single time we change the page.
-    > This worked, but now we have a new problem: our `head` is growing forever!
+    > When we forced our snippet to add the `<script>` tag without any check, it effectively
+    > added a new copy of itself into our `<head>` *every* single time we change the page.
+    > This worked, but now we have a new problem: our `<head>` is growing forever!
   features:
     multiple_choice:
       choices:
         a: |
-          Because the `script` tag added by our snippet of code is only added once, hence
-          it only executes once and never re-initializes the widget on subsequent pages.
+          Because the `<script>` tag added by our snippet of code is only added once, hence
+          it only executes once.
         b: |
-          Because the snippet of code added by us is only executed once, hence it only
-          adds the `script` tag once
+          Because the snippet of code added by us to the `<bode>` element is only executed once,
+          hence it only adds the `<script>` tag to our `<head>` once.
         c: |
           Because Turbo recognizes similar scripts between page views and avoids re-executing
           them.
         d: |
-          The widget snipped worked as expected. It did not stop working after subsequent
+          The widget snippet worked as expected. It did not stop working after subsequent
           page views: we even verified that the `a` tag was present!
       correct: a
 
@@ -228,11 +229,11 @@ analytics:
   question: |
     When does the `turbo:before-render` event fire?
   explanation: |
-    This is useful because you can access the contents of the new `body` element
+    This is useful because you can access the contents of the new `<body>` element
     that is about to replace the old one, so that you can tweak it and modify it
     before any JavaScript is executed!
     
-    > You can access the "about to be added" `body` element with `event.detail.newBody`!
+    > You can access the "about to be added" `<body>` element with `event.detail.newBody`!
     
     > Related is the `turbo:render` event, which fires *after* the entire rendering operation
     > has completed.
@@ -246,10 +247,10 @@ analytics:
           It fires once per session, before Turbo initializes its JavaScript engine.
         c: |
           It fires every time that turbo has received a new page via Ajax and before it
-          replaces the `body` element with the new `body` contents.
+          replaces the `<body>` element with the new `<body>` contents.
         d: |
           It fires every time that turbo has received a new page via Ajax, after it
-          replaces the `body` element but *before* executing any JavaScript in it
+          replaces the `<body>` element but *before* executing any JavaScript in it.
       correct: c
 
 analytics_2:
@@ -257,7 +258,7 @@ analytics_2:
     At the end of our video, we talk about analytics and show an example of how you can
     execute code *once* (and only once) on every page load (including the first page load!)
     
-    What is this event? And what is the *best* explanation for why other events won't work?
+    What event acomplishes this? And what is the *best* explanation for why other events won't work?
   explanation: |
     `turbo:laod` is very usefull if we need to execute some code on a "per view" basis. It will
     execute on every page view and will *not* repeat itself if a page has a preview. *Just* what
