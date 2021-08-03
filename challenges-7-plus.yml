@@ -206,7 +206,7 @@ js_widget:
     
     > When we forced our snippet to add the `script` tag without any check, it effectively
     > added a new copy of itself into our `head` *every* single time we change the page.
-    > This worked, but now we have a new problem: Our `head` is growing forever!
+    > This worked, but now we have a new problem: our `head` is growing forever!
   features:
     multiple_choice:
       choices:
