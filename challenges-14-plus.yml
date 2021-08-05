@@ -1,0 +1,155 @@
+asset-tracking:
+  question: |
+    I just came from our company meeting and I have big news! We have just released a
+    new version of our main CSS file!
+    
+    But I'm getting complaints from users who are unable to see those changes! Oh no!
+    
+    How can I make Turbo Drive show the new version of my site to all my users without
+    waiting for them to do a full refresh (i.e. by closing their browsers and come back
+    the next day)?
+  explanation: |
+    One of the few instances in which we can say that a full reload is *needed* is when
+    our front end code changes (JavaScript or CSS)!
+    
+    By adding file versioning to our system, we can make those files be downloaded once
+    they change. But this alone is not enough! Webpack prevents similar named files with
+    different hashes from running! And besides, if they did run, we would be duplicating
+    them on our `<head>` element.
+    
+    By leveraging the attribute `data-turbo-track="reload"` in our `<script>` and `<link>
+    tags, we can make Turbo Drive force a reload on the page if the collection of files
+    in the `<head>` element ever changes! This combination of techniques is our best
+    friend!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          By modifying the file `config/packages/webpack_encore.yaml` and add the attribute:
+  
+          ```yml
+          'data-turbo-track': reload
+          ```
+
+          To both `link_attributes` and `script_attributes`.
+        b: |
+          By making sure you enable versioning in Webpack Encore:
+          
+          ```javascript
+          .enableVersioning(Encore.isProduction())
+          ```
+          
+          And by modifying the file `config/packages/webpack_encore.yaml` and add the attribute:
+          
+          ```yml
+          'data-turbo-track': reload
+          ```
+          
+          To both `link_attributes` and `script_attributes`.
+        c: |
+          By modifying the file `config/packages/webpack_encore.yaml` and add the attribute:
+  
+          ```yml
+          'data-turbo-track': refresh
+          ```
+
+          To `script_attributes`.
+        d: |
+          By making sure you enable versioning in Webpack Encore:
+  
+          ```javascript
+          .enableVersioning(Encore.isProduction())
+          ```
+
+          And by modifying the file `config/packages/webpack_encore.yaml` and add the attribute:
+
+          ```yml
+          'data-turbo-webpack': track-versioning
+          ```
+
+          To both `link_attributes` and `script_attributes`.
+      correct: b
+
+manual_visit:
+  question: |
+    In our website there is a section that is very special. Only a certain type
+    of users can enter, so I've decided to pop a big dialog in the front page
+    of that section so that users can *leave* if they don't feel up to it!
+    
+    Here's how it looks!
+    
+    ```html
+    <div id="my_great_modal" style="display: none">
+        <h1>Welcome to our Pizza Section!</h1>
+
+        <p>You need to be a pizza lover before you proceed!</p>
+
+        <button
+            class="btn btn-primary"
+            onclick="javascript:document.getElementById('my_great_modal').style.display='none';"
+        >
+            Proceed
+        </button>
+    </div>
+    ```
+    
+    This works as expected, but I'm a bit nervous about leaving too much time
+    on our users to decide. They should be quick! So I've added a timeout on
+    the main JavaScript of the page to force users *away* after a certain
+    amount of time.
+    
+    ```javascript
+    window.setTimeout(() => {
+        window.location.href = '/';
+    }, 10000);
+    ```
+    
+    How can we use Turbo Drive (instead of just `window.location.href=`)
+    to perform a page visit without doing a full refresh?
+  explanation: |
+    By using the syntax `import * as Turbo from '@hotwired/turbo'` you will be importing all
+    public functions from the library into an object caller `Turbo`. This enables
+    you to use Turbo Drive specific actions in your scripts.
+    
+    > You can also use destructuring to import only the functions you need. In
+    > this case, this would be: `import { visit } from '@hotwired/turbo'`
+    
+    > Turbo is also set automatically as a global variable once you import it anywhere in your
+    > page, so you can also use Turbo from inline scripts!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```javascript
+          import Turbo from '@hotwired/turbo`;
+
+          window.setTimeout(() => {
+              Turbo.visit('/');
+          }, 10000);
+          ```
+        b: |
+          ```javascript
+          import * as Turbo from '@hotwired/turbo`;
+
+          window.setTimeout(() => {
+              Turbo.location.href = '/';
+          }, 10000);
+          ```
+        c: |
+          ```javascript
+          import * as Turbo from '@hotwired/turbo`;
+
+          window.setTimeout(() => {
+              Turbo.visit = '/';
+          }, 10000);
+          ```
+        d: |
+          ```javascript
+          import * as Turbo from '@hotwired/turbo`;
+          
+          window.setTimeout(() => {
+              Turbo.visit('/');
+          }, 10000);
+          ```
+      correct: d
+      
