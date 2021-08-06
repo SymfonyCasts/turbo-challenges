@@ -18,7 +18,7 @@ asset-tracking:
     them on our `<head>` element.
     
     By leveraging the attribute `data-turbo-track="reload"` in our `<script>` and `<link>
-    tags, we can make Turbo Drive force a reload on the page if the collection of files
+    tags, we can make Turbo Drive force a reload of the page if the collection of files
     in the `<head>` element ever changes! This combination of techniques is our best
     friend!
   features:
@@ -73,7 +73,7 @@ asset-tracking:
 manual_visit:
   question: |
     In our website there is a section that is very special. Only a certain type
-    of users can enter, so I've decided to pop a big dialog in the front page
+    of users can enter, so I've decided to pop up a big dialog in the front page
     of that section so that users can *leave* if they don't feel up to it!
     
     Here's how it looks!
@@ -108,11 +108,11 @@ manual_visit:
     to perform a page visit without doing a full refresh?
   explanation: |
     By using the syntax `import * as Turbo from '@hotwired/turbo'` you will be importing all
-    public functions from the library into an object caller `Turbo`. This enables
-    you to use Turbo Drive specific actions in your scripts.
+    public functions from the library into an object called `Turbo`. This enables
+    you to use some Turbo Drive specific actions in your scripts, like `Turbo.visit`.
     
     > You can also use destructuring to import only the functions you need. In
-    > this case, this would be: `import { visit } from '@hotwired/turbo'`
+    > this case, this would be: `import { visit } from '@hotwired/turbo'`.
     
     > Turbo is also set automatically as a global variable once you import it anywhere in your
     > page, so you can also use Turbo from inline scripts!
@@ -155,9 +155,9 @@ manual_visit:
       
 transitions:
   question: |
-    I just came back from the meeting with our designed, and she has an *amazing* concept
+    I just came back from a meeting with our designer, and she has an *amazing* concept
     for a new transition that we need to add to our page loads between clicks! It looks like
-    this on CSS:
+    this in the CSS main file:
     
     ```css
     body {
@@ -170,21 +170,21 @@ transitions:
     }
     ```
   
-    I think this is going to look awesome (and won't render too many of our viewers blind)!
+    I think this is going to look *awesome* (and won't render too many of our viewers blind)!
     
     So, how can we implement these transitions using Turbo Drive event listeners?
   explanation: |
     `turbo:visit` will trigger immediately after a user clicks on a link to another page.
     It will take care of transitioning our background color to `red`.
     
-    Once the new page renders, in order to fade gracefully back into white -as opposed to
+    Once the new page renders, in order to gracefully fade back into white -as opposed to
     an instant change- we use two more events:
     
-    `turbo:before-render` re-adds this class to the newly added body element so that it *starts*
+    `turbo:before-render` re-adds this class to the newly added `<body>` element so that it *starts*
     red.
     
-    Lastly, `turbo:render`, removes it on the browser's next frame, so that the browser can play
-    the transition to the white color.
+    Finally, once the rendering finishes, `turbo:render` removes it on the browser's next frame,
+    so that the browser can play the transition to the white color.
     
     > Notice that `turbo:load` won't work, because it doesn't track each visit precisely as
     > the user clicks on the link or otherwise interacts with the page to cause a page load.
@@ -253,17 +253,94 @@ transitions_2:
     The fact that we cannot pause a render operation in Turbo before 7.0.0-rc.1 means that
     our transition, if we make one, will always take the time it takes for the Ajax call
     to finish. This makes it hard for us to perform complex transitions when we can't
-    *pause* the render until our animation finishes.
+    *pause* the render until our animation properly finishes.
   features:
     multiple_chopice:
       a: |
         Because there are no good event handlers to use when transitioning pages for
         this particular purpose.
       b: |
-        You *can* easily implement page transitions between clicks in 7.0.0 beta.
+        Actually, you *can* easily implement page transitions between clicks in 7.0.0 beta.
       c: |
         Because wnen a page finishes loading, Turbo replaces the `<body>` element
         immediately, leaving no time for a transition.
       d: |
         Because there are other libraries that can achieve this.
     correct: c
+
+transition_finish:
+  question: |
+    Our lead designer is *ANGRY*! When our page went live, we've discovered that some
+    of our transitions didn't work as expected! Instead of fading to red and then back
+    to white, they faded from red to white twice!
+    
+    You can imagine the anger of our clients when they didn't get to properly experience
+    all those shades of pink.
+    
+    Can you tell me exactly when did this happen and why?
+  explanation: |
+    Our `turbo:before-render` and `turbo:render` events are flawed! They happen when a real
+    page, as well as a preview page, renders!
+    
+    This is the cause of the quirkiness that we've experienced. When the user travels to
+    a page that has a preview, our `turbo-loading` class is added and removed twice,
+    causing the double fade-in from red to white!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          This happens when the user visits a page that has been previewed before,
+          because the Turbo events `turbo:before-render` and `turbo:render` fire
+          both for real pages and preview pages alike.
+        b: |
+          This happens when the user visits a new page that has no preview, because
+          in that case, when a preview is being made, the Turbo events `turbo:before-render`
+          and `turbo:render` are fired twice.
+        c: |
+          This happens when the user visits a page by clicking the back or forward
+          button in the browser, because the Turbo event `turbo:visit` fires twice
+          in such instances.
+        d: |
+          This happens when the user clicks on a button to submit a form, because
+          the Turbo event `turbo:visit` fires twice in such instances.
+      correct: a
+
+transition_finish_2:
+  question: |
+    In order to fix this page transition issue (and save our jobs), we need to find
+    a way to identify when a `turbo:before-render` or a `turbo:render` event come
+    from a preview or a real page.
+    
+    We need to make sure our previews have the `turbo-loading` class in their `<body>`
+    elements so that the red doesn't flash twice!
+    
+    How can we do this?
+  explanation: |
+    The `data-turbo-preview` attribute added to the `<html>` element is very useful in
+    cases in which we need to identify wheather we're dealing with a preview or a real
+    page in Turbo.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          You can do this by performing this check using JavaScript:
+  
+          ```javascript
+          document.body.hasAttribute('data-turbo-preview');
+          ```
+        b: |
+          You can do this by performing this check using JavaScript:
+  
+          ```javascript
+          document.querySelector('body').hasAttribute('data-turbo-preview');
+          ```
+        c: |
+          You can do this by performing this check using JavaScript:
+          
+          ```javascript
+          document.documentElement.hasAttribute('data-turbo-preview');
+          ```
+        d: |
+          There is no way of differenciating between a preview and a real page in
+          Turbo.
+      correct: c
