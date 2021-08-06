@@ -153,3 +153,117 @@ manual_visit:
           ```
       correct: d
       
+transitions:
+  question: |
+    I just came back from the meeting with our designed, and she has an *amazing* concept
+    for a new transition that we need to add to our page loads between clicks! It looks like
+    this on CSS:
+    
+    ```css
+    body {
+        background-color: #FFF
+        transition: background-color 0.2s;
+    }
+    
+    body.turbo-loading {
+        background-color: #F00;
+    }
+    ```
+  
+    I think this is going to look awesome (and won't render too many of our viewers blind)!
+    
+    So, how can we implement these transitions using Turbo Drive event listeners?
+  explanation: |
+    `turbo:visit` will trigger immediately after a user clicks on a link to another page.
+    It will take care of transitioning our background color to `red`.
+    
+    Once the new page renders, in order to fade gracefully back into white -as opposed to
+    an instant change- we use two more events:
+    
+    `turbo:before-render` re-adds this class to the newly added body element so that it *starts*
+    red.
+    
+    Lastly, `turbo:render`, removes it on the browser's next frame, so that the browser can play
+    the transition to the white color.
+    
+    > Notice that `turbo:load` won't work, because it doesn't track each visit precisely as
+    > the user clicks on the link or otherwise interacts with the page to cause a page load.
+    
+    Cool!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```javascript
+          document.addEventListener('turbo:visit', () => {
+              document.body.classList.add('turbo-loading');
+          });
+          ```
+        b: |
+          ```javascript
+          document.addEventListener('turbo:visit', () => {
+              document.body.classList.add('turbo-loading');
+          });
+          
+          document.addEventListener('turbo:before-render', (event) => {
+              event.detail.newBody.classList.add('turbo-loading');
+          });
+          
+          document.addEventListener('turbo:render', () => {
+              requestAnimationFrame(() => {
+                 document.body.classList.remove('turbo-loading');
+              });
+          });
+          ```
+        c: |
+          ```javascript
+          document.addEventListener('turbo:visit', () => {
+              document.body.classList.add('turbo-loading');
+          });
+
+          document.addEventListener('turbo:before-render', (event) => {
+              event.detail.newBody.classList.add('turbo-loading');
+          });
+          ```
+        d: |
+          ```javascript
+          document.addEventListener('turbo:load', () => {
+              document.body.classList.add('turbo-loading');
+          });
+
+          document.addEventListener('turbo:before-render', (event) => {
+              event.detail.newBody.classList.add('turbo-loading');
+          });
+
+          document.addEventListener('turbo:render', () => {
+              requestAnimationFrame(() => {
+                 document.body.classList.remove('turbo-loading');
+              });
+          });
+          ```
+      correct: b
+  
+transitions_2:
+  question: |
+    Why is it hard in Turbo to implement page load transitions in versions 7.0.0 beta?
+    
+    > Notice that starting with version 7.0.0-rc.1 the "Pausable rendering" PR has been
+    > merged, making it easier to implement page transitions between clicks!
+  explanation: |
+    The fact that we cannot pause a render operation in Turbo before 7.0.0-rc.1 means that
+    our transition, if we make one, will always take the time it takes for the Ajax call
+    to finish. This makes it hard for us to perform complex transitions when we can't
+    *pause* the render until our animation finishes.
+  features:
+    multiple_chopice:
+      a: |
+        Because there are no good event handlers to use when transitioning pages for
+        this particular purpose.
+      b: |
+        You *can* easily implement page transitions between clicks in 7.0.0 beta.
+      c: |
+        Because wnen a page finishes loading, Turbo replaces the `<body>` element
+        immediately, leaving no time for a transition.
+      d: |
+        Because there are other libraries that can achieve this.
+    correct: c
