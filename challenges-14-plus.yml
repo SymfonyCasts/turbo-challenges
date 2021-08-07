@@ -344,3 +344,38 @@ transition_finish_2:
           There is no way of differenciating between a preview and a real page in
           Turbo.
       correct: c
+
+native_prefetch:
+  question: |
+    Let's say our website has a very important landing page, a route by the name
+    `app_pizzas` that we want to prefetch on every page so that such page is
+    always ready to be loaded instantly if the user wants to go there.
+    
+    Assuming we have a `{% block metas %}{% endblock %}` that we can override. What
+    is the native way in which we can do this?
+  explanation: |
+    `<link rel="prefetch">` is a useful tool that you can leverage with Turbo Drive
+    when you need to make certain pages readily available to the user.
+    
+    In our example, we infer that we are adding this prefetch link on every page. Make
+    sure you have this in mind, because if you add a prefetch link in a *specific* page,
+    this won't stay in the `<head>` element for other pages!
+  features:
+    multiple_choice:
+      a: |
+        ```twig
+        <link rel="prefetch" src="{{ path('app_pizzas') }}">
+        ```
+      b: |
+        ```twig
+        <link rel="prefetch" href="{{ path('app_pizzas') }}">
+        ```
+      c: |
+        ```twig
+        <a rel="prefetch" href="{{ path('app_pizzas') }}"></a>
+        ```
+      d: |
+        ```twig
+        <meta rel="prefetch" href="{{ path('app_pizzas') }}">
+        ```
+    correct: b
