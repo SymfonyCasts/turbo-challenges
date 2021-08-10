@@ -410,7 +410,7 @@ lazy_frame:
           while other parts of our page change. It is mainly used as navigation bars.
       correct: c
 
-lazy_frame_2:
+frames_find_frames:
   question: |
     My website has a terribly complex sidebar! Our project manager asked us to extract
     it to a separate route so that we could load it lazily using Turbo Frames. This
@@ -443,3 +443,30 @@ lazy_frame_2:
           <turbo-frame id="app_nav_frame" src="{{ path('_app_nav') }}"></turbo-frame>
           ```
       correct: d
+
+frames_find_frames_2:
+  question: |
+    When we load a Turbo Frame we need to specify an `id` property both in the frame
+    on the page that does the loading, and on the frame in the rendered fragment.
+    
+    Why is this so?
+  explanation: |
+    A core feature of Turbo Frames is the ability to get a full page rendered by your
+    server but *only* load the part of the page that matches one or several Turbo Frames.
+    
+    This means that several frames can load *the same* URL and only take the parts that
+    belong to that particular frame for updating it.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because Turbo needs to know if the rendered fragment matches the frame that
+          did the request, since URLs can be hacked.
+        b: |
+          The rendered response can have any id. Turbo just looks at `<turbo-frame>`
+          elements within it and will only render that part of the response.
+        c: |
+          Because Turbo will look at the part of the rendered response
+          that exactly matches the `<turbo-frame id="">` pattern and only render that
+          part.
+      correct: c
