@@ -379,3 +379,67 @@ native_prefetch:
         <meta rel="prefetch" href="{{ path('app_pizzas') }}">
         ```
     correct: b
+
+lazy_frame:
+  question: |
+    What is a Turbo Frame and what does it do?
+  explanation: |
+    The `<turbo-frame>` HTML element is a special element that allows us
+    to make areas of our web pages dynamic.
+    
+    You can use Turbo Frames if you want navigation to happen inside an
+    area of the page, instead of having the whole page refreshed.
+    
+    Another use is when you want a part of your page to load lazily, once
+    the general structure has loaded.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          A Turbo Frame is an `<iframe>` element in a page that has extra
+          functionality, like loading pages via ajax calls.
+        b: |
+          Tturbo Frames is a system that allows you to create complex animations
+          in our web pages.
+        c: |
+          A Turbo Frame is an area of our page in which we can load content and
+          update it via Ajax calls that return HTML. It behaves similarly to the
+          old `<iframe>` system.
+        d: |
+          A Turbo Frame is an area of our page that has the ability to stay loaded
+          while other parts of our page change. It is mainly used as navigation bars.
+      correct: c
+
+lazy_frame_2:
+  question: |
+    My website has a terribly complex sidebar! Our project manager asked us to extract
+    it to a separate route so that we could load it lazily using Turbo Frames. This
+    work is done! Our route has the name `_app_nav`, and the rendered frame has an id of
+    `app_nav_frame`.
+    
+    How could we load this in our main template?
+  explanation: |
+    It's very important that when a frame is loaded by Turbo, its HTML contains at least
+    one `<turbo-frame>` element with an `id` that we can identify!
+    
+    The rest is *almost* magic!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-frame src="{{ path('_app_nav') }}"></turbo-frame>
+          ```
+        b: |
+          ```twig
+          <turbo-frame id="app_nav_frame"></turbo-frame>
+          ```
+        c: |
+          ```twig
+          <turbo-frame id="_app_nav" src="{{ path('app_nav_frame') }}"></turbo-frame>
+          ```
+        d: |
+          ```twig
+          <turbo-frame id="app_nav_frame" src="{{ path('_app_nav') }}"></turbo-frame>
+          ```
+      correct: d
