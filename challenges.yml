@@ -501,7 +501,7 @@ analytics_2:
     
     What event acomplishes this? And what is the *best* explanation for why other events won't work?
   explanation: |
-    `turbo:laod` is very usefull if we need to execute some code on a "per view" basis. It will
+    `turbo:load` is very usefull if we need to execute some code on a "per view" basis. It will
     execute on every page view and will *not* repeat itself if a page has a preview. *Just* what
     we need to get our analytics code working!
   features:
