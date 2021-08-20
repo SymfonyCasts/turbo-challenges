@@ -273,7 +273,7 @@ transitions_2:
 
 transition_finish:
   question: |
-    Our lead designer is *ANGRY*! When our page went live, we've discovered that some
+    Our lead designer is *annoyed*! When our page went live, we've discovered that some
     of our transitions didn't work as expected! Instead of fading to red and then back
     to white, they faded from red to white twice!
     
