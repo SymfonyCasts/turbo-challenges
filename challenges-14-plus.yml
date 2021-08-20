@@ -72,7 +72,10 @@ asset-tracking:
 
 manual_visit:
   question: |
-    In our website there is a section that is very special. Only a certain type
+    On our site, there is one section that is very special: we expose the secrets to
+    creating the world's most perfect pizza. But not all users are ready for this
+    earth-shattering information. And so, I've decided to open a big dialog on the
+    front page of that section...
     of users can enter, so I've decided to pop up a big dialog in the front page
     of that section so that users can *leave* if they don't feel up to it!
     
