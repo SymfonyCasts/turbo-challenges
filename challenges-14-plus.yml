@@ -453,7 +453,7 @@ frames_find_frames_2:
     When we load a Turbo Frame we need to specify an `id` property both in the frame
     on the page that does the loading, and on the frame in the rendered fragment.
     
-    Why is this so?
+    Why?
   explanation: |
     A core feature of Turbo Frames is the ability to fetch a full page via Ajax... but then *only*
     find and use the `<turbo-frame>` inside whose `id` matches the frame id that *initiated*
