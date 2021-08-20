@@ -164,7 +164,7 @@ transitions:
     
     ```css
     body {
-        background-color: #FFF
+        background-color: #fff
         transition: background-color 0.2s;
     }
     
