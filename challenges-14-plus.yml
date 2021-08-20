@@ -17,7 +17,7 @@ asset-tracking:
     different hashes from running! And besides, if they did run, we would be duplicating
     them on our `<head>` element: the old *and* new CSS/JavaScript files would be loaded on the same page!
     
-    By leveraging the attribute `data-turbo-track="reload"` in our `<script>` and `<link>
+    By leveraging the `data-turbo-track="reload"` attribute on our `<script>` and `<link>`
     tags, we can make Turbo Drive force a reload of the page if the collection of files
     in the `<head>` element ever changes! This combination of techniques is our best
     friend!
