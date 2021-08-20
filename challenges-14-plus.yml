@@ -12,7 +12,7 @@ asset-tracking:
     One of the few instances in which we can say that a full reload is *needed* is when
     our frontend code changes (JavaScript or CSS)!
     
-    By adding file versioning to our system, we can make those files be downloaded once
+    By adding file versioning to our system, we can make sure that new files are downloaded once
     they change. But this alone is not enough! Webpack prevents similar named files with
     different hashes from running! And besides, if they did run, we would be duplicating
     them on our `<head>` element.
