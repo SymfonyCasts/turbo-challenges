@@ -112,7 +112,7 @@ manual_visit:
   explanation: |
     By using the syntax `import * as Turbo from '@hotwired/turbo'` you import *all*
     public functions from the library into an object called `Turbo`. This enables
-    you to use some Turbo Drive specific actions in your scripts, like `Turbo.visit`.
+    you to use some Turbo Drive specific actions in your scripts, like `Turbo.visit()`.
     
     > You can also use destructuring to import only the functions you need. In
     > this case, this would be: `import { visit } from '@hotwired/turbo'`.
