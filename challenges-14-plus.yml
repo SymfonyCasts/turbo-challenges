@@ -391,7 +391,8 @@ lazy_frame:
     The `<turbo-frame>` HTML element is a custom element that allows us
     to make areas of our site navigate independently of the rest of our site.
     
-    You can use Turbo Frames if you want navigation to happen inside an
+    You can use Turbo Frames if you want navigation (e.g. link clicks and form submits) to
+    happen (or "stay") inside of a specific area, instead of affecting the entire page.
     area of the page, instead of having the whole page refreshed.
     
     Another use is when you want a part of your page to load lazily via Ajax, after
