@@ -352,7 +352,7 @@ transition_finish_2:
 native_prefetch:
   question: |
     Imagine our website has a *very* important landing page - the route to it is
-    `app_pizzas` that we want to prefetch on every page so that such page is
+    `app_pizzas`. We want to "prefetch" this from *every* page so that it's
     always ready to be loaded instantly if the user wants to go there.
     
     Assuming we have a `{% block metas %}{% endblock %}` that we can override. What
