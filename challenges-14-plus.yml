@@ -356,7 +356,7 @@ native_prefetch:
     always ready to be loaded instantly if the user wants to go there.
     
     Assuming we have a `{% block metas %}{% endblock %}` that we can override, what
-    is the native way in which we can do this?
+    is the native way to do this?
   explanation: |
     `<link rel="prefetch">` is a useful tool that you can leverage with Turbo Drive
     when you need to make certain pages readily available to the user.
