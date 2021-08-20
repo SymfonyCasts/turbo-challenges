@@ -280,7 +280,7 @@ transition_finish:
     You can imagine how disappointed our clients were when they didn't get to properly experience
     all those shades of pink.
     
-    Can you tell me exactly when did this happen and why?
+    Our designer asks us why this happened. What should we tell them?
   explanation: |
     Our `turbo:before-render` and `turbo:render` events are flawed! They happen when a real
     page, as well as a preview page, renders!
