@@ -118,7 +118,7 @@ manual_visit:
     > this case, that would be: `import { visit } from '@hotwired/turbo'`.
     
     > Turbo is also set automatically as a global variable once you import it anywhere in your
-    > page, so you can also use Turbo from inline scripts!
+    > page, so you can also use Turbo from inline scripts... though you should try avoiding those, of course 😉. 
   features:
     multiple_choice:
       choices:
