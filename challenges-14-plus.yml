@@ -61,7 +61,7 @@ asset-tracking:
           .enableVersioning(Encore.isProduction())
           ```
 
-          And by modifying the file `config/packages/webpack_encore.yaml` and add the attribute:
+          And by modifying `config/packages/webpack_encore.yaml` and adding
 
           ```yml
           'data-turbo-webpack': track-versioning
