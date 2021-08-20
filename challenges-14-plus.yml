@@ -53,7 +53,7 @@ asset-tracking:
           'data-turbo-track': refresh
           ```
 
-          To `script_attributes`.
+          To `link_attributes`.
         d: |
           By making sure you enable versioning in Webpack Encore:
   
