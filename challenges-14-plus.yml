@@ -169,7 +169,7 @@ transitions:
     }
     
     body.turbo-loading {
-        background-color: #F00;
+        background-color: #f00;
     }
     ```
   
