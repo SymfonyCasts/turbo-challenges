@@ -401,7 +401,7 @@ lazy_frame:
       choices:
         a: |
           A Turbo Frame is an `<iframe>` element in a page that has extra
-          functionality, like loading pages via ajax calls.
+          functionality, like loading pages via Ajax calls.
         b: |
           Turbo Frames is a system that allows you to create complex animations
           in our web pages by making Ajax calls.
