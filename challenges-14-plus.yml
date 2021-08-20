@@ -355,7 +355,7 @@ native_prefetch:
     `app_pizzas`. We want to "prefetch" this from *every* page so that it's
     always ready to be loaded instantly if the user wants to go there.
     
-    Assuming we have a `{% block metas %}{% endblock %}` that we can override. What
+    Assuming we have a `{% block metas %}{% endblock %}` that we can override, what
     is the native way in which we can do this?
   explanation: |
     `<link rel="prefetch">` is a useful tool that you can leverage with Turbo Drive
