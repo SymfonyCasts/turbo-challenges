@@ -110,7 +110,7 @@ manual_visit:
     How can we use Turbo Drive (instead of just `window.location.href=`)
     to perform a page visit without doing a full refresh?
   explanation: |
-    By using the syntax `import * as Turbo from '@hotwired/turbo'` you will be importing all
+    By using the syntax `import * as Turbo from '@hotwired/turbo'` you import *all*
     public functions from the library into an object called `Turbo`. This enables
     you to use some Turbo Drive specific actions in your scripts, like `Turbo.visit`.
     
