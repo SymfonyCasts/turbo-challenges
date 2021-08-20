@@ -25,7 +25,7 @@ asset-tracking:
     multiple_choice:
       choices:
         a: |
-          By modifying the file `config/packages/webpack_encore.yaml` and add the attribute:
+          By modifying `config/packages/webpack_encore.yaml` and adding
   
           ```yml
           'data-turbo-track': reload
