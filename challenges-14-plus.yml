@@ -389,7 +389,7 @@ lazy_frame:
     What is a Turbo Frame and what does it do?
   explanation: |
     The `<turbo-frame>` HTML element is a custom element that allows us
-    to make areas of our web pages dynamic.
+    to make areas of our site navigate independently of the rest of our site.
     
     You can use Turbo Frames if you want navigation to happen inside an
     area of the page, instead of having the whole page refreshed.
