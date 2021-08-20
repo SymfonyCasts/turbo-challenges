@@ -72,12 +72,10 @@ asset-tracking:
 
 manual_visit:
   question: |
-    On our site, there is one section that is very special: we expose the secrets to
+    On our site, there is one section that is very special: We expose the secrets to
     creating the world's most perfect pizza. But not all users are ready for this
     earth-shattering information. And so, I've decided to open a big dialog on the
     front page of that section...
-    of users can enter, so I've decided to pop up a big dialog in the front page
-    of that section so that users can *leave* if they don't feel up to it!
     
     Here's how it looks!
     
@@ -118,7 +116,8 @@ manual_visit:
     > this case, that would be: `import { visit } from '@hotwired/turbo'`.
     
     > Turbo is also set automatically as a global variable once you import it anywhere in your
-    > page, so you can also use Turbo from inline scripts... though you should try avoiding those, of course 😉. 
+    > page, so you can also use Turbo from inline scripts... though you should try avoiding
+    > those, of course 😉.
   features:
     multiple_choice:
       choices:
@@ -456,10 +455,9 @@ frames_find_frames_2:
     
     Why?
   explanation: |
-    A core feature of Turbo Frames is the ability to fetch a full page via Ajax... but then *only*
-    find and use the `<turbo-frame>` inside whose `id` matches the frame id that *initiated*
-    the request.
-    server but *only* load the part of the page that matches one or several Turbo Frames.
+    A core feature of Turbo Frames is the ability to fetch a full page via Ajax... but then
+    *only* find and use the `<turbo-frame>` inside whose `id` matches the frame id that
+    *initiated* the request.
     
     This means that several frames can load *the same* URL and only take the parts that
     belong to that particular frame for updating it.
