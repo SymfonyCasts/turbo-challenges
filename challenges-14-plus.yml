@@ -115,7 +115,7 @@ manual_visit:
     you to use some Turbo Drive specific actions in your scripts, like `Turbo.visit()`.
     
     > You can also use destructuring to import only the functions you need. In
-    > this case, this would be: `import { visit } from '@hotwired/turbo'`.
+    > this case, that would be: `import { visit } from '@hotwired/turbo'`.
     
     > Turbo is also set automatically as a global variable once you import it anywhere in your
     > page, so you can also use Turbo from inline scripts!
