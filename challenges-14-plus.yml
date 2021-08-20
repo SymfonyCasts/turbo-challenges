@@ -395,7 +395,7 @@ lazy_frame:
     area of the page, instead of having the whole page refreshed.
     
     Another use is when you want a part of your page to load lazily via Ajax, after
-    the general structure has loaded.
+    the rest of your page has loaded.
   features:
     multiple_choice:
       choices:
