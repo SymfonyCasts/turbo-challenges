@@ -319,7 +319,8 @@ transition_finish_2:
     
     How can we do this?
   explanation: |
-    The `data-turbo-preview` attribute added to the `<html>` element is very useful in
+    Turbo adds a `data-turbo-preview` attribute to the `<html>` element whenever a preview is rendered. We
+    can use this to identify whether we're dealing with a preview or a real page in JavaScript.
     cases in which we need to identify wheather we're dealing with a preview or a real
     page in Turbo.
   features:
