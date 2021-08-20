@@ -97,7 +97,7 @@ manual_visit:
     ```
     
     This works as expected, but I'm a bit nervous about leaving too much time
-    on our users to decide. They should be quick! So I've added a timeout on
+    for our users to decide. They should be quick! So I've added a timeout on
     the main JavaScript of the page to force users *away* after a certain
     amount of time.
     
