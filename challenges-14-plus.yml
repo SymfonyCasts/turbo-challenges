@@ -15,7 +15,7 @@ asset-tracking:
     By adding file versioning to our system, we can make sure that new files are downloaded once
     they change. But this alone is not enough! Webpack prevents similar named files with
     different hashes from running! And besides, if they did run, we would be duplicating
-    them on our `<head>` element.
+    them on our `<head>` element: the old *and* new CSS/JavaScript files would be loaded on the same page!
     
     By leveraging the attribute `data-turbo-track="reload"` in our `<script>` and `<link>
     tags, we can make Turbo Drive force a reload of the page if the collection of files
