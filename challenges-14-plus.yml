@@ -47,7 +47,7 @@ asset-tracking:
           
           To both `link_attributes` and `script_attributes`.
         c: |
-          By modifying the file `config/packages/webpack_encore.yaml` and add the attribute:
+          By modifying `config/packages/webpack_encore.yaml` and adding
   
           ```yml
           'data-turbo-track': refresh
