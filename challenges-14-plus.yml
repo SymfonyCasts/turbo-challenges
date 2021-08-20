@@ -265,7 +265,7 @@ transitions_2:
       b: |
         Actually, you *can* easily implement page transitions between clicks in 7.0.0 beta.
       c: |
-        Because wnen a page finishes loading, Turbo replaces the `<body>` element
+        Because when a page finishes loading, Turbo replaces the `<body>` element
         immediately, leaving no time for a transition.
       d: |
         Because there are other libraries that can achieve this.
