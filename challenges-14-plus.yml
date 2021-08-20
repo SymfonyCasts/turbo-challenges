@@ -418,7 +418,7 @@ frames_find_frames:
   question: |
     My website has a terribly complex sidebar! Our project manager asked us to extract
     it to a separate route so that we could load it lazily using Turbo Frames. This
-    work is done! Our route has the name `_app_nav`, and the rendered frame has an id of
+    work is done! Our route has the name `_app_nav`, and it renders a frame with an id of
     `app_nav_frame`.
     
     How could we load this in our main template?
