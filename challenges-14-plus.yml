@@ -404,7 +404,7 @@ lazy_frame:
           functionality, like loading pages via ajax calls.
         b: |
           Tturbo Frames is a system that allows you to create complex animations
-          in our web pages.
+          in our web pages by making Ajax calls.
         c: |
           A Turbo Frame is an area of our page in which we can load content and
           update it via Ajax calls that return HTML. It behaves similarly to the
