@@ -4,10 +4,36 @@ asset-tracking:
     new version of our main CSS file!
     
     But I'm getting complaints from users who are unable to see those changes! Oh no!
+  
+    What is happening? Why are some users seeing out-of-date CSS?
+  explanation: |
+    The reason we aren't seeing up to date CSS is that turbo *thinks* that it shouldn't
+    update those files which have the same name!
     
-    How can I make Turbo Drive show the new version of my site to all my users without
-    waiting for them to do a full refresh (i.e. by closing their browsers and come back
-    the next day)?
+    Since Turbo is now performing full page reloads, our CSS stays the same until
+    we do a full refresh in our Browsers.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because when Turbo looks at the new files and see that they have
+          the same name as the ones we already have, it assumes they are
+          the same file and doesn't overwrite them!
+        b: |
+          Because our browser has cached our CSS and JavaScripts and the user
+          needs to perform a full refresh in order for Turbo to get the new
+          sources.
+        c: |
+          Because we forgot to enable file versioning in our application. This
+          alone would fix the issue, since Turbo by default reloads all files
+          with different versioning so that it keeps our CSS and JavaScript up
+          to date!
+      correct: a
+
+asset-tracking_2:
+  question: |
+    Now that we understand why some users aren't seeing the new CSS file, what could
+    we change on our app to prevent this in the future?
   explanation: |
     One of the few instances in which we can say that a full reload is *needed* is when
     our frontend code changes (JavaScript or CSS)!
@@ -74,24 +100,56 @@ manual_visit:
   question: |
     On our site, there is one section that is very special: We expose the secrets to
     creating the world's most perfect pizza. But not all users are ready for this
-    earth-shattering information. And so, I've decided to open a big dialog on the
-    front page of that section...
+    earth-shattering information. And so, I've decided to hide the entire page with
+    a button and open a big dialog on the front page of that section...
     
     Here's how it looks!
     
     ```html
-    <div id="my_great_modal" style="display: none">
-        <h1>Welcome to our Pizza Section!</h1>
+    <html>
+    <head>
+        ...
+    </head>
+    <body>
+        <p id="page_warning">
+            This page has been hidden for security reasons. Please click
+    
+            <button
+                class="btn btn-primary"
+                onclick="javascript:document.getElementById('my_great_modal').style.display: block"
+            >
+                here
+            </button>
+    
+            if you are ready to uncover some true secrets!
+        <p>
 
-        <p>Proceed only if you are ready for pizza to change your life!</p>
-
-        <button
-            class="btn btn-primary"
-            onclick="javascript:document.getElementById('my_great_modal').style.display='none';"
-        >
-            Proceed
-        </button>
-    </div>
+        <div id="my_great_modal" style="display: none">
+            <h1>Welcome to our Pizza Section!</h1>
+    
+            <p>Proceed only if you are ready for pizza to change your life!</p>
+    
+            <button
+                class="btn btn-primary"
+                onclick="javascript:hideDialogAndShowPage()"
+            >
+                Proceed
+            </button>
+        </div>
+    
+        <div id="the_rest_of_my_page" style="display: none">
+            ...
+        </div>
+    
+        <script>
+            window.hideDialogAndShowPage = () => {
+                document.getElementById('my_great_modal').style.display='none';
+                document.getElementById('page_warning').style.display='none';
+                document.getElementById('the_rest_of_my_page').style.display='block';
+            }
+        </script>
+    </body>
+    </html>
     ```
     
     This works as expected, but I'm a bit nervous about leaving too much time
@@ -248,14 +306,14 @@ transitions:
 transitions_2:
   question: |
     Why is it hard in Turbo to implement page load transitions in versions 7.0.0 beta?
-    
-    > Notice that starting with version 7.0.0-rc.1 the "Pausable rendering" PR has been
-    > merged, making it easier to implement page transitions between clicks!
   explanation: |
     The fact that we cannot pause a render operation in Turbo before 7.0.0-rc.1 means that
     our transition, if we make one, will always take the time it takes for the Ajax call
     to finish. This makes it hard for us to perform complex transitions when we can't
     *pause* the render until our animation properly finishes.
+  
+    > Notice that starting with version 7.0.0-rc.1 the "Pausable rendering" PR has been
+    > merged, making it easier to implement page transitions between clicks!
   features:
     multiple_chopice:
       a: |
@@ -423,10 +481,10 @@ frames_find_frames:
     
     How could we load this in our main template?
   explanation: |
-    It's very important that when a frame is loaded by Turbo, its HTML contains at least
-    one `<turbo-frame>` element with an `id` that we can identify!
-    
-    The rest is *almost* magic!
+    The `src=""` attribute tells Turbo to make an Ajax callto this URL to fetch the frame.
+    Once it does, it reads the `id` attribute of the original `<turbo-frame>`
+    (`id="app_nav_frame"`) and finds a `turbo-frame` with that *same* id inside the Ajax
+    response's HTML.
   features:
     multiple_choice:
       choices:
