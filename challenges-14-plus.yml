@@ -124,7 +124,7 @@ manual_visit:
       choices:
         a: |
           ```javascript
-          import Turbo from '@hotwired/turbo`;
+          import Turbo from '@hotwired/turbo';
 
           window.setTimeout(() => {
               Turbo.visit('/');
