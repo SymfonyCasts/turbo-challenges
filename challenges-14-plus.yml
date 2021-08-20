@@ -351,7 +351,7 @@ transition_finish_2:
 
 native_prefetch:
   question: |
-    Let's say our website has a very important landing page, a route by the name
+    Imagine our website has a *very* important landing page - the route to it is
     `app_pizzas` that we want to prefetch on every page so that such page is
     always ready to be loaded instantly if the user wants to go there.
     
