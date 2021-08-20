@@ -394,7 +394,7 @@ lazy_frame:
     You can use Turbo Frames if you want navigation to happen inside an
     area of the page, instead of having the whole page refreshed.
     
-    Another use is when you want a part of your page to load lazily, once
+    Another use is when you want a part of your page to load lazily via Ajax, after
     the general structure has loaded.
   features:
     multiple_choice:
