@@ -232,7 +232,34 @@ transitions:
   
     I think this is going to look *awesome* (and won't render too many of our viewers blind)!
     
-    So, how can we implement these transitions using Turbo Drive event listeners?
+    Our solution to implementing this using Turbo Drive event listeners is as follows:
+  
+    ```javascript
+    document.addEventListener('turbo:visit', () => {
+        document.body.classList.add('turbo-loading');
+    });
+
+    document.addEventListener('turbo:before-render', (event) => {
+        event.detail.newBody.classList.add('turbo-loading');
+    });
+
+    document.addEventListener('turbo:render', () => {
+       document.body.classList.remove('turbo-loading');
+    });
+    ```
+    
+    But upon peer-review, our coworker tells us that this is wrong! Our `turbo:render`
+    callback is missing a `requestAnimationFrame`!
+    
+    ```javascript
+    document.addEventListener('turbo:render', () => {
+        requestAnimationFrame(() => {
+           document.body.classList.remove('turbo-loading');
+        });
+    });
+    ```
+    
+    Why do we need this?
   explanation: |
     `turbo:visit` will trigger immediately after a user clicks on a link to another page.
     It will take care of transitioning our background color to `red`.
@@ -240,67 +267,30 @@ transitions:
     Once the new page renders, in order to gracefully fade back into white -as opposed to
     an instant change- we use two more events:
     
-    `turbo:before-render` re-adds this class to the newly added `<body>` element so that it *starts*
-    red.
+    `turbo:before-render` re-adds this class to the newly added `<body>` element so that it
+    *starts* red.
     
-    Finally, once the rendering finishes, `turbo:render` removes it on the browser's next frame,
-    so that the browser can play the transition to the white color.
-    
-    > Notice that `turbo:load` won't work, because it doesn't track each visit precisely as
-    > the user clicks on the link or otherwise interacts with the page to cause a page load.
-    
-    Cool!
+    Finally, once the rendering finishes, `turbo:render` removes it in the browser's next frame,
+    so that the browser can play the transition to the white color. If we didn't add
+    `requestAnimationFrame`, the transition would *not* happen at all, since there would be
+    no time for the browser to "pain" the screen in the previous state before the transition.
   features:
     multiple_choice:
       choices:
         a: |
-          ```javascript
-          document.addEventListener('turbo:visit', () => {
-              document.body.classList.add('turbo-loading');
-          });
-          ```
+          We need to implement all of these callbacks within `requestAnimationFrame` so
+          our browser can animate all of the transitions.
         b: |
-          ```javascript
-          document.addEventListener('turbo:visit', () => {
-              document.body.classList.add('turbo-loading');
-          });
-          
-          document.addEventListener('turbo:before-render', (event) => {
-              event.detail.newBody.classList.add('turbo-loading');
-          });
-          
-          document.addEventListener('turbo:render', () => {
-              requestAnimationFrame(() => {
-                 document.body.classList.remove('turbo-loading');
-              });
-          });
-          ```
+          Because in that particular case, both events `turbo:before-render`
+          and `turbo:render` execute in the same frame. This means that our class would
+          be added *and* removed in the same frame and the transition would not take place.
         c: |
-          ```javascript
-          document.addEventListener('turbo:visit', () => {
-              document.body.classList.add('turbo-loading');
-          });
-
-          document.addEventListener('turbo:before-render', (event) => {
-              event.detail.newBody.classList.add('turbo-loading');
-          });
-          ```
+          Because we use `requestAnimationFrame` every time we need to implement a CSS
+          transition.
         d: |
-          ```javascript
-          document.addEventListener('turbo:load', () => {
-              document.body.classList.add('turbo-loading');
-          });
-
-          document.addEventListener('turbo:before-render', (event) => {
-              event.detail.newBody.classList.add('turbo-loading');
-          });
-
-          document.addEventListener('turbo:render', () => {
-              requestAnimationFrame(() => {
-                 document.body.classList.remove('turbo-loading');
-              });
-          });
-          ```
+          Because in this particular case, our last transition wouldn't have time to complete
+          animating unless we defer our last callback to another frame. This will happen
+          *after* the transition has finished.
       correct: b
   
 transitions_2:
@@ -330,74 +320,22 @@ transitions_2:
 
 transition_finish:
   question: |
-    Our lead designer is *annoyed*! When our page went live, we've discovered that some
-    of our transitions didn't work as expected! Instead of fading to red and then back
-    to white, they faded from red to white twice!
-    
-    You can imagine how disappointed our clients were when they didn't get to properly experience
-    all those shades of pink.
-    
-    Our designer asks us why this happened. What should we tell them?
-  explanation: |
-    Our `turbo:before-render` and `turbo:render` events are flawed! They happen when a real
-    page, as well as a preview page, renders!
-    
-    This is the cause of the quirkiness that we've experienced. When the user travels to
-    a page that has a preview, our `turbo-loading` class is added and removed twice,
-    causing the double fade-in from red to white!
-  features:
-    multiple_choice:
-      choices:
-        a: |
-          This happens when the user visits a page that has been previewed before,
-          because the Turbo events `turbo:before-render` and `turbo:render` fire
-          both for real pages and preview pages alike.
-        b: |
-          This happens when the user visits a new page that has no preview, because
-          in that case, when a preview is being made, the Turbo events `turbo:before-render`
-          and `turbo:render` are fired twice.
-        c: |
-          This happens when the user visits a page by clicking the back or forward
-          button in the browser, because the Turbo event `turbo:visit` fires twice
-          in such instances.
-        d: |
-          This happens when the user clicks on a button to submit a form, because
-          the Turbo event `turbo:visit` fires twice in such instances.
-      correct: a
-
-transition_finish_2:
-  question: |
-    In order to fix this page transition issue (and save our jobs), we need to find
-    a way to identify when a `turbo:before-render` or a `turbo:render` event come
-    from a preview or a real page.
-    
-    We need to make sure our previews have the `turbo-loading` class in their `<body>`
-    elements so that the red doesn't flash twice!
-    
-    How can we do this?
+    In o Turbo Drive, how can we tell when a page is a preview, or a freshly downloaded page?
   explanation: |
     Turbo adds a `data-turbo-preview` attribute to the `<html>` element whenever a preview is rendered. We
     can use this to identify whether we're dealing with a preview or a real page in JavaScript.
-    cases in which we need to identify wheather we're dealing with a preview or a real
-    page in Turbo.
   features:
     multiple_choice:
       choices:
         a: |
-          You can do this by performing this check using JavaScript:
-  
           ```javascript
           document.body.hasAttribute('data-turbo-preview');
           ```
         b: |
-          You can do this by performing this check using JavaScript:
-  
           ```javascript
           document.querySelector('body').hasAttribute('data-turbo-preview');
           ```
         c: |
-          You can do this by performing this check using JavaScript:
-          
           ```javascript
           document.documentElement.hasAttribute('data-turbo-preview');
           ```
@@ -418,8 +356,8 @@ native_prefetch:
     `<link rel="prefetch">` is a useful tool that you can leverage with Turbo Drive
     when you need to make certain pages readily available to the user.
     
-    In our example, we infer that we are adding this prefetch link on every page. Make
-    sure you have this in mind, because if you add a prefetch link in a *specific* page,
+    In our example, we want to add this prefetch link on every page (e.g. in `base.html.twig`).
+    Make sure you have this in mind, because if you add a prefetch link in a *specific* page,
     this won't stay in the `<head>` element for other pages!
   features:
     multiple_choice:
