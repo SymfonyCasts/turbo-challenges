@@ -71,7 +71,7 @@ how_drive_works_3:
           Turbo merges the new `<head>` tag by adding new `<script>` and `<link>` tags but replacing any
           other tags with those from the new page. It then replaces the `<body>`.
       correct: d
-      
+
 javascript:
   question: |
     What is the biggest way in which JavaScript works differently on Turbo-enabled websites?
@@ -111,7 +111,7 @@ javascript_2:
     executed. When the actual page finishes loading, turbo will replace the cached page
     with the new one, causing another execution of its JavaScript, thus potentially causing
     issues.
-  
+    
     Also, executing the same JavaScript code on every page is wasteful! When you put JavaScript
     in the `<head>` tag, it's only parsed and executed *one* time, which means there is less
     work to do each time Turbo Drive navigates to a new page.
@@ -206,7 +206,7 @@ disabling:
           Once you install and set up turbo (i.e. include Turbo in your main
           JavaScript entry), you cannot disable it, except on a link-by-link basis.
       correct: c
-      
+
 forms:
   question: |
     In this video, we fixed our forms by making them respond with a 422 status code
@@ -214,7 +214,7 @@ forms:
   explanation: |
     A 422 status when a form has errors is a better way of handling a form failure. It
     also tells Turbo that there has been an error and needs to re-render the page.
-  
+    
     Previously, when we returned a 200 status code, it made Turbo think that our form
     did submit successfully. But, when a form submits successfully, we should redirect.
     This... confused Turbo, which thought that our form did submit successfully...
@@ -521,3 +521,479 @@ analytics_2:
           has a preview, but *not* `turbo:before-render`. `turbo:load` only executes on the first
           page load but doesn't execute later.
       correct: a
+
+asset-tracking:
+  question: |
+    I just came from our company meeting and I have big news! We have just released a
+    new version of our main CSS file!
+    
+    But I'm getting complaints from users who are unable to see those changes! Oh no!
+  
+    What is happening? Why are some users seeing out-of-date CSS?
+  explanation: |
+    The reason we aren't seeing up to date CSS is that turbo *thinks* that it shouldn't
+    update those files which have the same name!
+    
+    Since Turbo is now performing full page reloads, our CSS stays the same until
+    we do a full refresh in our Browsers.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because when Turbo looks at the new files and see that they have
+          the same name as the ones we already have, it assumes they are
+          the same file and doesn't overwrite them!
+        b: |
+          Because our browser has cached our CSS and JavaScripts and the user
+          needs to perform a full refresh in order for Turbo to get the new
+          sources.
+        c: |
+          Because we forgot to enable file versioning in our application. This
+          alone would fix the issue, since Turbo by default reloads all files
+          with different versioning so that it keeps our CSS and JavaScript up
+          to date!
+      correct: a
+
+asset-tracking_2:
+  question: |
+    Now that we understand why some users aren't seeing the new CSS file, what could
+    we change on our app to prevent this in the future?
+  explanation: |
+    One of the few instances in which we can say that a full reload is *needed* is when
+    our frontend code changes (JavaScript or CSS)!
+    
+    By adding file versioning to our system, we can make sure that new files are downloaded once
+    they change. But this alone is not enough! Webpack prevents similar named files with
+    different hashes from running! And besides, if they did run, we would be duplicating
+    them on our `<head>` element: the old *and* new CSS/JavaScript files would be loaded on the same page!
+    
+    By leveraging the `data-turbo-track="reload"` attribute on our `<script>` and `<link>`
+    tags, we can make Turbo Drive force a reload of the page if the collection of files
+    in the `<head>` element ever changes! This combination of techniques is our best
+    friend!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          By modifying `config/packages/webpack_encore.yaml` and adding
+  
+          ```yml
+          'data-turbo-track': reload
+          ```
+
+          To both `link_attributes` and `script_attributes`.
+        b: |
+          By making sure you enable versioning in Webpack Encore:
+          
+          ```javascript
+          .enableVersioning(Encore.isProduction())
+          ```
+          
+          By modifying `config/packages/webpack_encore.yaml` and adding
+          
+          ```yml
+          'data-turbo-track': reload
+          ```
+          
+          To both `link_attributes` and `script_attributes`.
+        c: |
+          By modifying `config/packages/webpack_encore.yaml` and adding
+  
+          ```yml
+          'data-turbo-track': refresh
+          ```
+
+          To `link_attributes`.
+        d: |
+          By making sure you enable versioning in Webpack Encore:
+  
+          ```javascript
+          .enableVersioning(Encore.isProduction())
+          ```
+
+          And by modifying `config/packages/webpack_encore.yaml` and adding
+
+          ```yml
+          'data-turbo-webpack': track-versioning
+          ```
+
+          To both `link_attributes` and `script_attributes`.
+      correct: b
+
+manual_visit:
+  question: |
+    On our site, there is one section that is very special: We expose the secrets to
+    creating the world's most perfect pizza. But not all users are ready for this
+    earth-shattering information. And so, I've decided to hide the entire page with
+    a button and open a big dialog on the front page of that section...
+    
+    Here's how it looks!
+    
+    ```html
+    <html>
+    <head>
+        ...
+    </head>
+    <body>
+        <p id="page_warning">
+            This page has been hidden for security reasons. Please click
+    
+            <button
+                class="btn btn-primary"
+                onclick="javascript:document.getElementById('my_great_modal').style.display: block"
+            >
+                here
+            </button>
+    
+            if you are ready to uncover some true secrets!
+        <p>
+
+        <div id="my_great_modal" style="display: none">
+            <h1>Welcome to our Pizza Section!</h1>
+    
+            <p>Proceed only if you are ready for pizza to change your life!</p>
+    
+            <button
+                class="btn btn-primary"
+                onclick="javascript:hideDialogAndShowPage()"
+            >
+                Proceed
+            </button>
+        </div>
+    
+        <div id="the_rest_of_my_page" style="display: none">
+            ...
+        </div>
+    
+        <script>
+            window.hideDialogAndShowPage = () => {
+                document.getElementById('my_great_modal').style.display='none';
+                document.getElementById('page_warning').style.display='none';
+                document.getElementById('the_rest_of_my_page').style.display='block';
+            }
+        </script>
+    </body>
+    </html>
+    ```
+    
+    This works as expected, but I'm a bit nervous about leaving too much time
+    for our users to decide. They should be quick! So I've added a timeout on
+    the main JavaScript of the page to force users *away* after a certain
+    amount of time.
+    
+    ```javascript
+    window.setTimeout(() => {
+        window.location.href = '/';
+    }, 10000);
+    ```
+    
+    How can we use Turbo Drive (instead of just `window.location.href=`)
+    to perform a page visit without doing a full refresh?
+  explanation: |
+    By using the syntax `import * as Turbo from '@hotwired/turbo'` you import *all*
+    public functions from the library into an object called `Turbo`. This enables
+    you to use some Turbo Drive specific actions in your scripts, like `Turbo.visit()`.
+    
+    > You can also use destructuring to import only the functions you need. In
+    > this case, that would be: `import { visit } from '@hotwired/turbo'`.
+    
+    > Turbo is also set automatically as a global variable once you import it anywhere in your
+    > page, so you can also use Turbo from inline scripts... though you should try avoiding
+    > those, of course 😉.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```javascript
+          import Turbo from '@hotwired/turbo';
+
+          window.setTimeout(() => {
+              Turbo.visit('/');
+          }, 10000);
+          ```
+        b: |
+          ```javascript
+          import * as Turbo from '@hotwired/turbo';
+
+          window.setTimeout(() => {
+              Turbo.location.href = '/';
+          }, 10000);
+          ```
+        c: |
+          ```javascript
+          import * as Turbo from '@hotwired/turbo';
+
+          window.setTimeout(() => {
+              Turbo.visit = '/';
+          }, 10000);
+          ```
+        d: |
+          ```javascript
+          import * as Turbo from '@hotwired/turbo';
+          
+          window.setTimeout(() => {
+              Turbo.visit('/');
+          }, 10000);
+          ```
+      correct: d
+      
+transitions:
+  question: |
+    I just came back from a meeting with our designer, and she has an *amazing* concept
+    for a new transition that we need to add to our page loads between clicks! It looks like
+    this in the CSS main file:
+    
+    ```css
+    body {
+        background-color: #fff
+        transition: background-color 0.2s;
+    }
+    
+    body.turbo-loading {
+        background-color: #f00;
+    }
+    ```
+  
+    I think this is going to look *awesome* (and won't render too many of our viewers blind)!
+    
+    Our solution to implementing this using Turbo Drive event listeners is as follows:
+  
+    ```javascript
+    document.addEventListener('turbo:visit', () => {
+        document.body.classList.add('turbo-loading');
+    });
+
+    document.addEventListener('turbo:before-render', (event) => {
+        event.detail.newBody.classList.add('turbo-loading');
+    });
+
+    document.addEventListener('turbo:render', () => {
+       document.body.classList.remove('turbo-loading');
+    });
+    ```
+    
+    But upon peer-review, our coworker tells us that this is wrong! Our `turbo:render`
+    callback is missing a `requestAnimationFrame`!
+    
+    ```javascript
+    document.addEventListener('turbo:render', () => {
+        requestAnimationFrame(() => {
+           document.body.classList.remove('turbo-loading');
+        });
+    });
+    ```
+    
+    Why do we need this?
+  explanation: |
+    `turbo:visit` will trigger immediately after a user clicks on a link to another page.
+    It will take care of transitioning our background color to `red`.
+    
+    Once the new page renders, in order to gracefully fade back into white -as opposed to
+    an instant change- we use two more events:
+    
+    `turbo:before-render` re-adds this class to the newly added `<body>` element so that it
+    *starts* red.
+    
+    Finally, once the rendering finishes, `turbo:render` removes it in the browser's next frame,
+    so that the browser can play the transition to the white color. If we didn't add
+    `requestAnimationFrame`, the transition would *not* happen at all, since there would be
+    no time for the browser to "pain" the screen in the previous state before the transition.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          We need to implement all of these callbacks within `requestAnimationFrame` so
+          our browser can animate all of the transitions.
+        b: |
+          Because in that particular case, both events `turbo:before-render`
+          and `turbo:render` execute in the same frame. This means that our class would
+          be added *and* removed in the same frame and the transition would not take place.
+        c: |
+          Because we use `requestAnimationFrame` every time we need to implement a CSS
+          transition.
+        d: |
+          Because in this particular case, our last transition wouldn't have time to complete
+          animating unless we defer our last callback to another frame. This will happen
+          *after* the transition has finished.
+      correct: b
+  
+transitions_2:
+  question: |
+    Why is it hard in Turbo to implement page load transitions in versions 7.0.0 beta?
+  explanation: |
+    The fact that we cannot pause a render operation in Turbo before 7.0.0-rc.1 means that
+    our transition, if we make one, will always take the time it takes for the Ajax call
+    to finish. This makes it hard for us to perform complex transitions when we can't
+    *pause* the render until our animation properly finishes.
+  
+    > Notice that starting with version 7.0.0-rc.1 the "Pausable rendering" PR has been
+    > merged, making it easier to implement page transitions between clicks!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because there are no good event handlers to use when transitioning pages for
+          this particular purpose.
+        b: |
+          Actually, you *can* easily implement page transitions between clicks in 7.0.0 beta.
+        c: |
+          Because when a page finishes loading, Turbo replaces the `<body>` element
+          immediately, leaving no time for a transition.
+        d: |
+          Because there are other libraries that can achieve this.
+      correct: c
+
+transition_finish:
+  question: |
+    In Turbo Drive, how can we tell when a page is a preview or a freshly downloaded page?
+  explanation: |
+    Turbo adds a `data-turbo-preview` attribute to the `<html>` element whenever a preview is rendered. We
+    can use this to identify whether we're dealing with a preview or a real page in JavaScript.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```javascript
+          document.body.hasAttribute('data-turbo-preview');
+          ```
+        b: |
+          ```javascript
+          document.querySelector('body').hasAttribute('data-turbo-preview');
+          ```
+        c: |
+          ```javascript
+          document.documentElement.hasAttribute('data-turbo-preview');
+          ```
+        d: |
+          There is no way of differenciating between a preview and a real page in
+          Turbo.
+      correct: c
+
+native_prefetch:
+  question: |
+    Imagine our website has a *very* important landing page - the route to it is
+    `app_pizzas`. We want to "prefetch" this from *every* page so that it's
+    always ready to be loaded instantly if the user wants to go there.
+    
+    Assuming we have a `{% block metas %}{% endblock %}` that we can override, what
+    is the native way to do this?
+  explanation: |
+    `<link rel="prefetch">` is a useful tool that you can leverage with Turbo Drive
+    when you need to make certain pages readily available to the user.
+    
+    In our example, we want to add this prefetch link on every page (e.g. in `base.html.twig`).
+    Make sure you have this in mind, because if you add a prefetch link in a *specific* page,
+    this won't stay in the `<head>` element for other pages!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <link rel="prefetch" src="{{ path('app_pizzas') }}">
+          ```
+        b: |
+          ```twig
+          <link rel="prefetch" href="{{ path('app_pizzas') }}">
+          ```
+        c: |
+          ```twig
+          <a rel="prefetch" href="{{ path('app_pizzas') }}"></a>
+          ```
+        d: |
+          ```twig
+          <meta rel="prefetch" href="{{ path('app_pizzas') }}">
+          ```
+      correct: b
+
+lazy_frame:
+  question: |
+    What is a Turbo Frame and what does it do?
+  explanation: |
+    The `<turbo-frame>` HTML element is a custom element that allows us
+    to make areas of our site navigate independently of the rest of our site.
+    
+    You can use Turbo Frames if you want navigation (e.g. link clicks and form submits) to
+    happen (or "stay") inside of a specific area, instead of affecting the entire page.
+    area of the page, instead of having the whole page refreshed.
+    
+    Another use is when you want a part of your page to load lazily via Ajax, after
+    the rest of your page has loaded.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          A Turbo Frame is an `<iframe>` element in a page that has extra
+          functionality, like loading pages via Ajax calls.
+        b: |
+          Turbo Frames is a system that allows you to create complex animations
+          in our web pages by making Ajax calls.
+        c: |
+          A Turbo Frame is an area of our page in which we can load content and
+          update it via Ajax calls that return HTML. It behaves similarly to the
+          old `<iframe>` system.
+        d: |
+          A Turbo Frame is an area of our page that has the ability to stay loaded
+          while other parts of our page change. It is mainly used as navigation bars.
+      correct: c
+
+frames_find_frames:
+  question: |
+    My website has a terribly complex sidebar! Our project manager asked us to extract
+    it to a separate route so that we could load it lazily using Turbo Frames. This
+    work is done! Our route has the name `_app_nav`, and it renders a frame with an id of
+    `app_nav_frame`.
+    
+    How could we load this in our main template?
+  explanation: |
+    The `src=""` attribute tells Turbo to make an Ajax callto this URL to fetch the frame.
+    Once it does, it reads the `id` attribute of the original `<turbo-frame>`
+    (`id="app_nav_frame"`) and finds a `turbo-frame` with that *same* id inside the Ajax
+    response's HTML.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-frame src="{{ path('_app_nav') }}"></turbo-frame>
+          ```
+        b: |
+          ```twig
+          <turbo-frame id="app_nav_frame"></turbo-frame>
+          ```
+        c: |
+          ```twig
+          <turbo-frame id="_app_nav" src="{{ path('app_nav_frame') }}"></turbo-frame>
+          ```
+        d: |
+          ```twig
+          <turbo-frame id="app_nav_frame" src="{{ path('_app_nav') }}"></turbo-frame>
+          ```
+      correct: d
+
+frames_find_frames_2:
+  question: |
+    When we load a Turbo Frame, we need to specify an `id` property both in the frame
+    on the page that does the loading, and on the frame in the rendered fragment.
+    
+    Why?
+  explanation: |
+    A core feature of Turbo Frames is the ability to fetch a full page via Ajax... but then
+    *only* find and use the `<turbo-frame>` inside whose `id` matches the frame id that
+    *initiated* the request.
+    
+    This means that several frames can load *the same* URL and only take the parts that
+    belong to that particular frame for updating it.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because Turbo needs to know if the rendered fragment matches the frame that
+          did the request, since URLs can be hacked.
+        b: |
+          The rendered response can have any id. Turbo just looks at `<turbo-frame>`
+          elements within it and will only render that part of the response.
+        c: |
+          Because Turbo will look at the part of the rendered response
+          that exactly matches the `<turbo-frame id="">` pattern and only render that
+          part.
+      correct: c
