@@ -1,0 +1,130 @@
+lazy_frame_full_frame:
+  question: |
+    My animal rescue website has a page with very useful contact numbers that
+    people should use if they see a stray cat or dog. But, as usefull as this is,
+    I'd like to show this information at the bottom of every page!
+    
+    My footer looks like this:
+    
+    ```twig
+    <div id="footer">
+      <p>Emergency Contact Numbers:</p>
+
+      <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}"></turbo-frame>
+    </div>
+    ```
+    
+    And my contact page has all of its content in the `body` block.
+    
+    ```twig
+    {% block body %}
+        <h1>Useful Contact Numbers</h1>
+        
+        <p>Here are some usefull contact numbers in case you are in an emergency and
+        in need of help!</p>
+        
+        <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+        
+        <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+        
+        <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+    {% endblock %}
+    ```
+    
+    How can I make turbo only load *only* the contact information into my footer every
+    time I load a page?
+  explanation: |
+    One of the best aspects of lazy frames, is that you can load only parts of a page into
+    a frame. This way you can reuse your routes without the need of creating special
+    urls for partial renders!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          {% block body %}
+              <h1>Useful Contact Numbers</h1>
+  
+              <p>Here are some usefull contact numbers in case you are in an emergency and
+              in need of help!</p>
+  
+              <turbo-frame id="contact-numbers">
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+      
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+      
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+        b: |
+          {% block body %}
+              <turbo-frame id="contact-numbers">
+                  <h1>Useful Contact Numbers</h1>
+    
+                  <p>Here are some usefull contact numbers in case you are in an emergency and
+                  in need of help!</p>
+
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+        c: |
+          {% block body %}
+              <h1>Useful Contact Numbers</h1>
+
+              <p>Here are some usefull contact numbers in case you are in an emergency and
+              in need of help!</p>
+
+              <turbo-frame src="{{ path('contact_numbers') }}">
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+        d: |
+          {% block body %}
+              <h1>Useful Contact Numbers</h1>
+
+              <p>Here are some usefull contact numbers in case you are in an emergency and
+              in need of help!</p>
+
+              <turbo-frame>
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+      correct: a
+  
+lazy_frame_full_frame_2:
+  question: |
+    Based on the last question, if I wanted my footer frame to load lazily, only when
+    the user scrolls down to the footer of my page, how can I achieve this?
+  explanation: |
+    If a frame you need to render is too heavy and uses many resources to load, you can
+    economize a bit of resources by adding `loading="lazy"` on `<turbo-frame>` element.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```html
+          <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}" data-turbo-frame="lazy"></turbo-frame>
+          ```
+        b: |
+          ```html
+          <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}" data-turbo-load="lazy"></turbo-frame>
+          ```
+        c: |
+          ```html
+          <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}" loading="lazy"></turbo-frame>
+          ```
+        d: |
+          There is no such feature in Turbo Frames. All of your frames will load as soon as
+          the `<turbo-frame>` elements are ready in the DOM.
+      correct: c
