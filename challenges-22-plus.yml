@@ -128,3 +128,65 @@ lazy_frame_full_frame_2:
           There is no such feature in Turbo Frames. All of your frames will load as soon as
           the `<turbo-frame>` elements are ready in the DOM.
       correct: c
+
+frame_target:
+  question: |
+    When we click on a link inside a Turbo Frame, Turbo will look for a reference to that frame in our
+    response HTML so that it can replace only that part of our page. But if our link takes us to a
+    completely different page with no such reference, we'll have an explosion on our site!
+    
+    How can we make our links in a frame change the entire page from within a Turbo Frame?
+  explanation: |
+    Much like with old frames, `target` works by directing our navigation to different parts of
+    our frame structure. You can also set `target` to the `id` of another Turbo Frame for the link
+    to *work* on that frame!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```HTML
+          <turbo-frame id="my-frame" target="top"></turbo-frame>
+          ```
+        b: |
+          ```HTML
+          <turbo-frame id="my-frame" target="_top"></turbo-frame>
+          ```
+        c: |
+          ```HTML
+          <turbo-frame id="my-frame" data-turbo-target="_top"></turbo-frame>
+          ```
+        d: |
+          ```HTML
+          <turbo-frame id="my-frame" data-target="_top"></turbo-frame>
+          ```
+      correct: b
+
+read_more_frame:
+  question: |
+    In our Turbo Frame with `target="_top"` we found that one of our links needed to load inside
+    the frame, instead of reloading our whole page.
+    
+    How can we achieve this?
+  explanation: |
+    Instead of using `target`, when directing `<a>` elements or form actions onto Turbo Frames,
+    we use the `data-turbo-frame` attribute.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```HTML
+          <a href="{{ path('my_link') }}" target="my-frame">Link</a>
+          ```
+        b: |
+          ```HTML
+          <a href="{{ path('my_link') }}" data-turbo-target="my-frame">Link</a>
+          ```
+        c: |
+          ```HTML
+          <a href="{{ path('my_link') }}" data-target="my-frame">Link</a>
+          ```
+        d: |
+          ```HTML
+          <a href="{{ path('my_link') }}" data-turbo-frame="my-frame">Link</a>
+          ```
+      correct: d
