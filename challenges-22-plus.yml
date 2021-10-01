@@ -36,7 +36,7 @@ lazy_frame_full_frame:
   explanation: |
     One of the best aspects of frames, is that you can load only parts of a page into
     a frame. This way you can reuse existing routes without needing to create special
-    urls for partial renders!
+    urls that render only parts of your page!
   features:
     multiple_choice:
       choices:
