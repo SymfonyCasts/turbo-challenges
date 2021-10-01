@@ -2,7 +2,7 @@ lazy_frame_full_frame:
   question: |
     My animal rescue website has a page with very useful contact numbers that
     people should use if they see a stray cat or dog. And since this info is *so* useful,
-    I'd like to show this information at the bottom of every page!
+    I'd like to also show this information at the bottom of every page!
     
     My footer looks like this:
     
