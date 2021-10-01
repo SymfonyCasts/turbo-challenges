@@ -1,8 +1,8 @@
 lazy_frame_full_frame:
   question: |
-    My animal rescue website has a page with very useful contact numbers that
-    people should use if they see a stray cat or dog. And since this info is *so* useful,
-    I'd like to also show this information at the bottom of every page!
+    My animal rescue website has a page with very useful contact numbers.
+    And since this info is *so* useful, I'd like to also show this information
+    at the bottom of every page!
     
     My footer looks like this:
     
@@ -30,9 +30,8 @@ lazy_frame_full_frame:
         <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
     {% endblock %}
     ```
-    
-    How can I make turbo only load *only* the contact information into my footer every
-    time I load a page?
+  
+    How can I make turbo load *only* the contact information into my footer?
   explanation: |
     One of the best aspects of frames, is that you can load only parts of a page into
     a frame. This way you can reuse existing routes without needing to create special
@@ -137,9 +136,10 @@ frame_target:
     
     How can we make all links in a frame navigate the *entire* page instead of just the frame?
   explanation: |
-    Much like with old frames, `target` works by directing our navigation to different parts of
-    our frame structure. You can also set `target` to the `id` of another Turbo Frame for the link
-    to *work* on that frame!
+    Following the `<a>` element's `target` attribute concept, which can direct our navigation to different
+    parts of a page with an iframe structure, or use `_top` to navigate the entirepage. You can also
+    set `target` in `<turbo-frame>`s to the `id` of another Turbo Frame for the link to *work* on that
+    frame!
   features:
     multiple_choice:
       choices:
