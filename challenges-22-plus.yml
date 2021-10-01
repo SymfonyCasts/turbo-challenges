@@ -44,7 +44,7 @@ lazy_frame_full_frame:
           {% block body %}
               <h1>Useful Contact Numbers</h1>
   
-              <p>Here are some usefull contact numbers in case you are in an emergency and
+              <p>Here are some useful contact numbers in case you are in an emergency and
               in need of help!</p>
   
               <turbo-frame id="contact-numbers">
@@ -60,7 +60,7 @@ lazy_frame_full_frame:
               <turbo-frame id="contact-numbers">
                   <h1>Useful Contact Numbers</h1>
     
-                  <p>Here are some usefull contact numbers in case you are in an emergency and
+                  <p>Here are some useful contact numbers in case you are in an emergency and
                   in need of help!</p>
 
                   <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
@@ -74,7 +74,7 @@ lazy_frame_full_frame:
           {% block body %}
               <h1>Useful Contact Numbers</h1>
 
-              <p>Here are some usefull contact numbers in case you are in an emergency and
+              <p>Here are some useful contact numbers in case you are in an emergency and
               in need of help!</p>
 
               <turbo-frame src="{{ path('contact_numbers') }}">
@@ -89,7 +89,7 @@ lazy_frame_full_frame:
           {% block body %}
               <h1>Useful Contact Numbers</h1>
 
-              <p>Here are some usefull contact numbers in case you are in an emergency and
+              <p>Here are some useful contact numbers in case you are in an emergency and
               in need of help!</p>
 
               <turbo-frame>
@@ -133,7 +133,7 @@ frame_target:
   question: |
     When we click on a link inside a Turbo Frame, Turbo will look for a reference to that frame in our
     response HTML so that it can use only that part of the new page. But if our link takes us to a
-    completely different page with no matching `turbo-frame`, we'll have an explosion on our site! 🔥 
+    completely different page with no matching `turbo-frame`, we'll have an explosion on our site! 🔥
     
     How can we make all links in a frame navigate the *entire* page instead of just the frame?
   explanation: |
