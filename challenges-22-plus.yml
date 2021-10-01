@@ -133,7 +133,7 @@ frame_target:
   question: |
     When we click on a link inside a Turbo Frame, Turbo will look for a reference to that frame in our
     response HTML so that it can use only that part of the new page. But if our link takes us to a
-    completely different page with no such reference, we'll have an explosion on our site!
+    completely different page with no matching `turbo-frame`, we'll have an explosion on our site! 🔥 
     
     How can we make our links in a frame change the entire page from within a Turbo Frame?
   explanation: |
