@@ -20,7 +20,7 @@ lazy_frame_full_frame:
     {% block body %}
         <h1>Useful Contact Numbers</h1>
         
-        <p>Here are some usefull contact numbers in case you are in an emergency and
+        <p>Here are some useful contact numbers in case you are in an emergency and
         in need of help!</p>
         
         <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
