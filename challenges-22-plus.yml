@@ -34,7 +34,7 @@ lazy_frame_full_frame:
     How can I make turbo only load *only* the contact information into my footer every
     time I load a page?
   explanation: |
-    One of the best aspects of lazy frames, is that you can load only parts of a page into
+    One of the best aspects of frames, is that you can load only parts of a page into
     a frame. This way you can reuse your routes without the need of creating special
     urls for partial renders!
   features:
