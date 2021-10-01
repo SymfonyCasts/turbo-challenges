@@ -135,7 +135,7 @@ frame_target:
     response HTML so that it can use only that part of the new page. But if our link takes us to a
     completely different page with no matching `turbo-frame`, we'll have an explosion on our site! 🔥 
     
-    How can we make our links in a frame change the entire page from within a Turbo Frame?
+    How can we make all links in a frame navigate the *entire* page instead of just the frame?
   explanation: |
     Much like with old frames, `target` works by directing our navigation to different parts of
     our frame structure. You can also set `target` to the `id` of another Turbo Frame for the link
