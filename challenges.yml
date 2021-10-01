@@ -997,3 +997,205 @@ frames_find_frames_2:
           that exactly matches the `<turbo-frame id="">` pattern and only render that
           part.
       correct: c
+
+lazy_frame_full_frame:
+  question: |
+    My animal rescue website has a page with very useful contact numbers.
+    And since this info is *so* useful, I'd like to also show this information
+    at the bottom of every page!
+    
+    My footer looks like this:
+    
+    ```twig
+    <div id="footer">
+      <p>Emergency Contact Numbers:</p>
+    
+      <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}"></turbo-frame>
+    </div>
+    ```
+    
+    And my contact page has all of its content in the `body` block.
+    
+    ```twig
+    {% block body %}
+        <h1>Useful Contact Numbers</h1>
+    
+        <p>Here are some useful contact numbers in case you are in an emergency and
+        in need of help!</p>
+    
+        <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+    
+        <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+    
+        <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+    {% endblock %}
+    ```
+    
+    How can I make turbo load *only* the contact information into my footer?
+  explanation: |
+    One of the best aspects of frames, is that you can load only parts of a page into
+    a frame. This way you can reuse existing routes without needing to create special
+    urls that render only parts of your page!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          {% block body %}
+              <h1>Useful Contact Numbers</h1>
+          
+              <p>Here are some useful contact numbers in case you are in an emergency and
+              in need of help!</p>
+          
+              <turbo-frame id="contact-numbers">
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+          
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+          
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+          ```
+        b: |
+          ```twig
+          {% block body %}
+              <turbo-frame id="contact-numbers">
+                  <h1>Useful Contact Numbers</h1>
+          
+                  <p>Here are some useful contact numbers in case you are in an emergency and
+                  in need of help!</p>
+          
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+          
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+          
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+          ```
+        c: |
+          ```twig
+          {% block body %}
+              <h1>Useful Contact Numbers</h1>
+          
+              <p>Here are some useful contact numbers in case you are in an emergency and
+              in need of help!</p>
+          
+              <turbo-frame src="{{ path('contact_numbers') }}">
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+          
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+          
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+          ```
+        d: |
+          ```twig
+          {% block body %}
+              <h1>Useful Contact Numbers</h1>
+          
+              <p>Here are some useful contact numbers in case you are in an emergency and
+              in need of help!</p>
+          
+              <turbo-frame>
+                  <p><strong>Hope for Paws</strong>: +1 310-880-1416</p>
+          
+                  <p><strong>National Mill Dog Rescue</strong>: +1 719-683-3334</p>
+          
+                  <p><strong>Catskill Animal Sanctuary</strong>: +1 845-336-8447</p>
+              </turbo-frame>
+          {% endblock %}
+          ```
+      correct: a
+
+lazy_frame_full_frame_2:
+  question: |
+    Based on the last question, if I wanted my footer frame to load lazily, only when
+    the user scrolls down to the footer of my page, how can I achieve this?
+  explanation: |
+    If a frame you need to render is too heavy and uses many resources to load, you can
+    economize a bit of resources by adding `loading="lazy"` on a `<turbo-frame>` element.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```html
+          <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}" data-turbo-frame="lazy"></turbo-frame>
+          ```
+        b: |
+          ```html
+          <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}" data-turbo-load="lazy"></turbo-frame>
+          ```
+        c: |
+          ```html
+          <turbo-frame id="contact-numbers" src="{{ path('contact_numbers') }}" loading="lazy"></turbo-frame>
+          ```
+        d: |
+          There is no such feature in Turbo Frames. All of your frames will load as soon as
+          the `<turbo-frame>` elements are ready in the DOM.
+      correct: c
+
+frame_target:
+  question: |
+    When we click on a link inside a Turbo Frame, Turbo will look for a reference to that frame in our
+    response HTML so that it can use only that part of the new page. But if our link takes us to a
+    completely different page with no matching `turbo-frame`, we'll have an explosion on our site! 🔥
+    
+    How can we make all links in a frame navigate the *entire* page instead of just the frame?
+  explanation: |
+    Turbo Frames follows the `<a>` element's `target` attribute concept, which can direct our navigation
+    to different parts of a page with an iframe structure, or use `_top` to navigate the entire page.
+    
+    > You can also set the `target` attribute in a `<turbo-frame>` to the `id` of another Turbo Frame for
+    > the link to *work* on that frame!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```HTML
+          <turbo-frame id="my-frame" target="top"></turbo-frame>
+          ```
+        b: |
+          ```HTML
+          <turbo-frame id="my-frame" target="_top"></turbo-frame>
+          ```
+        c: |
+          ```HTML
+          <turbo-frame id="my-frame" data-turbo-target="_top"></turbo-frame>
+          ```
+        d: |
+          ```HTML
+          <turbo-frame id="my-frame" data-target="_top"></turbo-frame>
+          ```
+      correct: b
+
+read_more_frame:
+  question: |
+    In our Turbo Frame with `target="_top"` we found that one of our links needed to load inside
+    the frame, instead of reloading our whole page.
+    
+    How can we achieve this?
+  explanation: |
+    Instead of using `target`, when directing `<a>` elements or form actions onto Turbo Frames,
+    we use the `data-turbo-frame` attribute.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```HTML
+          <a href="{{ path('my_link') }}" target="my-frame">Link</a>
+          ```
+        b: |
+          ```HTML
+          <a href="{{ path('my_link') }}" data-turbo-target="my-frame">Link</a>
+          ```
+        c: |
+          ```HTML
+          <a href="{{ path('my_link') }}" data-target="my-frame">Link</a>
+          ```
+        d: |
+          ```HTML
+          <a href="{{ path('my_link') }}" data-turbo-frame="my-frame">Link</a>
+          ```
+      correct: d
