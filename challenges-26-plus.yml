@@ -1,0 +1,58 @@
+frame_loading:
+  question: |
+    Our site has a sidebar that takes forever to load, so our project
+    manager wanted us to extract it into a lazy Turbo Frame.
+    
+    Now he wants us to show a loading indicator whenever we are
+    loading its contents! Here's the loading code:
+    
+    ```html
+    <turbo-frame id="app_sidebar">
+        {% include('templates/_busySidebar.html.twig') %}
+    
+        <span class="frame-loading-show fas fa-spinner fa-spin">
+        </span>
+    </turbo-frame>
+    ```
+    
+    How can I show and hide this spinner *only* when the turbo frame
+    is busy?
+  explanation: |
+    Whenever Turbo Frames is fetching HTML into a frame, it will add
+    a `busy` attribute to its `<turbo-frame>` element. This is useful
+    for us to add all kinds of effects to it while loading!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```css
+          turbo-frame .frame-loading-show {
+              display: none;
+          }
+          
+          turbo-frame[busy] .frame-loading-show {
+              display: inline-block;
+          }
+          ```
+        b: |
+          ```css
+          turbo-frame[busy] .frame-loading-show {
+              display: inline-block;
+          }
+          ```
+        c: |
+          ```css
+          turbo-frame .frame-loading-show {
+              display: none;
+          }
+
+          turbo-frame[loading] .frame-loading-show {
+              display: inline-block;
+          }
+          ```
+        d: |
+          It's not possible to achieve this with *only* css. You would
+          have to hook events in a stimulus controller and add/remove
+          the classes when users click on a link to navigate within
+          the frame.
+      correct: a
