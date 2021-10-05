@@ -56,3 +56,45 @@ frame_loading:
           the classes when users click on a link to navigate within
           the frame.
       correct: a
+
+form_disable_submit:
+  question: |
+    I was going through my website files and I saw this piece of code
+    in `app.js`:
+    
+    ```js
+    document.addEventListener('turbo:submit-start', (event) => {
+        event.detail.formSubmission.submitter.classList.toggle('loading');
+    });
+    ```
+    
+    This must be the code responsible for adding a loading state to
+    the buttons in my forms!
+    
+    How does the Turbo event `turbo:submit-start` work?
+  explanation: |
+    Turbo will fire the `turbo:submit-start` event on *any* form that gets
+    submitted weather it belongs to a frame or not.
+    
+    > There are all kinds of information included within the
+    > `event.detail.formSubmission` object!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          `turbo:submit-start` gets dispatched every time a form gets submitted
+          from within a turbo frame and contains very useful information about
+          the form that is being submitted.
+        b: |
+          `turbo:submit-start` gets dispatched every time a form is rendered on a
+          turbo frame and contains very useful information about the form that is
+          being rendered.
+        c: |
+          `turbo:submit-start` gets dispatched every time a form is rendered *anywhere*
+          on our site and contains very useful information about the form that is
+          being rendered.
+        d: |
+          `turbo:submit-start` gets dispatched every time a form gets submitted
+          *anywhere* on our site and contains very useful information about the
+          form that is being submitted.
+      correct: d
