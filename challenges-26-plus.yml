@@ -3,8 +3,8 @@ frame_loading:
     Our site has a sidebar that takes forever to load, so our project
     manager wanted us to extract it into a lazy Turbo Frame.
     
-    Now he wants us to show a loading indicator whenever we are
-    loading its contents! Here's the loading code:
+    Now he wants us to show a loading indicator while it's loading!
+    Here's the loading code:
     
     ```html
     <turbo-frame id="app_sidebar">
@@ -51,9 +51,8 @@ frame_loading:
           }
           ```
         d: |
-          It's not possible to achieve this with *only* css. You would
-          have to hook events in a stimulus controller and add/remove
-          the classes when users click on a link to navigate within
+          You actually do it with JavaScript! Create a stimulus controller and
+          add/remove the classes when users click on a link to navigate within
           the frame.
       correct: a
 
@@ -83,18 +82,14 @@ form_disable_submit:
       choices:
         a: |
           `turbo:submit-start` gets dispatched every time a form gets submitted
-          from within a turbo frame and contains very useful information about
-          the form that is being submitted.
+          from within a turbo frame.
         b: |
           `turbo:submit-start` gets dispatched every time a form is rendered on a
-          turbo frame and contains very useful information about the form that is
-          being rendered.
+          turbo frame.
         c: |
           `turbo:submit-start` gets dispatched every time a form is rendered *anywhere*
-          on our site and contains very useful information about the form that is
-          being rendered.
+          on our site.
         d: |
           `turbo:submit-start` gets dispatched every time a form gets submitted
-          *anywhere* on our site and contains very useful information about the
-          form that is being submitted.
+          *anywhere* on our site.
       correct: d
