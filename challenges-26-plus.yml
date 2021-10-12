@@ -74,7 +74,7 @@ form_disable_submit:
     How does the Turbo event `turbo:submit-start` work?
   explanation: |
     Turbo will fire the `turbo:submit-start` event on *any* form that gets
-    submitted weather it belongs to a frame or not.
+    submitted whether it belongs to a frame or not.
     
     > There are all kinds of information included within the
     > `event.detail.formSubmission` object!
