@@ -18,7 +18,7 @@ frame_loading:
     How can I show and hide this spinner *only* when the turbo frame
     is busy?
   explanation: |
-    Whenever Turbo Frames is fetching HTML into a frame, it will add
+    Whenever a Turbo Frame is making an Ajax request, it will add
     a `busy` attribute to its `<turbo-frame>` element. This is useful
     for us to add all kinds of effects to it while loading!
   features:
