@@ -59,7 +59,7 @@ frame_loading:
 
 form_disable_submit:
   question: |
-    I was going through my website files and I saw this piece of code
+    I was going through my site's JavaScript and I saw this piece of code
     in `app.js`:
     
     ```js
