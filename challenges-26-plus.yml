@@ -8,7 +8,7 @@ frame_loading:
     
     ```html
     <turbo-frame id="app_sidebar">
-        {% include('templates/_busySidebar.html.twig') %}
+        {{ include('templates/_busySidebar.html.twig') }}
     
         <span class="frame-loading-show fas fa-spinner fa-spin">
         </span>
