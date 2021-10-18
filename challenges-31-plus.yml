@@ -1,0 +1,60 @@
+frame_redirect:
+  question: |
+    Our website has a very special Analytics tool made by us that does *not* use
+    any cookies! Our tool has a very convenient Symfony Package that we can use
+    while processing our requests.
+    
+    In our last weekly meeting, our boss told us that we need to log the name
+    of the frame making every request using this tool.
+    
+    How can we get this information form a controller?
+  explanation: |
+    Whenever Turbo sends a request from one of its Frames, it sends the header
+    `Turbo-Frame:` and the id of the frame it's sending the request from. This
+    is useful for us to know what to do with it!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```php
+          $frameId = $request->headers->get('Turbo-Frame', '_top');
+          ```
+        b: |
+          ```php
+          $frameId = $request->headers->get('Turbo-Frame-Id', '_top');
+          ```
+        c: |
+          ```php
+          $frameId = $request->headers->get('Frame', '_top');
+          ```
+        d: |
+          ```php
+          $frameId = $request->headers->get('Turbo', '_top');
+          ```
+      correct: a
+
+modal_frame_close:
+  question: |
+    In this video we've learned about the event `turbo:submit-end`. What
+    is the difference between it and `turbo:submit-start`
+  explanation: |
+    The `turbo:submit-end` event happens *after* a form has been submitted and
+    therefore it contains information about the response from the controller.
+    
+    > Turbo form events are different from other events in that they are fired
+    > from the `<form>` element instead of the `Document`, so you can attach
+    > event listeners to the forms themselves or any of their parent elements.
+  features:
+    choices:
+      a: |
+        `turbo:submit-end` happens after we submit a form and before we
+        get any response back.
+      b: |
+        `turbo:submit-end` happens after we submit a form and contains
+        the HTML of the response.
+      c: |
+        `turbo:submit-end` happens after we submit a form and contains
+        information about the response, like the `success` key.
+      d: |
+        `turbo:submit-end` happens after `turbo:submit-start` and allows
+        us to make asynchronous operations while waiting for a response.
