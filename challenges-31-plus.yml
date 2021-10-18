@@ -58,3 +58,28 @@ modal_frame_close:
       d: |
         `turbo:submit-end` happens after `turbo:submit-start` and allows
         us to make asynchronous operations while waiting for a response.
+    correct: c
+
+prevent_frame_rendering:
+  question: |
+    What is the difference between the `turbo:before-fetch-response` and
+    `turbo:submit-end` events?
+  explanation: |
+    The `turbo:before-fetch-request` and `turbo:before-fetch-response` events
+    allow us to cancel the submit of the form, while `turbo:submit-start` and
+    `turbo:submit-end` don't!
+  features:
+    choices:
+      a: |
+        The `turbo:before-fetch-request` event is fired before the form is submitted
+        while `turbo:submit-end` is fired after.
+      b: |
+        The `turbo:before-fetch-request` event is fired before the form is submitted
+        and it allows us to cancel the event while `turbo:submit-end` doesn't.
+      c: |
+        The `turbo:before-fetch-request` event is fired before the form is submitted
+        and it doesn't contain any extra information (such as `success`) while
+        `turbo:submit-end` does contain it.
+      d: |
+        Options b and c are correct.
+    correct: b
