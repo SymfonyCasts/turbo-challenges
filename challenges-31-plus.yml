@@ -1,13 +1,21 @@
 frame_redirect:
   question: |
-    Our website has a very special Analytics tool made by us that does *not* use
-    any cookies! Our tool has a very convenient Symfony Package that we can use
-    while processing our requests.
-    
-    In our last weekly meeting, our boss told us that we need to log the name
-    of the frame making every request using this tool.
-    
-    How can we get this information form a controller?
+    On our cart page, we have a `<turbo-frame id="cart-summary">` that renders a
+    short list of the items in our cart. This works great! But now, in our base
+    layout, we want to render a link on our sidebar that, on click, loads this
+    "cart summary" into the sidebar:
+
+    ```html
+    <turbo-frame id="sidebar">
+        <!-- ... -->
+
+        <a href="{{ path('app_cart') }}">Show Cart Summary</a>
+    </turbo>
+    ```
+
+    Unfortunately, when we try this, we get an error because the `turbo-frame`
+    looks for a `sidebar` frame on the cart page. How could me modify the cart
+    page to get this to work?
   explanation: |
     Whenever Turbo sends a request from one of its frames, it sends the header
     `Turbo-Frame:` and the id of the frame it's sending the request from. This
@@ -17,26 +25,51 @@ frame_redirect:
       choices:
         a: |
           ```php
-          $frameId = $request->headers->get('Turbo-Frame', '_top');
+          /*
+           * Renders the Cart Summary in the cart-summary turbo frame
+           */
+          public function showCartSummary(Request $request): Response
+          {
+              $frameId = $request->headers->get('Turbo-Frame', 'cart-summary');
+
+              return $this->render('cartSummary.html.twig', [
+                  frameId => $frameId,
+              ]);
+          }
           ```
         b: |
           ```php
-          $frameId = $request->headers->get('Turbo-Frame-Id', '_top');
+          /*
+           * Renders the Cart Summary in the cart-summary turbo frame
+           */
+          public function showCartSummary(Request $request): Response
+          {
+              $frameId = $request->headers->get('Turbo-Frame', '_top');
+
+              return $this->render('cartSummary.html.twig', [
+                  frameId => $frameId,
+              ]);
+          }
           ```
         c: |
           ```php
-          $frameId = $request->headers->get('Frame', '_top');
-          ```
-        d: |
-          ```php
-          $frameId = $request->headers->get('Turbo', '_top');
+          /*
+           * Renders the Cart Summary in the cart-summary turbo frame
+           */
+          public function showCartSummary(Request $request): Response
+          {
+              $frameId = $request->headers->get('Turbo-Frame', 'sidebar');
+
+              return $this->render('cartSummary.html.twig', [
+                  frameId => $frameId,
+              ]);
+          }
           ```
       correct: a
 
 modal_frame_close:
   question: |
-    In this video we've learned about the event `turbo:submit-end`. What
-    is the difference between it and `turbo:submit-start`
+    Which of the following statements is *not* true?
   explanation: |
     The `turbo:submit-end` event happens *after* a form has been submitted and
     therefore it contains information about the response from the controller.
@@ -47,39 +80,32 @@ modal_frame_close:
   features:
     choices:
       a: |
-        `turbo:submit-end` happens after we submit a form and before we
-        get any response back.
+        `turbo:submit-end` happens after we submit a form.
       b: |
-        `turbo:submit-end` happens after we submit a form and contains
-        the HTML of the response.
+        The `turbo:submit-end` event contains the HTML of the response.
       c: |
-        `turbo:submit-end` happens after we submit a form and contains
-        information about the response, like the `success` key.
-      d: |
-        `turbo:submit-end` happens after `turbo:submit-start` and allows
-        us to make asynchronous operations while waiting for a response.
-    correct: c
+        The `turbo:submit-end` event contains information about the response,
+        like the `success` key.
+    correct: b
 
 prevent_frame_rendering:
   question: |
-    What is the difference between the `turbo:before-fetch-response` and
+    Which of these statements is false about the `turbo:before-fetch-response` and
     `turbo:submit-end` events?
   explanation: |
     The `turbo:before-fetch-request` and `turbo:before-fetch-response` events
-    allow us to cancel the submit of the form, while `turbo:submit-start` and
-    `turbo:submit-end` don't!
+    allow us to cancel the rendering of the response from the form, while
+    `turbo:submit-start` and `turbo:submit-end` don't!
   features:
     choices:
       a: |
-        The `turbo:before-fetch-request` event is fired before the form is submitted
-        while `turbo:submit-end` is fired after.
+        The `turbo:before-fetch-response` event is fired from the `<body>` element
+        while `turbo:submit-end` is fired from the `<form>` element.
       b: |
-        The `turbo:before-fetch-request` event is fired before the form is submitted
-        and it allows us to cancel the event while `turbo:submit-end` doesn't.
+        The `turbo:before-fetch-response` event allows us to cancel the event,
+        while `turbo:submit-end` doesn't.
       c: |
-        The `turbo:before-fetch-request` event is fired before the form is submitted
-        and it doesn't contain any extra information (such as `success`) while
-        `turbo:submit-end` does contain it.
-      d: |
-        Options b and c are correct.
-    correct: b
+        The `turbo:before-fetch-response` event doesn't contain any extra
+        information in the `event.detail` property (such as `success`) while `turbo:submit-end`
+        does contain it.
+    correct: c
