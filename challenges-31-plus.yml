@@ -9,7 +9,7 @@ frame_redirect:
     
     How can we get this information form a controller?
   explanation: |
-    Whenever Turbo sends a request from one of its Frames, it sends the header
+    Whenever Turbo sends a request from one of its frames, it sends the header
     `Turbo-Frame:` and the id of the frame it's sending the request from. This
     is useful for us to know what to do with it!
   features:
