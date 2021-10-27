@@ -1331,7 +1331,7 @@ frame_redirect:
               $frameId = $request->headers->get('Turbo-Frame', 'cart-summary');
 
               return $this->render('cartSummary.html.twig', [
-                  frameId => $frameId,
+                  'frameId' => $frameId,
               ]);
           }
           ```
@@ -1345,7 +1345,7 @@ frame_redirect:
               $frameId = $request->headers->get('Turbo-Frame', '_top');
 
               return $this->render('cartSummary.html.twig', [
-                  frameId => $frameId,
+                  'frameId' => $frameId,
               ]);
           }
           ```
@@ -1359,7 +1359,7 @@ frame_redirect:
               $frameId = $request->headers->get('Turbo-Frame', 'sidebar');
 
               return $this->render('cartSummary.html.twig', [
-                  frameId => $frameId,
+                  'frameId' => $frameId,
               ]);
           }
           ```
@@ -1376,15 +1376,16 @@ modal_frame_close:
     > from the `<form>` element instead of the `Document`, so you can attach
     > event listeners to the forms themselves or any of their parent elements.
   features:
-    choices:
-      a: |
-        `turbo:submit-end` happens after we submit a form.
-      b: |
-        The `turbo:submit-end` event contains the HTML of the response.
-      c: |
-        The `turbo:submit-end` event contains information about the response,
-        like the `success` key.
-    correct: b
+    multiple_choice:
+      choices:
+        a: |
+          `turbo:submit-end` happens after we submit a form.
+        b: |
+          The `turbo:submit-end` event contains the HTML of the response.
+        c: |
+          The `turbo:submit-end` event contains information about the response,
+          like the `success` key.
+      correct: b
 
 prevent_frame_rendering:
   question: |
@@ -1395,16 +1396,17 @@ prevent_frame_rendering:
     allow us to cancel the rendering of the response from the form, while
     `turbo:submit-start` and `turbo:submit-end` don't!
   features:
-    choices:
-      a: |
-        The `turbo:before-fetch-response` event is fired from the `<turbo-frame>`
-        or `<form>` element that originated the request; like the `turbo:submit-end`
-        event, which is fired from the `<form>` element that originated it.
-      b: |
-        The `turbo:before-fetch-response` event allows us to cancel the event,
-        while `turbo:submit-end` doesn't.
-      c: |
-        The `turbo:before-fetch-response` event doesn't contain any extra
-        information in the `event.detail` property (such as `success`) while `turbo:submit-end`
-        does contain it.
-    correct: c
+    multiple_choice:
+      choices:
+        a: |
+          The `turbo:before-fetch-response` event is fired from the `<turbo-frame>`
+          or `<form>` element that originated the request; like the `turbo:submit-end`
+          event, which is fired from the `<form>` element that originated it.
+        b: |
+          The `turbo:before-fetch-response` event allows us to cancel the event,
+          while `turbo:submit-end` doesn't.
+        c: |
+          The `turbo:before-fetch-response` event doesn't contain any extra
+          information in the `event.detail` property (such as `success`) while `turbo:submit-end`
+          does contain it.
+      correct: c
