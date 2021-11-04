@@ -20,7 +20,7 @@ modal_redirect:
           `language`: Is a string containing the language in which our content
           was retrieved.
         d: |
-          `succeded`: Is a boolean that determines weather the fetch was
+          `succeeded`: Is a boolean that determines weather the fetch was
           successful.
       correct: c
 
@@ -48,6 +48,6 @@ frame_redirect_cache:
           cache before we call `Turbo.visit()` so that we always
           get a fresh page.
         d: |
-          Because Turbo has a bug when some times it doesn't properly
+          Because Turbo has a bug when sometimes it doesn't properly
           clear the cache after a form was successfully submitted.
       correct: a
