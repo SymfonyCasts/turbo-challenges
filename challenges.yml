@@ -1410,3 +1410,57 @@ prevent_frame_rendering:
           information in the `event.detail` property (such as `success`) while `turbo:submit-end`
           does contain it.
       correct: c
+
+modal_redirect:
+  question: |
+    Which of these properties do *not* come in the `fetchResponse` object
+    when the event `turbo:before-fetch-response` happens?
+  explanation: |
+    Feel free to explore the `fetchResponse` object in your browser console.
+    It contains many useful properties for you to make your Turbo applications
+    really powerful!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          `response`: Is an object that contains details about the server
+          response, such as `body`, `headers` `status`, `redirected`
+          and more.
+        b: |
+          `location`: Is an object that contains the information about the
+          location where the response came from.
+        c: |
+          `language`: Is a string containing the language in which our content
+          was retrieved.
+        d: |
+          `succeeded`: Is a boolean that determines weather the fetch was
+          successful.
+      correct: c
+
+frame_redirect_cache:
+  question: |
+    In our video, why do we have to add `Turbo.clearCache();` to our
+    `turbo:before-fetch-response` event handler?
+  explanation: |
+    `Turbo.clearCache()` is useful when we need to make absolutely
+    sure that, from that moment forward, our pages need to load fresh
+    *without* a cache.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because by doing `event.preventDefault();` in the line
+          before, we're preventing Turbo from clearing its cache
+          after a form successfully submitted.
+        b: |
+          Because we need to make sure that after our form submits,
+          the pages will load from scratch so that they show the
+          reflected changes (Turbo does not do this on its own)
+        c: |
+          Because it's always a good practice to clear the Turbo
+          cache before we call `Turbo.visit()` so that we always
+          get a fresh page.
+        d: |
+          Because Turbo has a bug when sometimes it doesn't properly
+          clear the cache after a form was successfully submitted.
+      correct: a
