@@ -193,7 +193,6 @@ disabling:
           <html>
               <head>
                   <title>My Template</title>
-                  <meta data-turbo="false">
                   {% block javascripts %}{% endblock %}
                   {% block stylesheets %}{% endblock %}
               </head>
