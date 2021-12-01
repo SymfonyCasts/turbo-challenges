@@ -53,3 +53,83 @@ turbo_stream_2:
               ]);
           ```
       correct: a
+
+turbo_stream_3:
+  question: |
+    In my chat application, I have a spot in the page template
+    where I need to render this main chat flow:
+
+    ```html
+    <div id="chat-messages">
+    </div>
+
+    <div id="chat-input">
+        <input type="text" id="chat-text">
+        <button id="chat-submit">Submit!</button>
+    </div>
+    ```
+
+    Now I need to have this chat stream template *inside* the `<div>` with
+    `id="chat-message"`.
+
+    How should I do it?
+  explanation: |
+    The most important features of a `turbo-stream` element are its
+    `action`, specifying how it should perform the update; and `target`
+    attributes, specifying *where* it should update.
+
+    They also are followed immediately by a `<template>` element.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-stream action="update" target="chat-messages">
+              { % for message in chat.messages % }
+              <p>
+                  <span class="user">{{ message.from }}</span>
+                  <span class="message">{{ message.text }}</span>
+              </p>
+              {% endfor %}
+          </turbo-stream>
+        ```
+        b: |
+          ```twig
+          <turbo-stream action="update" target="chat-messages">
+              <template>
+                  {% for message in chat.messages %}
+                  <p>
+                      <span class="user">{{ message.from }}</span>
+                      <span class="message">{{ message.text }}</span>
+                  </p>
+                  {% endfor %}
+              </template>
+          </turbo-stream>
+          ```
+        c: |
+          ```twig
+          <turbo-stream>
+              <template action="update" target="chat-messages">
+                  {% for message in chat.messages %}
+                  <p>
+                      <span class="user">{{ message.from }}</span>
+                      <span class="message">{{ message.text }}</span>
+                  </p>
+                  {% endfor %}
+              </template>
+          </turbo-stream>
+          ```
+        d: |
+          ```twig
+          <turbo-stream target="chat-messages">
+              <template action="update">
+                  {% for message in chat.messages %}
+                  <p>
+                      <span class="user">{{ message.from }}</span>
+                      <span class="message">{{ message.text }}</span>
+                  </p>
+                  {% endfor %}
+              </template>
+          </turbo-stream>
+          ```
+      correct: b
