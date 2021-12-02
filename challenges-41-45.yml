@@ -133,3 +133,68 @@ turbo_stream_3:
           </turbo-stream>
           ```
       correct: b
+
+stream_everything:
+  question: |
+    My awesome chat application has 2 template fragments that I need to
+    update via Turbo Streams. One, the chat messages, lives under `chat/_messages.html.twig`.
+    A second one, a list of users, is on `chat/_user-list.html.twig`.
+
+    When a user enters a message on the chat, we need to update both! (We'll see
+    how to receive server notifications soon!).
+
+    How can I accomplish this by rendering only one Turbo Stream request?
+  explanation: |
+    You can render multiple streams in one template. This is very useful to update
+    all the dynamic parts in a page in one go!
+
+    > The `replace` action tells us to replace the entire `<div>` element
+    > with the response, rather than update the contents inside it.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-stream>
+              <template action="update" target="chat-messages">
+                  {{ include('chat/_messages.html.twig') }}
+              </template>
+
+              <template action="replace" target="char-user-list">
+                  {{ include('chat/_user-list.html.twig') }}
+              </template>
+          </turbo-stream>
+          ```
+        b: |
+          ```twig
+          <turbo-stream action="update">
+              <turbo-stream-fragment target="chat-messages">
+                  <template>
+                      {{ include('chat/_messages.html.twig') }}
+                  </template>
+              </turbo-stream-fragment>
+
+              <turbo-stream-fragment target="char-user-list">
+                  <template>
+                      {{ include('chat/_user-list.html.twig') }}
+                  </template>
+              </turbo-stream>
+          </turbo-stream>
+          ```
+        c: |
+          ```twig
+          <turbo-stream action="update" target="chat-messages">
+              <template>
+                  {{ include('chat/_messages.html.twig') }}
+              </template>
+          </turbo-stream>
+
+          <turbo-stream action="replace" target="char-user-list">
+              <template>
+                  {{ include('chat/_user-list.html.twig') }}
+              </template>
+          </turbo-stream>
+          ```
+        d: |
+          There cannot be more than one `<turbo-stream>` element per request!
+      correct: c
