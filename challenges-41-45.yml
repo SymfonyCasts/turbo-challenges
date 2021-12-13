@@ -76,7 +76,7 @@ turbo_stream_3:
   explanation: |
     The most important features of a `turbo-stream` element are its
     `action`, specifying how it should perform the update; and `target`
-    attributes, specifying *where* it should update.
+    , specifying *where* it should update.
 
     They also are followed immediately by a `<template>` element... which doesn't
     really do anything, but *is* needed.
