@@ -35,7 +35,7 @@ turbo_stream_2:
         a: |
           ```php
               return $this->render('chat/index.stream.html.twig', [
-                  ], new TurboStreamResponse());
+              ], new TurboStreamResponse());
           ```
         b: |
           ```php
