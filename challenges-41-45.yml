@@ -178,7 +178,7 @@ stream_everything:
                   </template>
               </turbo-stream-fragment>
 
-              <turbo-stream-fragment target="char-user-list">
+              <turbo-stream-fragment target="chat-user-list">
                   <template>
                       {{ include('chat/_user-list.html.twig') }}
                   </template>
