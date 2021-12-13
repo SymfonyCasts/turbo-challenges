@@ -17,7 +17,7 @@ turbo_stream:
           They are used to update a part of our page periodically without
           having to perform continuous requests.
         c: |
-          They are used to add and remove Turbo Frames to our page dynamically
+          They are used to add and remove Turbo Frames to our page dynamically.
       correct: c
 
 turbo_stream_2:
