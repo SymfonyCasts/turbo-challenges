@@ -193,7 +193,7 @@ stream_everything:
               </template>
           </turbo-stream>
 
-          <turbo-stream action="replace" target="char-user-list">
+          <turbo-stream action="replace" target="chat-user-list">
               <template>
                   {{ include('chat/_user-list.html.twig') }}
               </template>
