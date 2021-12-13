@@ -12,7 +12,7 @@ turbo_stream:
       choices:
         a: |
           They are used to update another part of a page when we submit
-          from a Turbo Frame
+          from a Turbo Frame.
         b: |
           They are used to update a part of our page periodically without
           having to perform continuous requests.
