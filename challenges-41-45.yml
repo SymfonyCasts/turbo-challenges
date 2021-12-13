@@ -78,7 +78,11 @@ turbo_stream_3:
     `action`, specifying how it should perform the update; and `target`
     attributes, specifying *where* it should update.
 
-    They also are followed immediately by a `<template>` element.
+    They also are followed immediately by a `<template>` element... which doesn't
+    really do anything, but *is* needed.
+
+    Fun fact! You can also update elements using a CSS selector instead of an id. For example,
+    `targets=".chat"` (notice the *s* on "targets") would update all elements with a `chat` class.
   features:
     multiple_choice:
       choices:
