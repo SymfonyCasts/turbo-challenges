@@ -164,7 +164,7 @@ stream_everything:
                   {{ include('chat/_messages.html.twig') }}
               </template>
 
-              <template action="replace" target="char-user-list">
+              <template action="replace" target="chat-user-list">
                   {{ include('chat/_user-list.html.twig') }}
               </template>
           </turbo-stream>
