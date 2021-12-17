@@ -1463,3 +1463,218 @@ frame_redirect_cache:
           Because Turbo has a bug when sometimes it doesn't properly
           clear the cache after a form was successfully submitted.
       correct: a
+
+turbo_stream:
+  question: |
+    What are Turbo Streams NOT used for?
+  explanation: |
+    Turbo Streams allow you to update, replace or remove any (or multiple)
+    HTML elements on the page from your PHP code. When used with something 
+    like Mercure, you can even update the pages of multiple users at once - 
+    not just the current user.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          They are used to update another part of a page when we submit
+          from a Turbo Frame.
+        b: |
+          They are used to update a part of our page periodically without
+          having to perform continuous requests.
+        c: |
+          They are used to add and remove Turbo Frames to our page dynamically.
+      correct: c
+
+turbo_stream_2:
+  question: |
+    I'm building a chat application and the main chat template is located at
+    `chat/index.stream.html.twig`.
+
+    How should I render this template from a Symfony controller?
+  explanation: |
+    The response object `TurboStreamResponse()` is what makes the response special
+    so that Turbo can handle it the right way in the Browser!
+    
+    This causes Symfony to add a `Content-Type: text/vnd.turbo-stream.html` header 
+    to the response and that is what the Turbo JavaScript looks to know that it should 
+    parse and handle the contents as a stream.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```php
+              return $this->render('chat/index.stream.html.twig', [
+              ], new TurboStreamResponse());
+          ```
+        b: |
+          ```php
+              return $this->render('chat/index.stream.html.twig');
+          ```
+        c: |
+          ```php
+              return $this->render('chat/index.stream.html.twig', [
+              ], new Response());
+          ```
+        d: |
+          ```php
+              return $this->render('chat/index.stream.html.twig', [
+                  new TurboStreamResponse(),
+              ]);
+          ```
+      correct: a
+
+turbo_stream_3:
+  question: |
+    In my chat application, I have a spot in the page template
+    where I need to render this main chat flow:
+
+    ```html
+    <turbo-frame id="chat-messages">
+        { % for message in chat.messages % }
+        <p>
+            <span class="user">{{ message.from }}</span>
+    
+            <span class="message">{{ message.text }}</span>
+        </p>
+        {% endfor %}
+    </turbo-frame>
+
+    <turbo-frame id="chat-input">
+        <form method="POST" action="{{ path('app_stream_send_chat_message') }}">
+            <input type="text" id="chat-text">
+    
+            <button name="chat-submit">Submit!</button>
+        </div>
+    <turbo-frame>
+    ```
+    
+    When the user clicks "Submit!", the form submits to a controller where we send a Stream
+    update back to the Browser. The goal of that stream template is to update the chat-messages
+    element to contain the message.
+
+    What is the correct way to do that?
+  explanation: |
+    The most important features of a `turbo-stream` element are its
+    `action`, specifying how it should perform the update; and `target`,
+    specifying *where* it should update.
+
+    They also are followed immediately by a `<template>` element... which doesn't
+    really do anything, but *is* needed.
+
+    Fun fact! You can also update elements using a CSS selector instead of an id. For example,
+    `targets=".chat"` (notice the *s* on "targets") would update all elements with a `chat` class.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-stream action="append" target="chat-messages">
+              <p>
+                  <span class="user">{{ message.from }}</span>
+          
+                  <span class="message">{{ message.text }}</span>
+              </p>
+          </turbo-stream>
+          ```
+        b: |
+          ```twig
+          <turbo-stream action="append" target="chat-messages">
+              <template>
+                  <p>
+                      <span class="user">{{ message.from }}</span>
+          
+                      <span class="message">{{ message.text }}</span>
+                  </p>
+              </template>
+          </turbo-stream>
+          ```
+        c: |
+          ```twig
+          <turbo-stream>
+              <template action="append" target="chat-messages">
+                  <p>
+                      <span class="user">{{ message.from }}</span>
+          
+                      <span class="message">{{ message.text }}</span>
+                  </p>
+              </template>
+          </turbo-stream>
+          ```
+        d: |
+          ```twig
+          <turbo-stream target="chat-messages">
+              <template action="append">
+                  <p>
+                      <span class="user">{{ message.from }}</span>
+          
+                      <span class="message">{{ message.text }}</span>
+                  </p>
+              </template>
+          </turbo-stream>
+          ```
+      correct: b
+
+stream_everything:
+  question: |
+    My awesome chat application has 2 template fragments that I need to
+    update via Turbo Streams. One, the chat messages, lives under `chat/_messages.html.twig`.
+    A second one, a list of users, is on `chat/_user-list.html.twig`.
+
+    When a user enters a message on the chat, we need to update both! (We'll see
+    how to receive server notifications soon!).
+
+    How can I accomplish this by rendering only one Turbo Stream request?
+  explanation: |
+    You can render multiple streams in one template. This is very useful to update
+    all the dynamic parts in a page in one go!
+
+    > The `replace` action tells us to replace the entire `<div>` element
+    > with the response, rather than update the contents inside it.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-stream>
+              <template action="update" target="chat-messages">
+                  {{ include('chat/_messages.html.twig') }}
+              </template>
+
+              <template action="replace" target="chat-user-list">
+                  {{ include('chat/_user-list.html.twig') }}
+              </template>
+          </turbo-stream>
+          ```
+        b: |
+          ```twig
+          <turbo-stream action="update">
+              <turbo-stream-fragment target="chat-messages">
+                  <template>
+                      {{ include('chat/_messages.html.twig') }}
+                  </template>
+              </turbo-stream-fragment>
+
+              <turbo-stream-fragment target="chat-user-list">
+                  <template>
+                      {{ include('chat/_user-list.html.twig') }}
+                  </template>
+              </turbo-stream>
+          </turbo-stream>
+          ```
+        c: |
+          ```twig
+          <turbo-stream action="update" target="chat-messages">
+              <template>
+                  {{ include('chat/_messages.html.twig') }}
+              </template>
+          </turbo-stream>
+
+          <turbo-stream action="replace" target="chat-user-list">
+              <template>
+                  {{ include('chat/_user-list.html.twig') }}
+              </template>
+          </turbo-stream>
+          ```
+        d: |
+          There cannot be more than one `<turbo-stream>` element per request!
+      correct: c
