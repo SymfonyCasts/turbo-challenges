@@ -83,3 +83,28 @@ manual_stream_2:
         d: |
           Both A and C are correct.
       correct: a
+
+mercure:
+  question: |
+    What is Mercure?
+  explanation: |
+    The Mercure service is the go to application when building interactive web
+    apps such as chatrooms and the likes.
+    
+    Oh, and the Planet is called `Mercury`! :p
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Mercure is the first planet of our Solar System!
+        b: |
+          Mercure is a service that runs in a host that allows messages to be
+          pushed to web clients without having to perform an http request!
+        c: |
+          Mercure is a browser extension for Firefox and Chrome that allows
+          us to send push notifications to them!
+        d: | 
+          Both A and B are correct!
+      correct: b
+
+      
