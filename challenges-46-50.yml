@@ -107,4 +107,113 @@ mercure:
           Both A and B are correct!
       correct: b
 
-      
+listen_publish:
+  question: |
+    My chat application is finally ready to become interactive! I've just
+    installed the `symfony/ux-turbo-mercure` package and set up Mercure in
+    my server and I'm ready to receive messages from other people!
+    
+    My current template is looking like this:
+    
+    ```twig
+    <turbo-stream action="update" target="chat-messages">
+        <template>
+            {{ include('chat/_messages.html.twig') }}
+        </template>
+    </turbo-stream>
+
+    <turbo-stream action="replace" target="chat-user-list">
+        <template>
+            {{ include('chat/_user-list.html.twig') }}
+        </template>
+    </turbo-stream>
+    ```
+    
+    And I now need to listen to a `new-messages` topic in Mercure in order to
+    receive them. How is the way to do it?
+  explanation: |
+    That twig function is all you need to make your page listen to that
+    Mercure connection. It's not a *visual* component (e.g. It will not be 
+    visible in any way in our page) but a functional one!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-stream data-mercure-topic="new-messages" action="update" target="chat-messages>
+              <template>
+                  {{ include('chat/_messages.html.twig') }}
+              </template>
+          </turbo-stream>
+          ```
+        b: |
+          ```twig
+          <turbo-frame data-mercure-topic="new-messages">
+              {{ include('chat/_messages.html.twig') }}
+          <turbo-frame>
+          ```
+        c: |
+          Both A and D are correct.
+        d: |
+          ```twig
+          <div {{ turbo_stream_listen('new-messages') }}></div>
+          ```
+      correct: d
+
+mercure_jwt:
+  question: |
+    Now that mercure is installed, ready to go and my page enables it, I have 
+    the following template in my chat page that can receive new messages from
+    other users!
+    
+    ```twig
+    <div {{ turbo_stream_listen('new-messages') }}></div>
+    <turbo-frame id="chat-messages">
+        {{ include('chat/_messages.html.twig') }}
+    </div>
+
+    <turbo-frame id="user-list">
+        {{ include('chat/_user-list.html.twig') }}
+    </div>
+    ```
+    
+    Now I need to send messages to that template in order to update new messages
+    coming from other users!
+    
+    What should the `data` portion of that message look like?
+  explanation: |
+    That's right! `<turbo-stream>` elements have the ability to update *any* part
+    of your page. It can be a `<turbo-frame>` or any normal `<div>` element.
+    
+    The awesome part of our `ux-turbo-mercure` package is that by sending 
+    `<turbo-stream>` elements as the `data` property of our payload, we can
+    instantly make updates *anywhere* in our pages!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```html
+          <turbo-stream target="chat-messages" action="replace">
+              <template>
+                  <div class="message">Hello!</div>
+              </teamplte>
+          </turbo-stream>
+          ```
+        b: |
+          ```html
+          <turbo-stream target="chat-messages" action="update">
+              <div class="message">Hello!</div>
+          </turbo-stream>
+          ```
+        c: |
+          ```html
+          <turbo-stream target="chat-messages" action="update">
+              <template>
+                  <div class="message">Hello!</div>
+              </teamplte>
+          </turbo-stream>
+          ```
+        d: |
+          Any messasge we send with HTML in it won't update anything because our
+          page needs to contain a correponsing `<turbo-stream>` element!
+      correct: c
