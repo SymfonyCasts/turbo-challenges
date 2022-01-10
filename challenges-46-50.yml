@@ -28,7 +28,7 @@ manual_stream:
 manual_stream_2:
   question: |
     My base template has a flash container where I render all my application's flash
-    messages. It goes like this:
+    messages. It looks like this:
     
     ```twig
     <div id="flash-container">
