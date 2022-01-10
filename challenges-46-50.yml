@@ -1,6 +1,6 @@
 manual_stream:
   question: |
-    How does the function `renderStreamMessage` work?
+    How does the function `renderStreamMessage()` work?
   explanation: |
     `renderStreamMessage` allows us to modify different areas on a page
     using the Turbo Streams markup
