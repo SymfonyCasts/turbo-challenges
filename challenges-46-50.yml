@@ -9,7 +9,7 @@ manual_stream:
       choices:
         a: |
           `renderStreamMessage` takes a Response object from a `fetch` function and
-          processes the response in order to make changes in your page.
+          processes the response in order to make changes to your page.
         b: |
           `renderStreamMessage` takes a plain string as an argument and uses your pages'
           flash alerts container to append it to the list of flash messages. Basically
