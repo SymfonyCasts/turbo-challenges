@@ -90,7 +90,7 @@ mercure:
   question: |
     What is Mercure?
   explanation: |
-    The Mercure service is the go to application when building interactive web
+    The Mercure service is the go-to application when building interactive web
     apps such as chatrooms and the likes.
     
     Oh, and the Planet is called `Mercury`! :p
