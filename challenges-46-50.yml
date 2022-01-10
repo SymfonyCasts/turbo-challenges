@@ -165,7 +165,7 @@ listen_publish:
 
 mercure_jwt:
   question: |
-    Now that mercure is installed, ready to go and my page enables it, I have 
+    Mercure is installed and ready. I have 
     the following template in my chat page that can receive new messages from
     other users!
     
