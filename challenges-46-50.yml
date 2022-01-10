@@ -91,7 +91,8 @@ mercure:
     What is Mercure?
   explanation: |
     The Mercure service is the go-to application when building interactive web
-    apps such as chatrooms and the likes.
+    apps such as chatrooms and the likes. It allows you to "push" messages
+    to your users without them needing to make an Ajax request.
     
     Oh, and the Planet is called `Mercury`! :p
   features:
