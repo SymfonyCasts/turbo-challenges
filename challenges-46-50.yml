@@ -20,7 +20,7 @@ manual_stream:
           on demand.
         d: |
           `renderStreamMessage` takes a plain string as an argument and pops up
-          a nicely styled dialog with it and a close button, similar to SweetAlert.
+          a nicely styled dialog and a close button, similar to SweetAlert.
       correct: c
 
 manual_stream_2:
