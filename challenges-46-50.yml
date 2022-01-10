@@ -47,7 +47,7 @@ manual_stream_2:
     How can I avoid this from happening?
   explanation: |
     The `data-turbo-cache="false"` attribute is used to prevent Turbo from caching any
-    part of your page that needs to be tryly dynamic!
+    part of your page that needs to be truly dynamic!
   features:
     multiple_choice:
       choices:
