@@ -3,7 +3,9 @@ manual_stream:
     How does the function `renderStreamMessage()` work?
   explanation: |
     `renderStreamMessage` allows us to modify different areas on a page
-    using the Turbo Streams markup
+    using the Turbo Streams markup. This is what Turbo calls behind the scenes automatically
+    whenever it detects that our server returns a stream response. But we can also call it
+    manually to update parts of the page. Pretty cool!
   features:
     multiple_choice:
       choices:
