@@ -116,7 +116,7 @@ listen_publish:
     installed the `symfony/ux-turbo-mercure` package and set up Mercure in
     my server. I'm ready to receive messages from other people!
     
-    My current template is looking like this:
+    My current template looks like this:
     
     ```twig
     <turbo-stream action="update" target="chat-messages">
