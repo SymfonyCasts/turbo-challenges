@@ -137,7 +137,9 @@ listen_publish:
   explanation: |
     That twig function is all you need to make your page listen to that
     Mercure connection. It's not a *visual* component (e.g. It will not be 
-    visible in any way in our page) but a functional one!
+    visible in any way on our page) but a functional one! An so, it can be placed
+    anywhere: it doesn't need to be around, inside or even "near" the elements
+    that the Turbo Stream will eventually update!
   features:
     multiple_choice:
       choices:
