@@ -182,7 +182,7 @@ mercure_jwt:
     </div>
     ```
     
-    Now I need to send messages to that template in order to update new messages
+    Now I need to send updates to that template in order to update new messages
     coming from other users!
     
     What should the `data` portion of that message look like?
