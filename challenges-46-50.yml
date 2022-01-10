@@ -3,15 +3,17 @@ manual_stream:
     How does the function `renderStreamMessage()` work?
   explanation: |
     `renderStreamMessage()` allows us to modify different areas on a page
-    using the Turbo Streams markup
+    using the Turbo Streams markup. This is what Turbo calls behind the scenes automatically
+    whenever it detects that our server returns a stream response. But we can also call it
+    manually to update parts of the page. Pretty cool!
   features:
     multiple_choice:
       choices:
         a: |
           `renderStreamMessage()` takes a Response object from a `fetch` function and
-          processes the response in order to make changes in your page.
+          processes the response in order to make changes to your page.
         b: |
-          `renderStreamMessage()` takes a plain string as an argument and uses your pages'
+          `renderStreamMessage` takes a plain string as an argument and uses your page's
           flash alerts container to append it to the list of flash messages. Basically
           a client side version of the Symfony flash message feature.
         c: |
@@ -20,7 +22,7 @@ manual_stream:
           on demand.
         d: |
           `renderStreamMessage()` takes a plain string as an argument and pops up
-          a nicely styled dialog with it and a close button, similar to SweetAlert.
+          a nicely styled dialog and a close button, similar to SweetAlert.
       correct: c
 
 manual_stream_2:
