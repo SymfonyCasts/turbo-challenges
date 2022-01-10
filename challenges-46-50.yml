@@ -219,6 +219,6 @@ mercure_jwt:
           </turbo-stream>
           ```
         d: |
-          Any messasge we send with HTML in it won't update anything because our
+          Any message we send with HTML in it won't update anything because our
           page needs to contain a correponsing `<turbo-stream>` element!
       correct: c
