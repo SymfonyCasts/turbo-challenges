@@ -133,7 +133,7 @@ listen_publish:
     ```
     
     And I now need to listen to a `new-messages` topic in Mercure in order to
-    receive them. How is the way to do it?
+    receive them. How can I do that?
   explanation: |
     That twig function is all you need to make your page listen to that
     Mercure connection. It's not a *visual* component (e.g. It will not be 
