@@ -13,7 +13,7 @@ manual_stream:
           `renderStreamMessage()` takes a Response object from a `fetch` function and
           processes the response in order to make changes to your page.
         b: |
-          `renderStreamMessage` takes a plain string as an argument and uses your page's
+          `renderStreamMessage()` takes a plain string as an argument and uses your page's
           flash alerts container to append it to the list of flash messages. Basically
           a client side version of the Symfony flash message feature.
         c: |
@@ -40,7 +40,7 @@ manual_stream_2:
     </div>
     ```
     
-    One issue I've noticed is that once these messages are dismissed, they tend to reappear
+    One issue I've noticed is that once these messages are shown, they tend to reappear
     for a few seconds if I click the back button in my browser. This is due to the messages being
     cached by Turbo.
     
@@ -158,21 +158,21 @@ listen_publish:
           <turbo-frame>
           ```
         c: |
-          Both A and D are correct.
-        d: |
           ```twig
           <div {{ turbo_stream_listen('new-messages') }}></div>
           ```
-      correct: d
+        d: |
+          Both A and C are correct.
+      correct: c
 
 mercure_jwt:
   question: |
-    Mercure is installed and ready. I have 
-    the following template in my chat page that can receive new messages from
-    other users!
+    Mercure is installed and ready. I have the following template in my 
+    chat page that can receive new messages from other users!
     
     ```twig
     <div {{ turbo_stream_listen('new-messages') }}></div>
+    
     <turbo-frame id="chat-messages">
         {{ include('chat/_messages.html.twig') }}
     </div>
@@ -182,10 +182,11 @@ mercure_jwt:
     </div>
     ```
     
-    Now I need to send updates to that template in order to update new messages
+    Now I need to send updates to that template in order to receive new messages
     coming from other users!
     
-    What should the `data` portion of that message look like?
+    Assuming our JWT is already correctly signed, what should the `data` (i.e. the HTML) 
+    portion of that message look like?
   explanation: |
     That's right! `<turbo-stream>` elements have the ability to update *any* part
     of your page. It can be a `<turbo-frame>` or any normal `<div>` element.
