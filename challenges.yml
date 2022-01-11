@@ -1678,3 +1678,229 @@ stream_everything:
         d: |
           There cannot be more than one `<turbo-stream>` element per request!
       correct: c
+
+manual_stream:
+  question: |
+    How does the function `renderStreamMessage()` work?
+  explanation: |
+    `renderStreamMessage()` allows us to modify different areas on a page
+    using the Turbo Streams markup. This is what Turbo calls behind the scenes automatically
+    whenever it detects that our server returns a stream response. But we can also call it
+    manually to update parts of the page. Pretty cool!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          `renderStreamMessage()` takes a Response object from a `fetch` function and
+          processes the response in order to make changes to your page.
+        b: |
+          `renderStreamMessage()` takes a plain string as an argument and uses your page's
+          flash alerts container to append it to the list of flash messages. Basically
+          a client side version of the Symfony flash message feature.
+        c: |
+          `renderStreamMessage()` takes a Turbo Stream formatted HTML as a string and
+          immediately processes it in order to change different parts of you page
+          on demand.
+        d: |
+          `renderStreamMessage()` takes a plain string as an argument and pops up
+          a nicely styled dialog and a close button, similar to SweetAlert.
+      correct: c
+
+manual_stream_2:
+  question: |
+    My base template has a flash container where I render all my application's flash
+    messages. It looks like this:
+    
+    ```twig
+    <div id="flash-container">
+    {% for flash in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ flash }}
+        </div>
+    {% endfor %}
+    </div>
+    ```
+    
+    One issue I've noticed is that once these messages are shown, they tend to reappear
+    for a few seconds if I click the back button in my browser. This is due to the messages being
+    cached by Turbo.
+    
+    How can I avoid this from happening?
+  explanation: |
+    The `data-turbo-cache="false"` attribute is used to prevent Turbo from caching any
+    part of your page that needs to be truly dynamic!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <div id="flash-container" data-turbo-cache="false">
+          {% for flash in app.session.flashBag.get('success') %}
+              <div class="alert alert-success">
+                  {{ flash }}
+              </div>
+          {% endfor %}
+          </div>
+          ```
+        b: |
+          ```twig
+          <div id="flash-container" data-cache="false">
+          {% for flash in app.session.flashBag.get('success') %}
+              <div class="alert alert-success">
+                  {{ flash }}
+              </div>
+          {% endfor %}
+          </div>
+          ```
+        c: |
+          ```twig
+          <div id="flash-container">
+              <meta name="data-turbo-cache" content="false">
+              {% for flash in app.session.flashBag.get('success') %}
+                  <div class="alert alert-success">
+                      {{ flash }}
+                  </div>
+              {% endfor %}
+          </div>
+          ```
+        d: |
+          Both A and C are correct.
+      correct: a
+
+mercure:
+  question: |
+    What is Mercure?
+  explanation: |
+    The Mercure service is the go-to application when building interactive web
+    apps such as chatrooms and the likes. It allows you to "push" messages
+    to your users without them needing to make an Ajax request.
+    
+    Oh, and the Planet is called `Mercury`! :p
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Mercure is the first planet of our Solar System!
+        b: |
+          Mercure is a service that runs in a host that allows messages to be
+          pushed to web clients without having to perform an http request!
+        c: |
+          Mercure is a browser extension for Firefox and Chrome that allows
+          us to send push notifications to them!
+        d: |
+          Both A and B are correct!
+      correct: b
+
+listen_publish:
+  question: |
+    My chat application is finally ready to become interactive! I've just
+    installed the `symfony/ux-turbo-mercure` package and set up Mercure in
+    my server. I'm ready to receive messages from other people!
+    
+    My current template looks like this:
+    
+    ```twig
+    <turbo-stream action="update" target="chat-messages">
+        <template>
+            {{ include('chat/_messages.html.twig') }}
+        </template>
+    </turbo-stream>
+
+    <turbo-stream action="replace" target="chat-user-list">
+        <template>
+            {{ include('chat/_user-list.html.twig') }}
+        </template>
+    </turbo-stream>
+    ```
+    
+    And I now need to listen to a `new-messages` topic in Mercure in order to
+    receive them. How can I do that?
+  explanation: |
+    That twig function is all you need to make your page listen to that
+    Mercure connection. It's not a *visual* component (e.g. It will not be 
+    visible in any way on our page) but a functional one! An so, it can be placed
+    anywhere: it doesn't need to be around, inside or even "near" the elements
+    that the Turbo Stream will eventually update!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          <turbo-stream data-mercure-topic="new-messages" action="update" target="chat-messages>
+              <template>
+                  {{ include('chat/_messages.html.twig') }}
+              </template>
+          </turbo-stream>
+          ```
+        b: |
+          ```twig
+          <turbo-frame data-mercure-topic="new-messages">
+              {{ include('chat/_messages.html.twig') }}
+          <turbo-frame>
+          ```
+        c: |
+          ```twig
+          <div {{ turbo_stream_listen('new-messages') }}></div>
+          ```
+        d: |
+          Both A and C are correct.
+      correct: c
+
+mercure_jwt:
+  question: |
+    Mercure is installed and ready. I have the following template in my 
+    chat page that can receive new messages from other users!
+    
+    ```twig
+    <div {{ turbo_stream_listen('new-messages') }}></div>
+    
+    <turbo-frame id="chat-messages">
+        {{ include('chat/_messages.html.twig') }}
+    </div>
+
+    <turbo-frame id="user-list">
+        {{ include('chat/_user-list.html.twig') }}
+    </div>
+    ```
+    
+    Now I need to send updates to that template in order to receive new messages
+    coming from other users!
+    
+    Assuming our JWT is already correctly signed, what should the `data` (i.e. the HTML) 
+    portion of that message look like?
+  explanation: |
+    That's right! `<turbo-stream>` elements have the ability to update *any* part
+    of your page. It can be a `<turbo-frame>` or any normal `<div>` element.
+    
+    The awesome part of our `ux-turbo-mercure` package is that by sending 
+    `<turbo-stream>` elements as the `data` property of our payload, we can
+    instantly make updates *anywhere* in our pages!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```html
+          <turbo-stream target="chat-messages" action="replace">
+              <template>
+                  <div class="message">Hello!</div>
+              </teamplte>
+          </turbo-stream>
+          ```
+        b: |
+          ```html
+          <turbo-stream target="chat-messages" action="update">
+              <div class="message">Hello!</div>
+          </turbo-stream>
+          ```
+        c: |
+          ```html
+          <turbo-stream target="chat-messages" action="update">
+              <template>
+                  <div class="message">Hello!</div>
+              </teamplte>
+          </turbo-stream>
+          ```
+        d: |
+          Any message we send with HTML in it won't update anything because our
+          page needs to contain a correponsing `<turbo-stream>` element!
+      correct: c
