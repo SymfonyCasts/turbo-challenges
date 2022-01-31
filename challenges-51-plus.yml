@@ -1,0 +1,71 @@
+mercure-php:
+  question: |
+    As mentioned in another challenge, my chat application is
+    ready to receive updates using our PHP server!
+    
+    The chat app looks like this:
+    
+    ```twig
+    <div {{ turbo_stream_listen('new-messages') }}></div>
+
+    <turbo-frame id="chat-messages">
+        {{ include('chat/_messages.html.twig') }}
+    </div>
+
+    <turbo-frame id="user-list">
+        {{ include('chat/_user-list.html.twig') }}
+    </div>
+    ```
+    
+    How can I now send a `chat-messages` turbo stream from my
+    PHP server?
+  explanation: |
+    Whenever a turbo stream is received by the client that is listening to
+    a certain channel, it will automatically process that message!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```php
+          public function updateChatMessages(HubInterface $mercureHub): Response
+          {
+              $mercureHub->publish(new Update(
+                  '<turbo-stream action="update" target="new-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              ));
+          
+              return new Response(204, null);
+          }
+          ```
+        b: |
+          ```php
+          public function updateChatMessages(HubInterface $mercureHub): Response
+          {
+              $mercureHub->publish(new Update(
+                  'new-messages',
+                  '<turbo-stream action="update" target="chat-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              ));
+          
+              return new Response(204, null);
+          }
+          ```
+        c: |
+          ```php
+          public function updateChatMessages(): Update
+          {
+              return new new Update(
+                  'new-messages',
+                  '<turbo-stream action="update" target="chat-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              );
+          }
+          ```
+        d: |
+          ```php
+          public function updateChatMessages(HubInterface $mercureHub): HubInterface
+          {
+              return new $mercureHub->publish(new Update(
+                  'new-messages',
+                  '<turbo-stream action="update" target="chat-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              ));
+          }
+          ```
+      correct: b
