@@ -69,3 +69,148 @@ mercure-php:
           }
           ```
       correct: b
+
+reviews-stream:
+  question: |
+    Following up with my chat messge test, I came up with the right teamplate to actually add
+    the new messages to our users chat log.
+    
+    ```twig
+    <turbo-stream action="update" id="new-messages-{{ chat.id }}">
+        <template>
+            {% for message in chat.newMessages %}
+                <div class="message">
+                    <span class="user">{{ message.from }}</span>:
+                    {{ message.text }}
+                </div>
+            {% endfor %}
+        </template>
+    </turbo-stream>
+    ```
+    
+    Now whenever a user sends a message, I can return an empty form, to reset the user's chat
+    *and* stream the new messages to all chatrooms.
+    
+    What would the controller for this action look like?
+  explanation: |
+    The function `$this->renderView()` will return a string instead of a `Response` object, which is 
+    just what we need for our `Update()` call to work!
+    
+    On the other hand, use Mercure Updates when you need your updates to be reflected in other
+    people's screens! Option D here won't work since our templates are swapped. Our chat form will
+    reset in everybody's screens but the messages won't update.
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```php
+          public function chatAction(Request $request, HubInterface $mercureHub): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+          
+              if (null !== $chat) {
+                  $mercureHub->publish(new Update(
+                      'new-messages',
+                      $this->renderView('_newMessages.html.twig', [ 'chat' => $chat ]),
+                  ));
+              }
+          
+              return $this->render('_chatForm.html.twig');
+          }
+          ```
+        b: |
+          ```php
+          public function chatAction(Request $request, HubInterface $mercureHub): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+
+              if (null !== $chat) {
+                  $mercureHub->publish(new Update(
+                      'new-messages',
+                      $this->render('_newMessages.html.twig', [ 'chat' => $chat ]),
+                  ));
+              }
+
+              return $this->render('_chatForm.html.twig');
+          }
+          ```
+        c: |
+          ```php
+          public function chatAction(Request $request): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+
+              return  $this->render('_newMessages.html.twig', [ 'chat' => $chat ]);
+          }
+          ```
+        d: |
+          ```php
+          public function chatAction(Request $request, HubInterface $mercureHub): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+
+              if (null !== $chat) {
+                  $mercureHub->publish(new Update(
+                      'chat-form',
+                      $this->renderView('_chatForm.html.twig'),
+                  ));
+              }
+
+              return  $this->render('_newMessages.html.twig', [ 'chat' => $chat ]);
+          }
+          ```
+      correct: a
+    
+
+reviews-stream-update:
+  question: |
+    In my chat application, whenever a user sends a message to the chat, I return a turbo
+    stream message to update all the user's pages with the new message. My stream code
+    looks like this:
+    
+    ```twig
+    <turbo-stream action="update" id="new-messages-{{ chat.id }}">
+        <template>
+            {% for message in chat.newMessages %}
+                <div class="message">
+                    <span class="user">{{ message.from }}</span>:
+                    {{ message.text }}
+                </div>
+            {% endfor %}
+        </template>
+    </turbo-stream>
+    ```
+    
+    But whenever a user sends a message, the *entire* chat room disappears, only to
+    show the last messages. Why is this so and how could I fix it?
+  explanation: |
+    The `action="append"` is what you need to use if you want to append new rows to
+    a list that's already rendered!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because the `action="update"` will replace the entire DOM element with the
+          new contents instead of appending them. You need to create a new container
+          with the right chat id so that old mesages stay in the page.
+        b: |
+          Because the template we're sending does not contain all the old messages,
+          but only the new ones. You need to include all the old messages in the
+          turbo stream template.
+        c: |
+          Because the `action="update"` will replace the entire DOM element with the
+          new contents instead of appending them. You need to use `action="append"`
+          instead.
+        d: |
+          Because the template we're sending does not contain all the old messages,
+          but only the new ones. You need to use Turbo Frames for this, instead of
+          Turbo Streams.
+      correct: c
