@@ -1,6 +1,6 @@
 mercure-php:
   question: |
-    As mentioned in another challenge, my chat application is
+    As mentioned in a previous challenge, my chat application is
     ready to receive updates using our PHP server!
     
     The chat app looks like this:
@@ -20,7 +20,7 @@ mercure-php:
     How can I now send a `chat-messages` turbo stream from my
     PHP server?
   explanation: |
-    Whenever a turbo stream is received by the client that is listening to
+    Whenever a turbo stream is received by a client that is listening to
     a certain channel, it will automatically process that message!
   features:
     multiple_choice:
@@ -88,7 +88,7 @@ reviews-stream:
     </turbo-stream>
     ```
     
-    Now whenever a user sends a message, I can return an empty form, to reset the user's chat
+    Now whenever a user sends a message, I can return an empty form to reset the user's chat
     *and* stream the new messages to all chatrooms.
     
     What would the controller for this action look like?
@@ -98,7 +98,7 @@ reviews-stream:
     
     On the other hand, use Mercure Updates when you need your updates to be reflected in other
     people's screens! Option D here won't work since our templates are swapped. Our chat form will
-    reset in everybody's screens but the messages won't update.
+    reset in everybody's screens but the messages will only update in the sender's client!
   features:
     multiple_choice:
       choices:
@@ -168,12 +168,11 @@ reviews-stream:
           }
           ```
       correct: a
-    
 
 reviews-stream-update:
   question: |
     In my chat application, whenever a user sends a message to the chat, I return a turbo
-    stream message to update all the user's pages with the new message. My stream code
+    stream message to update all of the user's pages with the new message. My stream code
     looks like this:
     
     ```twig
@@ -198,7 +197,7 @@ reviews-stream-update:
     multiple_choice:
       choices:
         a: |
-          Because the `action="update"` will replace the entire DOM element with the
+          Because the `action="update"` will replace the entire target DOM element with the
           new contents instead of appending them. You need to create a new container
           with the right chat id so that old mesages stay in the page.
         b: |
@@ -206,19 +205,19 @@ reviews-stream-update:
           but only the new ones. You need to include all the old messages in the
           turbo stream template.
         c: |
-          Because the `action="update"` will replace the entire DOM element with the
+          Because the `action="update"` will replace the entire target DOM element with the
           new contents instead of appending them. You need to use `action="append"`
           instead.
         d: |
-          Because the template we're sending does not contain all the old messages,
+          Because the template we're sending does not contain all the old messages
           but only the new ones. You need to use Turbo Frames for this, instead of
           Turbo Streams.
       correct: c
 
 entity_broadcast:
   question: |
-    In my App, whenever a new pizza is added to the menu, I'm broadcasting the entity
-    so that it can be automatically updated in all clients!
+    In my Greatest Pizzas of all Times App, whenever a new pizza is added to the catalog,
+    I'm broadcasting the entity so that it can be automatically updated in all clients!
     
     The entity class is called `App\Entity\Pizza`.
     
@@ -257,7 +256,8 @@ entity_broadcast_2:
     extend in this template whenever something happens to the Pizza entity?
   explanation: |
     Much like with a database, we can add templates that respond to entities
-    being Created, Updated and Removed!
+    being Created, Updated and Removed! Inside these blocks, you can use
+    `<turbo-stream>` elements to update parts of your page!
   features:
     multiple_choice:
       choices:
@@ -265,11 +265,11 @@ entity_broadcast_2:
           You can use `create` for when an entity is created and `delete` for when
           an entity is deleted.
         b: |
-          You can use `create` for when an entity is created.
+          You can only use `create` for when an entity is created.
         c: |
           You can use `create` for when an entity is createed and 'remove' for when
-          an entoty is deleted.
+          an entity is deleted.
         d: |
-          You can use `create` for when an entoty is created, `update` for when
-          an entity is updated and `remove` for when an entoty is deleted.
+          You can use `create` for when an entity is created, `update` for when
+          an entity is updated and `remove` for when an entity is deleted.
       correct: d
