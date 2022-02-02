@@ -1,0 +1,275 @@
+mercure-php:
+  question: |
+    As mentioned in a previous challenge, my chat application is
+    ready to receive updates using our PHP server!
+    
+    The chat app looks like this:
+    
+    ```twig
+    <div {{ turbo_stream_listen('new-messages') }}></div>
+
+    <turbo-frame id="chat-messages">
+        {{ include('chat/_messages.html.twig') }}
+    </div>
+
+    <turbo-frame id="user-list">
+        {{ include('chat/_user-list.html.twig') }}
+    </div>
+    ```
+    
+    How can I now send a `chat-messages` turbo stream from my
+    PHP server?
+  explanation: |
+    Whenever a turbo stream is received by a client that is listening to
+    a certain channel, it will automatically process that message!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```php
+          public function updateChatMessages(HubInterface $mercureHub): Response
+          {
+              $mercureHub->publish(new Update(
+                  '<turbo-stream action="update" target="new-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              ));
+          
+              return new Response(204, null);
+          }
+          ```
+        b: |
+          ```php
+          public function updateChatMessages(HubInterface $mercureHub): Response
+          {
+              $mercureHub->publish(new Update(
+                  'new-messages',
+                  '<turbo-stream action="update" target="chat-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              ));
+          
+              return new Response(204, null);
+          }
+          ```
+        c: |
+          ```php
+          public function updateChatMessages(): Update
+          {
+              return new new Update(
+                  'new-messages',
+                  '<turbo-stream action="update" target="chat-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              );
+          }
+          ```
+        d: |
+          ```php
+          public function updateChatMessages(HubInterface $mercureHub): HubInterface
+          {
+              return new $mercureHub->publish(new Update(
+                  'new-messages',
+                  '<turbo-stream action="update" target="chat-messages"><template>New Chat Message Here!</template></turbo-stream>',
+              ));
+          }
+          ```
+      correct: b
+
+reviews-stream:
+  question: |
+    Following up with my chat messge test, I came up with the right teamplate to actually add
+    the new messages to our users chat log.
+    
+    ```twig
+    <turbo-stream action="update" id="new-messages-{{ chat.id }}">
+        <template>
+            {% for message in chat.newMessages %}
+                <div class="message">
+                    <span class="user">{{ message.from }}</span>:
+                    {{ message.text }}
+                </div>
+            {% endfor %}
+        </template>
+    </turbo-stream>
+    ```
+    
+    Now whenever a user sends a message, I can return an empty form to reset the user's chat
+    *and* stream the new messages to all chatrooms.
+    
+    What would the controller for this action look like?
+  explanation: |
+    The function `$this->renderView()` will return a string instead of a `Response` object, which is 
+    just what we need for our `Update()` call to work!
+    
+    On the other hand, use Mercure Updates when you need your updates to be reflected in other
+    people's screens! Option D here won't work since our templates are swapped. Our chat form will
+    reset in everybody's screens but the messages will only update in the sender's client!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```php
+          public function chatAction(Request $request, HubInterface $mercureHub): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+          
+              if (null !== $chat) {
+                  $mercureHub->publish(new Update(
+                      'new-messages',
+                      $this->renderView('_newMessages.html.twig', [ 'chat' => $chat ]),
+                  ));
+              }
+          
+              return $this->render('_chatForm.html.twig');
+          }
+          ```
+        b: |
+          ```php
+          public function chatAction(Request $request, HubInterface $mercureHub): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+
+              if (null !== $chat) {
+                  $mercureHub->publish(new Update(
+                      'new-messages',
+                      $this->render('_newMessages.html.twig', [ 'chat' => $chat ]),
+                  ));
+              }
+
+              return $this->render('_chatForm.html.twig');
+          }
+          ```
+        c: |
+          ```php
+          public function chatAction(Request $request): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+
+              return  $this->render('_newMessages.html.twig', [ 'chat' => $chat ]);
+          }
+          ```
+        d: |
+          ```php
+          public function chatAction(Request $request, HubInterface $mercureHub): Response
+          {
+              // Here we process what chatroom we're in and if the user has
+              // successfully entered a new message!
+              $chat = myFancyChatProcessingFunction($request);
+
+              if (null !== $chat) {
+                  $mercureHub->publish(new Update(
+                      'chat-form',
+                      $this->renderView('_chatForm.html.twig'),
+                  ));
+              }
+
+              return  $this->render('_newMessages.html.twig', [ 'chat' => $chat ]);
+          }
+          ```
+      correct: a
+
+reviews-stream-update:
+  question: |
+    In my chat application, whenever a user sends a message to the chat, I return a turbo
+    stream message to update all of the user's pages with the new message. My stream code
+    looks like this:
+    
+    ```twig
+    <turbo-stream action="update" id="new-messages-{{ chat.id }}">
+        <template>
+            {% for message in chat.newMessages %}
+                <div class="message">
+                    <span class="user">{{ message.from }}</span>:
+                    {{ message.text }}
+                </div>
+            {% endfor %}
+        </template>
+    </turbo-stream>
+    ```
+    
+    But whenever a user sends a message, the *entire* chat room disappears, only to
+    show the last messages. Why is this so and how could I fix it?
+  explanation: |
+    The `action="append"` is what you need to use if you want to append new rows to
+    a list that's already rendered!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          Because the `action="update"` will replace the entire target DOM element with the
+          new contents instead of appending them. You need to create a new container
+          with the right chat id so that old mesages stay in the page.
+        b: |
+          Because the template we're sending does not contain all the old messages,
+          but only the new ones. You need to include all the old messages in the
+          turbo stream template.
+        c: |
+          Because the `action="update"` will replace the entire target DOM element with the
+          new contents instead of appending them. You need to use `action="append"`
+          instead.
+        d: |
+          Because the template we're sending does not contain all the old messages
+          but only the new ones. You need to use Turbo Frames for this, instead of
+          Turbo Streams.
+      correct: c
+
+entity_broadcast:
+  question: |
+    In my Greatest Pizzas of all Times App, whenever a new pizza is added to the catalog,
+    I'm broadcasting the entity so that it can be automatically updated in all clients!
+    
+    The entity class is called `App\Entity\Pizza`.
+    
+    What should I add to my template in order to listen to its updates?
+  explanation: |
+    Whenever you need to listen to an entity broadcast in your App, you can add a 
+    regular `turbo_stream_listen` and the fully qualified name of the class!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          ```twig
+          {{ turbo_stream_listen('App\\Entity\\Pizza') }}
+          ```
+        b: |
+          ```twig
+          {{ turbo_stream_listen('Pizza') }}
+          ```
+        c: |
+          ```twig
+          {{ turbo_entity_listen('App\\Entity\\Pizza') }}
+          ```
+        d: |
+          ```twig
+          {{ turbo_entity_listen('Pizza') }}
+          ```
+      correct: a
+
+entity_broadcast_2:
+  question: |
+    After listening to my new pizza broadcast, I've created a template file
+    under `broadcast/Pizza.html.twig` to be able to render new instances
+    of this entity.
+    
+    My template is currently empty. What are the types of blocks that I can 
+    extend in this template whenever something happens to the Pizza entity?
+  explanation: |
+    Much like with a database, we can add templates that respond to entities
+    being Created, Updated and Removed! Inside these blocks, you can use
+    `<turbo-stream>` elements to update parts of your page!
+  features:
+    multiple_choice:
+      choices:
+        a: |
+          You can use `create` for when an entity is created and `delete` for when
+          an entity is deleted.
+        b: |
+          You can only use `create` for when an entity is created.
+        c: |
+          You can use `create` for when an entity is createed and 'remove' for when
+          an entity is deleted.
+        d: |
+          You can use `create` for when an entity is created, `update` for when
+          an entity is updated and `remove` for when an entity is deleted.
+      correct: d
