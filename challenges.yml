@@ -228,7 +228,7 @@ forms:
           We do this to better conform to HTTP standards, since our code was incomplete
           in this regard.
         c: |
-          We do this to show a nice new feature of synfomy regarding forms, where it can
+          We do this to show a nice new feature of Symfony regarding forms, where it can
           handle different status codes on different situations.
         d: |
           All of the above.
